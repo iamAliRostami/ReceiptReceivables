@@ -1,0 +1,3 @@
+include ':rahyab-release'
+include ':app'
+rootProject.name = "ReceiptReceivables"

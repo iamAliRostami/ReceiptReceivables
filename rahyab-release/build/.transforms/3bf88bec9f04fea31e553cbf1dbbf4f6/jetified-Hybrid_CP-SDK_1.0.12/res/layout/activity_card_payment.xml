@@ -1,0 +1,38 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bottom_bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="30dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/rounded_dialog_background"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/tv_merchant_name"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/img_swipe_card_label"/>
+
+        <ImageView
+            android:id="@+id/giv_swipe_card"
+            android:layout_width="wrap_content"
+            android:layout_height="250dp"
+            android:layout_gravity="center"
+            android:padding="5dp"
+            android:src="@drawable/img_swipe_card"
+            android:background="@android:color/transparent" />
+
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>
