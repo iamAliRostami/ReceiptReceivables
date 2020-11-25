@@ -3,7 +3,8 @@ package com.leon.receipt_receivables.enums;
 public enum BundleEnum {
     BILL_ID("bill_Id"),
     THEME("theme"),
-    TYPE("type");
+    TYPE("type"),
+    RESULT("resultValues");
 
     private final String value;
 
