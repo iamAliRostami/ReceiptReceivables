@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">وصول مطالبات</string>
+
+    <string name="error">خطا</string>
+    <string name="error_not_update_1">همکار گرامی لطفا نسخه به روز شده اپلیکیشن را از منوی تنظیمات  بخش به روز رسانی دریافت نمایید</string>
+    <string name="error_not_update_2">لطفا نسخه به روز شده اپلیکیشن را از فهرست فوری، بخش به روز رسانی دریافت نمایید.</string>
+    <string name="error_call_backup">همکار گرامی مشکلی در دریافت اطلاعات این بخش به وجود آمد، با پشتیبان بخش اسناد تماس حاصل فرمایید.</string>
+    <string name="error_not_auth">ممجوزهای دسترسی به شما اعطا نشده است، با پشتیبان تماس گرفته و از برنامه خارج و مجددا وارد شوید.</string>
+    <string name="error_bill_id">شناسه قبض صحیح نمیباشد.</string>
+    <string name="error_disconnected">برقراری ارتباط حین جابجایی اطلاعات با خطا مواجه شد</string>
+    <string name="error_connection">خطا در جابجایی اطلاعات، اتصالات خود را بررسی و مجدد تلاش کنید.</string>
+    <string name="error_unknown">خطای ناشناخته رخ داده است.</string>
+    <string name="error_code">\nکد خطا:</string>
+    <string name="error_external_storage_is_not_writable">حافظه خارجی قابلی نوشتن نیست.</string>
+    <string name="error_in_record_voice">در ضبظ صدا مشکلی به وجود آمد</string>
+    <string name="error_in_play_voice">در پخش صدا مشکلی به وجود آمد</string>
+    <string name="dear_user">همکار گرامی!</string>
+    <string name="error_other">در حال حاضر خدمات مقدور نمیباشد، لطفا مجددا تلاش فرمایید.</string>
+    <string name="error_internal">با عرض پوزش، سرور در حال به روزرسانی، لطفا دقایقی دیگر امتحان فرمایید.</string>
+    <string name="error_input">ورودی های خود را چک کنید.</string>
+    <string name="error_change_server">سرور در حال تغییرات است، لطفا منتظر بمانید و در صورت برطرف نشدن مشکل با پشتیبان تماس حاصل فرمایید.</string>
+    <string name="error_user_password">نام کاربری و گذرواژه در سیستم موجود نیست، لطفا در ورود اطلاعات دقت قرمایید.</string>
+    <string name="error_empty">این فیلد باید پر شود.</string>
+    <string name="error_is_not_match">نام کاربری و گذرواژه با یکدیگر مطابقت ندارند</string>
+
+    <string name="canceled">عملیات متوقف شد.</string>
+    <string name="waiting">لطفا صبر کنید…</string>
+    <string name="turn_internet_on">اینترنت وصل نیست، اینترنت وایفای یا همراه خود را روشن کنید.</string>
 </resources>
