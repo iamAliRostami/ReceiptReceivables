@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="384px"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txt_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="test"
+        android:layout_marginRight="@dimen/medium_dp"
+        android:gravity="right" />
+
+    <LinearLayout
+        android:layout_width="384dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="300px"
+            android:layout_height="40px"
+            android:layout_gravity="center"
+            android:src="@drawable/img_logo_footer"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:layout_width="100px"
+            android:layout_height="40px"
+            android:layout_gravity="center"
+            android:src="@drawable/img_logo_footer"
+            tools:ignore="ContentDescription" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_dscription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="desc"
+        android:layout_marginRight="@dimen/medium_dp"
+        android:gravity="right" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/colorPrimary" />
+</LinearLayout>

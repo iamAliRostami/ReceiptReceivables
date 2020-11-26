@@ -29,14 +29,9 @@ public class ResultActivity extends AppCompatActivity {
         getExtra();
     }
 
-    void print(){
+    void print() {
 
         if (SDKManager.getPrinterStatus() == SDKManager.STATUS_OK) {
-            //Print method takes an instance of Printable Data and a DataCallback as input
-            //In this example, the printer starts printing an instance of TestPrintableDataList
-            //then after successful end of printing first item it starts printing an instance of ListPrintableData.
-
-            //***** Print View or List of Objects *****
             ArrayList<PrintModel> printModels = new ArrayList<>();
             String title = "تست", des = "این سطر شماره ";
             int count = 4;
@@ -44,15 +39,15 @@ public class ResultActivity extends AppCompatActivity {
                 printModels.add(new PrintModel(title + i, des + i));
             }
 
-            //SDKManager.print(MainActivity.this, new TestPrintableDataList(printModels), null);
-            //SDKManager.print(MainActivity.this, new TestPrintableData(), objects -> SDKManager.print(MainActivity.this, new ListPrintableData("این سطر اول است", "سطر دوم پایین تر است", "سطر سوم زیر سطر دوم است."), null));
-                    /*SDKManager.print(MainActivity.this, new TestPrintableData(), data -> {
-                        SDKManager.print(MainActivity.this, new TestPrintableDataList(printModels), data1 -> {*//*
-                            SDKManager.print(MainActivity.this, new TestPrintableDataList(printModels), data2 -> {
-                                SDKManager.print(MainActivity.this, new TestPrintableDataList(printModels), null);
-                            });
-                        *//*});
-                    });*/
+//            SDKManager.print(ResultActivity.this, new PrintableDataList(printModels), null);
+//            SDKManager.print(ResultActivity.this, new PrintableData(), objects -> SDKManager.print(ResultActivity.this, new ListPrintableData("این سطر اول است", "سطر دوم پایین تر است", "سطر سوم زیر سطر دوم است."), null));
+//            SDKManager.print(ResultActivity.this, new PrintableData(), data1 -> {
+//                SDKManager.print(ResultActivity.this, new PrintableDataList(printModels), data2 -> {
+//                    SDKManager.print(ResultActivity.this, new PrintableDataList(printModels), data3 -> {
+//                        SDKManager.print(ResultActivity.this, new PrintableDataList(printModels), null);
+//                    });
+//                });
+//            });
 
             //***** Print Bitmap *****
 //            Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.bitmap_print_test);
@@ -61,17 +56,19 @@ public class ResultActivity extends AppCompatActivity {
 //            });
         }
     }
-    void getExtra(){
+
+    void getExtra() {
         ArrayList<String> resultReturns = new ArrayList<>();
         Intent intent = getIntent();
-        if(intent.hasExtra(BundleEnum.RESULT.getValue()))
+        if (intent.hasExtra(BundleEnum.RESULT.getValue()))
             resultReturns.addAll(intent.getStringArrayListExtra(BundleEnum.RESULT.getValue()));
 
         StringBuilder resultDescription = new StringBuilder("\n");
-        for (String resultReturn: resultReturns) {
+        for (String resultReturn : resultReturns) {
             resultDescription.append(resultReturn).append("\n");
         }
     }
+
     public static Intent putIntent(Context context, String... resultValues) {
         Intent intent = new Intent(context, ResultActivity.class);
         ArrayList<String> resultValuesList = new ArrayList<>(Arrays.asList(resultValues));
