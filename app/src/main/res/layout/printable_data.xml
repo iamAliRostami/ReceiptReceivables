@@ -22,7 +22,7 @@
         android:layout_height="200px"
         android:layout_gravity="center"
         android:layout_marginTop="5dp"
-        android:src="@drawable/ic_rahyab" />
+        android:src="@drawable/img_logo_footer" />
 
 
     <LinearLayout

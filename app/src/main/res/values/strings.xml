@@ -27,4 +27,16 @@
     <string name="waiting">لطفا صبر کنید…</string>
     <string name="turn_internet_on">اینترنت وصل نیست، اینترنت وایفای یا همراه خود را روشن کنید.</string>
     <string name="copy_right">شبکه تارنما سپاهان</string>
+    <string name="version">نسخه</string>
+    <string name="username">نام کاربری</string>
+    <string name="password">گذرواژه</string>
+    <string name="login">ورود</string>
+    <string name="save">ذخیره</string>
+    <string name="accepted">ادامه</string>
+    <string name="confirm">تایید</string>
+    <string name="ok">تایید</string>
+    <string name="dont_show_again">دیگر نمایش نده</string>
+    <string name="ex_msg_dialog_choice_confirm">Confirm button is only for multi choice lists. You must call setMultiChoiceItems first</string>
+    <string name="ex_msg_dialog_view_not_set">You must call method setView before calling configureView.</string>
+
 </resources>
