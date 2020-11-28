@@ -42,87 +42,127 @@ public class PayActivity extends AppCompatActivity {
             if (TextUtils.isEmpty(amount))
                 binding.editTextAmount.setError(getString(R.string.error_empty));
             else if (hostApp == HostApp.IKC) {
-                com.kishcore.sdk.irankish.rahyab.api.SDKManager.purchase(PayActivity.this, invoiceNumber, amount, "-1", "تست پیغام تبلیغاتی زیر رسید", "تست پیغام نمایش", new com.kishcore.sdk.irankish.rahyab.api.PaymentCallback() {
-                    @SuppressLint("DefaultLocale")
-                    @Override
-                    public void onPaymentInitializationFailed(int status, String statusDescription, String reserveNumber, String maskedPan, String panHash) {
-                        startActivity(ResultActivity.putIntent(PayActivity.this, String.format(Locale.ENGLISH, "آغاز فرایند پرداخت با کد فاکتور %s با خطا مواجه شد. \nکد وضعیت: %d \n" + statusDescription, reserveNumber, status), String.format(Locale.ENGLISH, "شماره کارت کاربر:\n %s", maskedPan), String.format(Locale.ENGLISH, "هش کارت کاربر:\n %s", panHash)));
-                    }
+                com.kishcore.sdk.irankish.rahyab.api.SDKManager.purchase(PayActivity.this,
+                        invoiceNumber, amount, "-1", "تست پیغام تبلیغاتی زیر رسید",
+                        "تست پیغام نمایش",
+                        new com.kishcore.sdk.irankish.rahyab.api.PaymentCallback() {
+                            @SuppressLint("DefaultLocale")
+                            @Override
+                            public void onPaymentInitializationFailed(int status, String statusDescription,
+                                                                      String reserveNumber,
+                                                                      String maskedPan, String panHash) {
+                                startActivity(ResultActivity.putIntent(PayActivity.this,
+                                        String.format(Locale.ENGLISH,
+                                                "آغاز فرایند پرداخت با کد فاکتور %s با خطا مواجه شد. \nکد وضعیت: %d \n"
+                                                        + statusDescription, reserveNumber, status), String.format(Locale.ENGLISH,
+                                                "شماره کارت کاربر:\n %s", maskedPan),
+                                        String.format(Locale.ENGLISH, "هش کارت کاربر:\n %s", panHash)));
+                            }
 
-                    @SuppressLint("DefaultLocale")
-                    @Override
-                    public void onPaymentSucceed(String terminalNo, String merchantId, String posSerial, String reserveNumber, String traceNumber, String rrn, String ref, String amount, String txnDate, String txnTime, String maskedPan, String panHash) {
-                        startActivity(ResultActivity.putIntent(PayActivity.this, "پرداخت با موفقیت انجام شد.",
-                                String.format(Locale.ENGLISH, "کد فاکتور: %s", reserveNumber),
-                                String.format(Locale.ENGLISH, "کد پیگیری: %s", traceNumber),
-                                String.format(Locale.ENGLISH, "شماره مرجع بازیابی: %s", rrn),
-                                String.format(Locale.ENGLISH, "مبلغ تراکنش: %s", amount),
-                                String.format(Locale.ENGLISH, "شماره کارت کاربر:\n %s", maskedPan),
-                                String.format(Locale.ENGLISH, "هش کارت کاربر:\n %s", panHash)));
-                    }
+                            @SuppressLint("DefaultLocale")
+                            @Override
+                            public void onPaymentSucceed(String terminalNo, String merchantId,
+                                                         String posSerial, String reserveNumber,
+                                                         String traceNumber, String rrn,
+                                                         String ref, String amount, String txnDate,
+                                                         String txnTime, String maskedPan,
+                                                         String panHash) {
+                                startActivity(ResultActivity.putIntent(PayActivity.this,
+                                        "پرداخت با موفقیت انجام شد.",
+                                        String.format(Locale.ENGLISH, "کد فاکتور: %s", reserveNumber),
+                                        String.format(Locale.ENGLISH, "کد پیگیری: %s", traceNumber),
+                                        String.format(Locale.ENGLISH, "شماره مرجع بازیابی: %s", rrn),
+                                        String.format(Locale.ENGLISH, "مبلغ تراکنش: %s", amount),
+                                        String.format(Locale.ENGLISH, "شماره کارت کاربر:\n %s", maskedPan),
+                                        String.format(Locale.ENGLISH, "هش کارت کاربر:\n %s", panHash)));
+                            }
 
-                    @SuppressLint("DefaultLocale")
-                    @Override
-                    public void onPaymentFailed(int errorCode, String errorDescription, String terminalNo, String merchantId, String posSerial, String reserveNumber, String traceNumber, String rrn, String ref, String amount, String txnDate, String txnTime, String maskedPan, String panHash) {
-                        startActivity(ResultActivity.putIntent(PayActivity.this, "پرداخت با خطا مواجه شد.",
-                                String.format(Locale.ENGLISH, "کد خطا: %d", errorCode),
-                                String.format(Locale.ENGLISH, "شرح خطا: %s", errorDescription),
-                                String.format(Locale.ENGLISH, "کد فاکتور: %s", reserveNumber),
-                                String.format(Locale.ENGLISH, "کد پیگیری: %s", traceNumber),
-                                String.format(Locale.ENGLISH, "شماره مرجع بازیابی: %s", rrn),
-                                String.format(Locale.ENGLISH, "مبلغ تراکنش: %s", amount),
-                                String.format(Locale.ENGLISH, "شماره کارت کاربر:\n %s", maskedPan),
-                                String.format(Locale.ENGLISH, "هش کارت کاربر:\n %s", panHash)));
-                    }
+                            @SuppressLint("DefaultLocale")
+                            @Override
+                            public void onPaymentFailed(int errorCode, String errorDescription,
+                                                        String terminalNo, String merchantId,
+                                                        String posSerial, String reserveNumber,
+                                                        String traceNumber, String rrn, String ref,
+                                                        String amount, String txnDate,
+                                                        String txnTime, String maskedPan,
+                                                        String panHash) {
+                                startActivity(ResultActivity.putIntent(PayActivity.this,
+                                        "پرداخت با خطا مواجه شد.",
+                                        String.format(Locale.ENGLISH, "کد خطا: %d", errorCode),
+                                        String.format(Locale.ENGLISH, "شرح خطا: %s", errorDescription),
+                                        String.format(Locale.ENGLISH, "کد فاکتور: %s", reserveNumber),
+                                        String.format(Locale.ENGLISH, "کد پیگیری: %s", traceNumber),
+                                        String.format(Locale.ENGLISH, "شماره مرجع بازیابی: %s", rrn),
+                                        String.format(Locale.ENGLISH, "مبلغ تراکنش: %s", amount),
+                                        String.format(Locale.ENGLISH, "شماره کارت کاربر:\n %s", maskedPan),
+                                        String.format(Locale.ENGLISH, "هش کارت کاربر:\n %s", panHash)));
+                            }
 
-                    @SuppressLint("DefaultLocale")
-                    @Override
-                    public void onPaymentCancelled(String reserveNumber, String maskedPan, String panHash) {
-                        //Toast.makeText(PayActivity.this, "onPaymentCancelled", Toast.LENGTH_SHORT).show();
-                        startActivity(ResultActivity.putIntent(PayActivity.this, String.format(Locale.ENGLISH, "فرایند پرداخت با کد فاکتور %s توسط کاربر لغو شد.", reserveNumber), String.format(Locale.ENGLISH, "شماره کارت کاربر:\n %s", maskedPan), String.format(Locale.ENGLISH, "هش کارت کاربر:\n %s", panHash)));
-                    }
-                });
+                            @SuppressLint("DefaultLocale")
+                            @Override
+                            public void onPaymentCancelled(String reserveNumber, String maskedPan,
+                                                           String panHash) {
+                                startActivity(ResultActivity.putIntent(PayActivity.this,
+                                        String.format(Locale.ENGLISH,
+                                                "فرایند پرداخت با کد فاکتور %s توسط کاربر لغو شد.",
+                                                reserveNumber), String.format(Locale.ENGLISH,
+                                                "شماره کارت کاربر:\n %s", maskedPan),
+                                        String.format(Locale.ENGLISH, "هش کارت کاربر:\n %s",
+                                                panHash)));
+                            }
+                        });
             } else if (hostApp == HostApp.SEP_IKCC) {
-                com.kishcore.sdk.sepIkcc.rahyab.api.SDKManager.purchase(PayActivity.this, invoiceNumber, amount, "-1", "تست پیغام تبلیغاتی زیر رسید", "تست پیغام نمایش", new com.kishcore.sdk.sepIkcc.rahyab.api.PaymentCallback() {
-                    @SuppressLint("DefaultLocale")
-                    @Override
-                    public void onPaymentInitializationFailed(int status, String statusDescription, String reserveNumber, String maskedPan, String panHash) {
-                        startActivity(ResultActivity.putIntent(PayActivity.this, String.format(Locale.ENGLISH, "آغاز فرایند پرداخت با کد فاکتور %s با خطا مواجه شد. \nکد وضعیت: %d \n" + statusDescription, reserveNumber, status), String.format(Locale.ENGLISH, "شماره کارت کاربر:\n %s", maskedPan), String.format(Locale.ENGLISH, "هش کارت کاربر:\n %s", panHash)));
-                    }
+                com.kishcore.sdk.sepIkcc.rahyab.api.SDKManager.purchase(PayActivity.this,
+                        invoiceNumber, amount, "-1", "تست پیغام تبلیغاتی زیر رسید",
+                        "تست پیغام نمایش",
+                        new com.kishcore.sdk.sepIkcc.rahyab.api.PaymentCallback() {
+                            @SuppressLint("DefaultLocale")
+                            @Override
+                            public void onPaymentInitializationFailed(int status, String statusDescription,
+                                                                      String reserveNumber,
+                                                                      String maskedPan, String panHash) {
+                                startActivity(ResultActivity.putIntent(PayActivity.this,
+                                        String.format(Locale.ENGLISH,
+                                                "آغاز فرایند پرداخت با کد فاکتور %s با خطا مواجه شد. \nکد وضعیت: %d \n"
+                                                        + statusDescription, reserveNumber, status),
+                                        String.format(Locale.ENGLISH, "شماره کارت کاربر:\n %s",
+                                                maskedPan), String.format(Locale.ENGLISH,
+                                                "هش کارت کاربر:\n %s", panHash)));
+                            }
 
-                    @SuppressLint("DefaultLocale")
-                    @Override
-                    public void onPaymentSucceed(String terminalNo, String merchantId, String posSerial, String reserveNumber, String traceNumber, String rrn, String ref, String amount, String txnDate, String txnTime, String maskedPan, String panHash) {
-                        startActivity(ResultActivity.putIntent(PayActivity.this, "پرداخت با موفقیت انجام شد.",
-                                String.format(Locale.ENGLISH, "کد فاکتور: %s", reserveNumber),
-                                String.format(Locale.ENGLISH, "کد پیگیری: %s", traceNumber),
-                                String.format(Locale.ENGLISH, "شماره مرجع بازیابی: %s", rrn),
-                                String.format(Locale.ENGLISH, "مبلغ تراکنش: %s", amount),
-                                String.format(Locale.ENGLISH, "شماره کارت کاربر:\n %s", maskedPan),
-                                String.format(Locale.ENGLISH, "هش کارت کاربر:\n %s", panHash)));
-                    }
+                            @SuppressLint("DefaultLocale")
+                            @Override
+                            public void onPaymentSucceed(String terminalNo, String merchantId, String posSerial, String reserveNumber, String traceNumber, String rrn, String ref, String amount, String txnDate, String txnTime, String maskedPan, String panHash) {
+                                startActivity(ResultActivity.putIntent(PayActivity.this, "پرداخت با موفقیت انجام شد.",
+                                        String.format(Locale.ENGLISH, "کد فاکتور: %s", reserveNumber),
+                                        String.format(Locale.ENGLISH, "کد پیگیری: %s", traceNumber),
+                                        String.format(Locale.ENGLISH, "شماره مرجع بازیابی: %s", rrn),
+                                        String.format(Locale.ENGLISH, "مبلغ تراکنش: %s", amount),
+                                        String.format(Locale.ENGLISH, "شماره کارت کاربر:\n %s", maskedPan),
+                                        String.format(Locale.ENGLISH, "هش کارت کاربر:\n %s", panHash)));
+                            }
 
-                    @SuppressLint("DefaultLocale")
-                    @Override
-                    public void onPaymentFailed(int errorCode, String errorDescription, String terminalNo, String merchantId, String posSerial, String reserveNumber, String traceNumber, String rrn, String ref, String amount, String txnDate, String txnTime, String maskedPan, String panHash) {
-                        startActivity(ResultActivity.putIntent(PayActivity.this, "پرداخت با خطا مواجه شد.",
-                                String.format(Locale.ENGLISH, "کد خطا: %d", errorCode),
-                                String.format(Locale.ENGLISH, "شرح خطا: %s", errorDescription),
-                                String.format(Locale.ENGLISH, "کد فاکتور: %s", reserveNumber),
-                                String.format(Locale.ENGLISH, "کد پیگیری: %s", traceNumber),
-                                String.format(Locale.ENGLISH, "شماره مرجع بازیابی: %s", rrn),
-                                String.format(Locale.ENGLISH, "مبلغ تراکنش: %s", amount),
-                                String.format(Locale.ENGLISH, "شماره کارت کاربر:\n %s", maskedPan),
-                                String.format(Locale.ENGLISH, "هش کارت کاربر:\n %s", panHash)));
-                    }
+                            @SuppressLint("DefaultLocale")
+                            @Override
+                            public void onPaymentFailed(int errorCode, String errorDescription, String terminalNo, String merchantId, String posSerial, String reserveNumber, String traceNumber, String rrn, String ref, String amount, String txnDate, String txnTime, String maskedPan, String panHash) {
+                                startActivity(ResultActivity.putIntent(PayActivity.this, "پرداخت با خطا مواجه شد.",
+                                        String.format(Locale.ENGLISH, "کد خطا: %d", errorCode),
+                                        String.format(Locale.ENGLISH, "شرح خطا: %s", errorDescription),
+                                        String.format(Locale.ENGLISH, "کد فاکتور: %s", reserveNumber),
+                                        String.format(Locale.ENGLISH, "کد پیگیری: %s", traceNumber),
+                                        String.format(Locale.ENGLISH, "شماره مرجع بازیابی: %s", rrn),
+                                        String.format(Locale.ENGLISH, "مبلغ تراکنش: %s", amount),
+                                        String.format(Locale.ENGLISH, "شماره کارت کاربر:\n %s", maskedPan),
+                                        String.format(Locale.ENGLISH, "هش کارت کاربر:\n %s", panHash)));
+                            }
 
-                    @SuppressLint("DefaultLocale")
-                    @Override
-                    public void onPaymentCancelled(String reserveNumber, String maskedPan, String panHash) {
-                        //Toast.makeText(PayActivity.this, "onPaymentCancelled", Toast.LENGTH_SHORT).show();
-                        startActivity(ResultActivity.putIntent(PayActivity.this, String.format(Locale.ENGLISH, "فرایند پرداخت با کد فاکتور %s توسط کاربر لغو شد.", reserveNumber), String.format(Locale.ENGLISH, "شماره کارت کاربر:\n %s", maskedPan), String.format(Locale.ENGLISH, "هش کارت کاربر:\n %s", panHash)));
-                    }
-                });
+                            @SuppressLint("DefaultLocale")
+                            @Override
+                            public void onPaymentCancelled(String reserveNumber, String maskedPan, String panHash) {
+                                //Toast.makeText(PayActivity.this, "onPaymentCancelled", Toast.LENGTH_SHORT).show();
+                                startActivity(ResultActivity.putIntent(PayActivity.this, String.format(Locale.ENGLISH, "فرایند پرداخت با کد فاکتور %s توسط کاربر لغو شد.", reserveNumber), String.format(Locale.ENGLISH, "شماره کارت کاربر:\n %s", maskedPan), String.format(Locale.ENGLISH, "هش کارت کاربر:\n %s", panHash)));
+                            }
+                        });
             } else if (hostApp == HostApp.FANAVA) {
                 com.kishcore.sdk.fanava.rahyab.api.SDKManager.purchase(PayActivity.this, invoiceNumber, amount, new com.kishcore.sdk.fanava.rahyab.api.PaymentCallback() {
                     @Override
@@ -334,8 +374,18 @@ public class PayActivity extends AppCompatActivity {
 
                     @SuppressLint("DefaultLocale")
                     @Override
-                    public void onPaymentFailed(String reserveNumber, String traceNumber, int errorCode, String errorDescription, String amount, String maskedPan, String panHash) {
-                        startActivity(ResultActivity.putIntent(PayActivity.this, "پرداخت با خطا مواجه شد. در صورت کسر وجه از حساب شما، مبلغ مذکور طی ۷۲ ساعت به حساب شما عودت خواهد شد در غیراینصورت حداکثر ظرف ۴۵ روز به حساب شما واریز می گردد.", String.format(Locale.ENGLISH, "کد فاکتور: %s", reserveNumber), String.format(Locale.ENGLISH, "شماره پیگیری: %s", traceNumber), String.format(Locale.ENGLISH, "کد خطا: %d", errorCode), String.format(Locale.ENGLISH, "شرح خطا: %s", errorDescription), String.format(Locale.ENGLISH, "مبلغ تراکنش: %s", amount), String.format(Locale.ENGLISH, "شماره کارت کاربر:\n %s", maskedPan), String.format(Locale.ENGLISH, "هش کارت کاربر:\n %s", panHash)));
+                    public void onPaymentFailed(String reserveNumber, String traceNumber,
+                                                int errorCode, String errorDescription,
+                                                String amount, String maskedPan, String panHash) {
+                        startActivity(ResultActivity.putIntent(PayActivity.this,
+                                "پرداخت با خطا مواجه شد. در صورت کسر وجه از حساب شما، مبلغ مذکور طی ۷۲ ساعت به حساب شما عودت خواهد شد در غیراینصورت حداکثر ظرف ۴۵ روز به حساب شما واریز می گردد.",
+                                String.format(Locale.ENGLISH, "کد فاکتور: %s", reserveNumber),
+                                String.format(Locale.ENGLISH, "شماره پیگیری: %s", traceNumber),
+                                String.format(Locale.ENGLISH, "کد خطا: %d", errorCode),
+                                String.format(Locale.ENGLISH, "شرح خطا: %s", errorDescription),
+                                String.format(Locale.ENGLISH, "مبلغ تراکنش: %s", amount),
+                                String.format(Locale.ENGLISH, "شماره کارت کاربر:\n %s", maskedPan),
+                                String.format(Locale.ENGLISH, "هش کارت کاربر:\n %s", panHash)));
                     }
 
                     @SuppressLint("DefaultLocale")
@@ -347,15 +397,24 @@ public class PayActivity extends AppCompatActivity {
             } else if (hostApp == HostApp.SEP) {
                 com.kishcore.sdk.sep.rahyab.api.SDKManager.purchase(PayActivity.this, invoiceNumber, amount, new com.kishcore.sdk.sep.rahyab.api.PaymentCallback() {
                     @Override
-                    public void onPaymentInitializationFailed(String reserveNumber, String maskedPan, String errorDescription) {
-                        startActivity(ResultActivity.putIntent(PayActivity.this, String.format(Locale.ENGLISH, "آغاز فرایند پرداخت با کد فاکتور %s با خطا مواجه شد.", reserveNumber),
+                    public void onPaymentInitializationFailed(String reserveNumber,
+                                                              String maskedPan, String errorDescription) {
+                        startActivity(ResultActivity.putIntent(PayActivity.this,
+                                String.format(Locale.ENGLISH,
+                                        "آغاز فرایند پرداخت با کد فاکتور %s با خطا مواجه شد.",
+                                        reserveNumber),
                                 String.format(Locale.ENGLISH, "شرح خطا: %s", errorDescription),
                                 String.format(Locale.ENGLISH, "شماره کارت کاربر:\n %s", maskedPan)));
                     }
 
                     @Override
-                    public void onPaymentSucceed(String terminalNo, String merchantId, String posSerial, String reserveNumber, String traceNumber, String rrn, String ref, String amount, String txnDate, String txnTime, String maskedPan) {
-                        startActivity(ResultActivity.putIntent(PayActivity.this, "پرداخت با موفقیت انجام شد.",
+                    public void onPaymentSucceed(String terminalNo, String merchantId,
+                                                 String posSerial, String reserveNumber,
+                                                 String traceNumber, String rrn, String ref,
+                                                 String amount, String txnDate, String txnTime,
+                                                 String maskedPan) {
+                        startActivity(ResultActivity.putIntent(PayActivity.this,
+                                "پرداخت با موفقیت انجام شد.",
                                 String.format(Locale.ENGLISH, "شماره ترمینال: %s", terminalNo),
                                 String.format(Locale.ENGLISH, "کد پذیرنده: %s", merchantId),
                                 String.format(Locale.ENGLISH, "سریال دستگاه: %s", posSerial),
@@ -368,8 +427,14 @@ public class PayActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onPaymentFailed(int errorCode, String errorDescription, String terminalNo, String merchantId, String posSerial, String reserveNumber, String traceNumber, String rrn, String ref, String amount, String txnDate, String txnTime, String maskedPan) {
-                        startActivity(ResultActivity.putIntent(PayActivity.this, "پرداخت با خطا مواجه شد.",
+                    public void onPaymentFailed(int errorCode, String errorDescription,
+                                                String terminalNo, String merchantId,
+                                                String posSerial, String reserveNumber,
+                                                String traceNumber, String rrn, String ref,
+                                                String amount, String txnDate, String txnTime,
+                                                String maskedPan) {
+                        startActivity(ResultActivity.putIntent(PayActivity.this,
+                                "پرداخت با خطا مواجه شد.",
                                 String.format(Locale.ENGLISH, "کد خطا: %d", errorCode),
                                 String.format(Locale.ENGLISH, "شرح خطا: %s", errorDescription),
                                 String.format(Locale.ENGLISH, "شماره ترمینال: %s", terminalNo),
@@ -385,8 +450,12 @@ public class PayActivity extends AppCompatActivity {
 
                     @Override
                     public void onPaymentCancelled(String reserveNumber, String maskedPan) {
-                        startActivity(ResultActivity.putIntent(PayActivity.this, String.format(Locale.ENGLISH, "فرایند پرداخت با کد فاکتور %s توسط کاربر لغو شد.", reserveNumber),
-                                String.format(Locale.ENGLISH, "شماره کارت کاربر:\n %s", maskedPan)));
+                        startActivity(ResultActivity.putIntent(PayActivity.this,
+                                String.format(Locale.ENGLISH,
+                                        "فرایند پرداخت با کد فاکتور %s توسط کاربر لغو شد.",
+                                        reserveNumber),
+                                String.format(Locale.ENGLISH, "شماره کارت کاربر:\n %s",
+                                        maskedPan)));
                     }
                 });
             }
