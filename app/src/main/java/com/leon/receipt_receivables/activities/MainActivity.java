@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.kishcore.sdk.hybrid.api.SDKManager;
+import com.leon.receipt_receivables.MyApplication;
 import com.leon.receipt_receivables.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,6 +20,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void initialize() {
-
+        MyApplication.hostApp = SDKManager.init(this);
     }
 }
