@@ -6,11 +6,14 @@ import android.graphics.Typeface;
 
 import androidx.multidex.MultiDex;
 
+import com.kishcore.sdk.hybrid.api.HostApp;
+
 import es.dmoral.toasty.Toasty;
 
 public class MyApplication extends Application {
     public static final String FONT_NAME = "font/font_1.ttf";
     public static final int TOAST_TEXT_SIZE = 20;
+    public static HostApp hostApp;
     static Context appContext;
 
     public static Context getContext() {

@@ -16,6 +16,7 @@ import java.util.Arrays;
 
 public class ResultActivity extends AppCompatActivity {
     ActivityResultBinding binding;
+    ArrayList<String> resultReturns;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,7 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     void getExtra() {
-        ArrayList<String> resultReturns = new ArrayList<>();
+        resultReturns = new ArrayList<>();
         Intent intent = getIntent();
         if (intent.hasExtra(BundleEnum.RESULT.getValue()))
             resultReturns.addAll(intent.getStringArrayListExtra(BundleEnum.RESULT.getValue()));

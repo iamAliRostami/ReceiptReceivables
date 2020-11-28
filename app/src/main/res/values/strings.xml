@@ -38,5 +38,14 @@
     <string name="dont_show_again">دیگر نمایش نده</string>
     <string name="ex_msg_dialog_choice_confirm">Confirm button is only for multi choice lists. You must call setMultiChoiceItems first</string>
     <string name="ex_msg_dialog_view_not_set">You must call method setView before calling configureView.</string>
+    <string name="amount">مبلغ</string>
+    <string name="rial">ریال</string>
+    <string name="purchase">خرید</string>
+    <string name="bill_id">شناسه قبض</string>
+    <string name="purchase_id">شناسه پرداخت</string>
+    <string name="bill_payment">پرداخت قبض</string>
+    <string name="select_purchase_way">روش خرید را انتخاب نمایید.</string>
+    <string name="normal_purchase">خرید عادی</string>
+    <string name="bon_purchase">خرید با بن کارت</string>
 
 </resources>

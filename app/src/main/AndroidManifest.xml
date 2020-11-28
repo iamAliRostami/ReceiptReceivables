@@ -24,7 +24,8 @@
         android:theme="@style/Theme.ReceiptReceivables"
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute">
-        <activity android:name=".activities.LoginActivity"></activity>
+        <activity android:name=".activities.PayActivity"></activity>
+        <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
