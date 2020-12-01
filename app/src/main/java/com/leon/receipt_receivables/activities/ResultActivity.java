@@ -3,6 +3,7 @@ package com.leon.receipt_receivables.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -68,6 +69,7 @@ public class ResultActivity extends AppCompatActivity {
         for (String resultReturn : resultReturns) {
             resultDescription.append(resultReturn).append("\n");
         }
+        Log.e("result", String.valueOf(resultDescription));
     }
 
     public static Intent putIntent(Context context, String... resultValues) {

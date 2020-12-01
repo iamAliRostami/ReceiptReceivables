@@ -63,4 +63,11 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
     implementation "com.squareup.retrofit2:converter-scalars:2.6.2"
     implementation 'com.google.code.gson:gson:2.8.6'
+
+    api 'io.jsonwebtoken:jjwt-api:0.11.2'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
+    runtimeOnly('io.jsonwebtoken:jjwt-orgjson:0.11.2') {
+        exclude group: 'org.json', module: 'json'
+    }
+    implementation 'com.auth0.android:jwtdecode:2.0.0'
 }

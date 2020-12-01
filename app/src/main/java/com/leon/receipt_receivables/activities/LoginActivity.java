@@ -10,6 +10,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.auth0.android.jwt.JWT;
 import com.leon.receipt_receivables.BuildConfig;
 import com.leon.receipt_receivables.R;
 import com.leon.receipt_receivables.databinding.ActivityLoginBinding;
@@ -26,6 +27,8 @@ import com.leon.receipt_receivables.utils.CustomDialog;
 import com.leon.receipt_receivables.utils.CustomErrorHandling;
 import com.leon.receipt_receivables.utils.CustomToast;
 import com.leon.receipt_receivables.utils.SharedPreferenceManager;
+
+import java.util.List;
 
 import retrofit2.Response;
 
@@ -126,8 +129,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     void savePreference(LoginFeedBack loginFeedBack) {
+        sharedPreferenceManager.putData(SharedReferenceKeys.DISPLAY_NAME.getValue(), loginFeedBack.displayName);
+        sharedPreferenceManager.putData(SharedReferenceKeys.USER_CODE.getValue(), loginFeedBack.userCode);
         sharedPreferenceManager.putData(SharedReferenceKeys.TOKEN.getValue(), loginFeedBack.access_token);
         sharedPreferenceManager.putData(SharedReferenceKeys.REFRESH_TOKEN.getValue(), loginFeedBack.refresh_token);
+        sharedPreferenceManager.putData(SharedReferenceKeys.XSRF.getValue(), loginFeedBack.XSRFToken);
         sharedPreferenceManager.putData(SharedReferenceKeys.USERNAME_TEMP.getValue(), username);
         sharedPreferenceManager.putData(SharedReferenceKeys.PASSWORD_TEMP.getValue(), Crypto.encrypt(password));
         if (binding.checkBoxSave.isChecked()) {
@@ -143,6 +149,60 @@ public class LoginActivity extends AppCompatActivity {
                     SharedReferenceKeys.USERNAME.getValue()));
             binding.editTextPassword.setText(Crypto.decrypt(sharedPreferenceManager.getStringData(
                     SharedReferenceKeys.PASSWORD.getValue())));
+        }
+    }
+
+    class Login implements ICallback<LoginFeedBack> {
+        @Override
+        public void execute(Response<LoginFeedBack> response) {
+            LoginFeedBack loginFeedBack = response.body();
+            if (loginFeedBack == null || loginFeedBack.access_token == null ||
+                    loginFeedBack.refresh_token == null ||
+                    loginFeedBack.access_token.length() < 1 ||
+                    loginFeedBack.refresh_token.length() < 1) {
+                CustomToast customToast = new CustomToast();
+                customToast.warning(getString(R.string.error_is_not_match));
+            } else {
+                List<String> cookieList = response.headers().values("Set-Cookie");
+                loginFeedBack.XSRFToken = (cookieList.get(1).split(";"))[0];
+                JWT jwt = new JWT(loginFeedBack.access_token);
+                loginFeedBack.displayName = jwt.getClaim("DisplayName").asString();
+                loginFeedBack.userCode = jwt.getClaim("UserCode").asString();
+
+                savePreference(loginFeedBack);
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }
+    }
+
+    class GetErrorIncomplete implements ICallbackIncomplete<LoginFeedBack> {
+        @Override
+        public void executeIncomplete(Response<LoginFeedBack> response) {
+            CustomErrorHandling customErrorHandlingNew = new CustomErrorHandling(context);
+            String error = customErrorHandlingNew.getErrorMessageDefault(response);
+            if (response.code() == 401) {
+                error = LoginActivity.this.getString(R.string.error_is_not_match);
+                CustomToast customToast = new CustomToast();
+                customToast.warning(error);
+            } else
+                new CustomDialog(DialogType.Yellow, LoginActivity.this, error,
+                        LoginActivity.this.getString(R.string.dear_user),
+                        LoginActivity.this.getString(R.string.login),
+                        LoginActivity.this.getString(R.string.accepted));
+        }
+    }
+
+    class GetError implements ICallbackError {
+        @Override
+        public void executeError(Throwable t) {
+            CustomErrorHandling customErrorHandlingNew = new CustomErrorHandling(context);
+            String error = customErrorHandlingNew.getErrorMessageTotal(t);
+            new CustomDialog(DialogType.YellowRedirect, LoginActivity.this, error,
+                    LoginActivity.this.getString(R.string.dear_user),
+                    LoginActivity.this.getString(R.string.login),
+                    LoginActivity.this.getString(R.string.accepted));
         }
     }
 
@@ -182,53 +242,5 @@ public class LoginActivity extends AppCompatActivity {
         Runtime.getRuntime().freeMemory();
         Runtime.getRuntime().maxMemory();
         Debug.getNativeHeapAllocatedSize();
-    }
-
-    class Login implements ICallback<LoginFeedBack> {
-        @Override
-        public void execute(Response<LoginFeedBack> response) {
-            LoginFeedBack loginFeedBack = response.body();
-            if (loginFeedBack == null || loginFeedBack.access_token == null ||
-                    loginFeedBack.refresh_token == null ||
-                    loginFeedBack.access_token.length() < 1 ||
-                    loginFeedBack.refresh_token.length() < 1) {
-                CustomToast customToast = new CustomToast();
-                customToast.warning(getString(R.string.error_is_not_match));
-            } else {
-                savePreference(loginFeedBack);
-                Intent intent = new Intent(context, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        }
-    }
-
-    class GetErrorIncomplete implements ICallbackIncomplete<LoginFeedBack> {
-        @Override
-        public void executeIncomplete(Response<LoginFeedBack> response) {
-            CustomErrorHandling customErrorHandlingNew = new CustomErrorHandling(context);
-            String error = customErrorHandlingNew.getErrorMessageDefault(response);
-            if (response.code() == 401) {
-                error = LoginActivity.this.getString(R.string.error_is_not_match);
-                CustomToast customToast = new CustomToast();
-                customToast.warning(error);
-            } else
-                new CustomDialog(DialogType.Yellow, LoginActivity.this, error,
-                        LoginActivity.this.getString(R.string.dear_user),
-                        LoginActivity.this.getString(R.string.login),
-                        LoginActivity.this.getString(R.string.accepted));
-        }
-    }
-
-    class GetError implements ICallbackError {
-        @Override
-        public void executeError(Throwable t) {
-            CustomErrorHandling customErrorHandlingNew = new CustomErrorHandling(context);
-            String error = customErrorHandlingNew.getErrorMessageTotal(t);
-            new CustomDialog(DialogType.YellowRedirect, LoginActivity.this, error,
-                    LoginActivity.this.getString(R.string.dear_user),
-                    LoginActivity.this.getString(R.string.login),
-                    LoginActivity.this.getString(R.string.accepted));
-        }
     }
 }

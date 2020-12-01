@@ -47,5 +47,10 @@
     <string name="select_purchase_way">روش خرید را انتخاب نمایید.</string>
     <string name="normal_purchase">خرید عادی</string>
     <string name="bon_purchase">خرید با بن کارت</string>
+    <string name="exit">خروج</string>
+    <string name="download">بارگیری</string>
+    <string name="upload">بارگذاری</string>
+    <string name="start">شروع کار</string>
+    <string name="reports">گزارشات</string>
 
 </resources>
