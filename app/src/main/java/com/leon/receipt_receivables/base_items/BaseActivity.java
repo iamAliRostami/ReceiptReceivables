@@ -93,7 +93,7 @@ public abstract class BaseActivity extends AppCompatActivity
                     @Override
                     public void onItemClick(View view, int position) {
                         drawer.closeDrawer(GravityCompat.START);
-                        if (position == 8) {
+                        if (position == 5) {
                             MyApplication.POSITION = -1;
                             finishAffinity();
                         } else if (MyApplication.POSITION != position) {
@@ -104,7 +104,6 @@ public abstract class BaseActivity extends AppCompatActivity
                             }
                             startActivity(intent);
                             finish();
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                         }
                     }
 
@@ -130,7 +129,7 @@ public abstract class BaseActivity extends AppCompatActivity
         drawer = binding.drawerLayout;
         recyclerView = binding.recyclerView;
         dataList = new ArrayList<>();
-        fillDrawerListView();
+        fillDrawerRecyclerView();
         setOnDrawerItemClick();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle
                 (this, drawer, toolbar, R.string.navigation_drawer_open,
@@ -145,7 +144,7 @@ public abstract class BaseActivity extends AppCompatActivity
         toolbar.setNavigationOnClickListener(view1 -> drawer.openDrawer(Gravity.START));
     }
 
-    void fillDrawerListView() {
+    void fillDrawerRecyclerView() {
         dataList = NavigationDrawerAdapter.DrawerItem.createItemList(
                 getResources().getStringArray(R.array.menu), getResources().obtainTypedArray(
                         R.array.icons));
