@@ -168,7 +168,6 @@ public class LoginActivity extends AppCompatActivity {
                 JWT jwt = new JWT(loginFeedBack.access_token);
                 loginFeedBack.displayName = jwt.getClaim("DisplayName").asString();
                 loginFeedBack.userCode = jwt.getClaim("UserCode").asString();
-
                 savePreference(loginFeedBack);
                 Intent intent = new Intent(context, MainActivity.class);
                 startActivity(intent);
@@ -182,15 +181,11 @@ public class LoginActivity extends AppCompatActivity {
         public void executeIncomplete(Response<LoginFeedBack> response) {
             CustomErrorHandling customErrorHandlingNew = new CustomErrorHandling(context);
             String error = customErrorHandlingNew.getErrorMessageDefault(response);
+            CustomToast customToast = new CustomToast();
             if (response.code() == 401) {
                 error = LoginActivity.this.getString(R.string.error_is_not_match);
-                CustomToast customToast = new CustomToast();
-                customToast.warning(error);
-            } else
-                new CustomDialog(DialogType.Yellow, LoginActivity.this, error,
-                        LoginActivity.this.getString(R.string.dear_user),
-                        LoginActivity.this.getString(R.string.login),
-                        LoginActivity.this.getString(R.string.accepted));
+            }
+            customToast.warning(error);
         }
     }
 

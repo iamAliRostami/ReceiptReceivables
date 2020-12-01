@@ -21,6 +21,21 @@
         <item name="android:layout_marginBottom">0dp</item>
     </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:actionOverflowButtonStyle">@style/OverFlowButton</item>
+        <item name="android:drawablePadding">2dp</item>
+    </style>
+
+    <style name="OverFlowButton">
+        <item name="android:layout_margin">3dp</item>
+    </style>
+
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
     <style name="DialogButton">
         <item name="android:textAllCaps">true</item>
         <item name="android:clickable">true</item>

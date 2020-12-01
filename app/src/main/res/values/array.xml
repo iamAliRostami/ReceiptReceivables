@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="menu">
+        <item>@string/download</item>
+        <item>@string/start</item>
+        <item>@string/upload</item>
+        <item>@string/reports</item>
+        <item>@string/help</item>
+        <item>@string/exit</item>
+    </string-array>
+
+    <array name="icons">
+        <item>@drawable/tiny_img_download</item>
+        <item>@drawable/tiny_img_reading</item>
+        <item>@drawable/tiny_img_upload</item>
+        <item>@drawable/tiny_img_report</item>
+        <item>@drawable/tiny_img_help</item>
+        <item>@drawable/tiny_img_exit</item>
+    </array>
+</resources>

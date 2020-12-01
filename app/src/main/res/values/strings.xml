@@ -52,5 +52,10 @@
     <string name="upload">بارگذاری</string>
     <string name="start">شروع کار</string>
     <string name="reports">گزارشات</string>
+    <string name="help">راهنما</string>
+    <string name="home">خانه</string>
 
+    <string name="how_to_exit">جهت خروج، از فهرست، گزینه «خروج» را بزنید.</string>
+    <string name="navigation_drawer_open">باز کردن منو</string>
+    <string name="navigation_drawer_close">بستن منو</string>
 </resources>

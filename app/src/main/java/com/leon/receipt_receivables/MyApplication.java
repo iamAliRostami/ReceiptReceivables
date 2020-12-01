@@ -15,6 +15,7 @@ public class MyApplication extends Application {
     public static final int TOAST_TEXT_SIZE = 20;
     public static HostApp hostApp;
     static Context appContext;
+    public static int POSITION = -1;
 
     public static Context getContext() {
         return appContext;
