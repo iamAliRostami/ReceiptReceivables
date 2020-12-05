@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.leon.receipt_receivables.BuildConfig;
@@ -36,7 +35,6 @@ import java.util.List;
 public abstract class BaseActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     Toolbar toolbar;
-    RecyclerView recyclerView;
     NavigationDrawerAdapter adapter;
     List<NavigationDrawerAdapter.DrawerItem> dataList;
     BaseActivityBinding binding;
@@ -85,9 +83,9 @@ public abstract class BaseActivity extends AppCompatActivity
             } else
                 binding.drawerLayout.closeDrawer(GravityCompat.START);
         });
-        recyclerView.addOnItemTouchListener(
+        binding.recyclerView.addOnItemTouchListener(
                 new NavigationDrawerAdapter.RecyclerItemClickListener(MyApplication.getContext(),
-                        recyclerView, new NavigationDrawerAdapter.RecyclerItemClickListener.OnItemClickListener() {
+                        binding.recyclerView, new NavigationDrawerAdapter.RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
                         binding.drawerLayout.closeDrawer(GravityCompat.START);
@@ -124,7 +122,6 @@ public abstract class BaseActivity extends AppCompatActivity
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        recyclerView = binding.recyclerView;
         dataList = new ArrayList<>();
         fillDrawerRecyclerView();
         setOnDrawerItemClick();
@@ -146,9 +143,9 @@ public abstract class BaseActivity extends AppCompatActivity
                 getResources().getStringArray(R.array.menu), getResources().obtainTypedArray(
                         R.array.icons));
         adapter = new NavigationDrawerAdapter(this, dataList);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(MyApplication.getContext()));
-        recyclerView.setNestedScrollingEnabled(true);
+        binding.recyclerView.setAdapter(adapter);
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(MyApplication.getContext()));
+        binding.recyclerView.setNestedScrollingEnabled(true);
     }
 
     @Override
