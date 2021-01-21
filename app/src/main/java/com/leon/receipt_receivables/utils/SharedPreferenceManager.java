@@ -32,6 +32,12 @@ public class SharedPreferenceManager implements ISharedPreferenceManager {
 
     }
 
+//    public void putTheme(Boolean theme) {
+//        SharedPreferences.Editor prefsEditor = appPrefs.edit();
+//        prefsEditor.putBoolean(SharedReferenceKeys.THEME.getValue(), theme);
+//        prefsEditor.apply();
+//    }
+
     @Override
     public void putData(String key, String data) {
         SharedPreferences.Editor prefsEditor = appPrefs.edit();
@@ -60,4 +66,8 @@ public class SharedPreferenceManager implements ISharedPreferenceManager {
     public boolean getBoolData(String key) {
         return appPrefs.getBoolean(key, false);
     }
+
+//    public boolean getTheme() {
+//        return appPrefs.getBoolean(SharedReferenceKeys.THEME.getValue(), false);
+//    }
 }

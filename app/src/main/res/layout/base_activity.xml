@@ -38,11 +38,30 @@
             android:layout_weight="1"
             tools:listitem="@layout/item_navigation_drawer" />
 
-        <TextView
-            android:id="@+id/text_view_version"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/version" />
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:id="@+id/text_view_version"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/version" />
+
+            <ImageView
+                android:id="@+id/image_view_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="42dp"
+                android:layout_margin="@dimen/low_dp"
+                android:background="@drawable/border_mode"
+                android:src="@drawable/mode"
+                tools:ignore="ContentDescription,RtlHardcoded" />
+
+        </LinearLayout>
     </LinearLayout>
 </androidx.drawerlayout.widget.DrawerLayout>

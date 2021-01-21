@@ -3,6 +3,7 @@ package com.leon.receipt_receivables.base_items;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Debug;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +21,12 @@ import com.google.android.material.navigation.NavigationView;
 import com.leon.receipt_receivables.BuildConfig;
 import com.leon.receipt_receivables.MyApplication;
 import com.leon.receipt_receivables.R;
+import com.leon.receipt_receivables.activities.DownloadActivity;
+import com.leon.receipt_receivables.activities.HelpActivity;
 import com.leon.receipt_receivables.activities.MainActivity;
+import com.leon.receipt_receivables.activities.ReadingActivity;
+import com.leon.receipt_receivables.activities.ReportActivity;
+import com.leon.receipt_receivables.activities.UploadActivity;
 import com.leon.receipt_receivables.adapters.NavigationDrawerAdapter;
 import com.leon.receipt_receivables.databinding.BaseActivityBinding;
 import com.leon.receipt_receivables.enums.SharedReferenceKeys;
@@ -39,6 +45,7 @@ public abstract class BaseActivity extends AppCompatActivity
     List<NavigationDrawerAdapter.DrawerItem> dataList;
     BaseActivityBinding binding;
     ISharedPreferenceManager sharedPreferenceManager;
+    boolean exit = false;
 
     protected abstract void initialize();
 
@@ -73,8 +80,8 @@ public abstract class BaseActivity extends AppCompatActivity
 
     @SuppressLint("RtlHardcoded")
     void setOnDrawerItemClick() {
+        initializeImageViewSwitch();
         binding.imageViewHeader.setOnClickListener(v -> {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             if (MyApplication.POSITION != -1) {
                 MyApplication.POSITION = -1;
                 Intent intent = new Intent(MyApplication.getContext(), MainActivity.class);
@@ -90,13 +97,22 @@ public abstract class BaseActivity extends AppCompatActivity
                     public void onItemClick(View view, int position) {
                         binding.drawerLayout.closeDrawer(GravityCompat.START);
                         if (position == 5) {
+                            exit = true;
                             MyApplication.POSITION = -1;
                             finishAffinity();
                         } else if (MyApplication.POSITION != position) {
                             MyApplication.POSITION = position;
                             Intent intent = new Intent();
                             if (position == 0) {
-//                                intent = new Intent(getApplicationContext(), DownloadActivity.class);
+                                intent = new Intent(getApplicationContext(), DownloadActivity.class);
+                            } else if (position == 1) {
+                                intent = new Intent(getApplicationContext(), ReadingActivity.class);
+                            } else if (position == 2) {
+                                intent = new Intent(getApplicationContext(), UploadActivity.class);
+                            } else if (position == 3) {
+                                intent = new Intent(getApplicationContext(), ReportActivity.class);
+                            } else if (position == 4) {
+                                intent = new Intent(getApplicationContext(), HelpActivity.class);
                             }
                             startActivity(intent);
                             finish();
@@ -108,6 +124,24 @@ public abstract class BaseActivity extends AppCompatActivity
                     }
                 })
         );
+    }
+
+    private void initializeImageViewSwitch() {
+        if (sharedPreferenceManager.getBoolData(SharedReferenceKeys.THEME.getValue())) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+        binding.imageViewSwitch.setOnClickListener(v -> {
+            sharedPreferenceManager.putData(SharedReferenceKeys.THEME.getValue(),
+                    !sharedPreferenceManager.getBoolData(SharedReferenceKeys.THEME.getValue()));
+            binding.drawerLayout.closeDrawer(GravityCompat.START);
+            if (sharedPreferenceManager.getBoolData(SharedReferenceKeys.THEME.getValue())) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
+        });
     }
 
     @SuppressLint("WrongConstant")
@@ -149,7 +183,28 @@ public abstract class BaseActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onStop() {
+        Debug.getNativeHeapAllocatedSize();
+        System.runFinalization();
+        Runtime.getRuntime().totalMemory();
+        Runtime.getRuntime().freeMemory();
+        Runtime.getRuntime().maxMemory();
+        Runtime.getRuntime().gc();
+        System.gc();
+        super.onStop();
+    }
+
+    @Override
     protected void onDestroy() {
+        Debug.getNativeHeapAllocatedSize();
+        System.runFinalization();
+        Runtime.getRuntime().totalMemory();
+        Runtime.getRuntime().freeMemory();
+        Runtime.getRuntime().maxMemory();
+        Runtime.getRuntime().gc();
+        System.gc();
+        if (exit)
+            android.os.Process.killProcess(android.os.Process.myPid());
         super.onDestroy();
     }
 }

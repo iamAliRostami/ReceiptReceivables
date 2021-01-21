@@ -21,24 +21,40 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:screenOrientation="portrait"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ReceiptReceivables"
+        android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute">
-        <activity android:name=".activities.PayActivity"><intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter></activity>
+        <activity
+            android:name=".activities.HelpActivity"
+            android:label="@string/help" />
+        <activity android:name=".activities.ReadingActivity" />
+        <activity
+            android:name=".activities.ReportActivity"
+            android:label="@string/reports" />
+        <activity
+            android:name=".activities.UploadActivity"
+            android:label="@string/upload" />
+        <activity
+            android:name=".activities.DownloadActivity"
+            android:label="@string/download" />
+        <activity
+            android:name=".activities.PayActivity"
+            android:label="@string/bill_payment" />
         <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.SplashActivity">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+        <activity
+            android:name=".activities.ResultActivity"
+            android:label="@string/result" />
+        <activity
+            android:name=".activities.MainActivity"
+            android:label="@string/home">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".activities.ResultActivity" />
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".activities.SplashActivity">
 
         </activity>
     </application>

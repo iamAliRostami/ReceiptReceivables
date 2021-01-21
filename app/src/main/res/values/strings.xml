@@ -58,4 +58,5 @@
     <string name="how_to_exit">جهت خروج، از فهرست، گزینه «خروج» را بزنید.</string>
     <string name="navigation_drawer_open">باز کردن منو</string>
     <string name="navigation_drawer_close">بستن منو</string>
+    <string name="result">نتیجه</string>
 </resources>

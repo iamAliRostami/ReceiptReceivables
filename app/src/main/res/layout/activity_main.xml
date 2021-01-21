@@ -21,6 +21,30 @@
             tools:ignore="DisableBaselineAlignment,UselessParent">
 
             <LinearLayout
+                android:id="@+id/linear_layout_reading"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                tools:ignore="NestedWeights">
+
+                <ImageView
+                    android:id="@+id/image_view_reading"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/img_reading"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/app_name"
+                    android:textSize="@dimen/text_size_medium" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/linear_layout_upload"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -43,31 +67,6 @@
                     android:text="@string/upload"
                     android:textSize="@dimen/text_size_medium" />
             </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linear_layout_reading"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                tools:ignore="NestedWeights">
-
-                <ImageView
-                    android:id="@+id/image_view_reading"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/img_reading"
-                    tools:ignore="ContentDescription" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/start"
-                    android:textSize="@dimen/text_size_medium" />
-            </LinearLayout>
-
         </LinearLayout>
 
         <LinearLayout
