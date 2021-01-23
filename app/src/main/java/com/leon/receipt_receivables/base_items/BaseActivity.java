@@ -49,13 +49,11 @@ public abstract class BaseActivity extends AppCompatActivity
 
     protected abstract void initialize();
 
-    @SuppressLint({"NewApi", "RtlHardcoded", "WrongConstant"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedPreferenceManager = new SharedPreferenceManager(getApplicationContext(),
                 SharedReferenceNames.ACCOUNT.getValue());
-        getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         overridePendingTransition(R.anim.slide_up_info, R.anim.no_change);
         binding = BaseActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -126,7 +124,7 @@ public abstract class BaseActivity extends AppCompatActivity
         );
     }
 
-    private void initializeImageViewSwitch() {
+    void initializeImageViewSwitch() {
         if (sharedPreferenceManager.getBoolData(SharedReferenceKeys.THEME.getValue())) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
@@ -156,7 +154,6 @@ public abstract class BaseActivity extends AppCompatActivity
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        dataList = new ArrayList<>();
         fillDrawerRecyclerView();
         setOnDrawerItemClick();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle
@@ -173,9 +170,10 @@ public abstract class BaseActivity extends AppCompatActivity
     }
 
     void fillDrawerRecyclerView() {
-        dataList = NavigationDrawerAdapter.DrawerItem.createItemList(
-                getResources().getStringArray(R.array.menu), getResources().obtainTypedArray(
-                        R.array.icons));
+        dataList = new ArrayList<>();
+        dataList = NavigationDrawerAdapter.DrawerItem.
+                createItemList(getResources().getStringArray(R.array.menu), getResources().
+                        obtainTypedArray(R.array.icons));
         adapter = new NavigationDrawerAdapter(this, dataList);
         binding.recyclerView.setAdapter(adapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(MyApplication.getContext()));

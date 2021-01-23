@@ -11,9 +11,9 @@
 
     <color name="colorPrimary">#061f49</color>
     <color name="colorPrimaryDark">#0b2758</color>
-    <color name="colorAccent">#e91e63</color>
+    <color name="colorAccent">#F57F17</color>
 
-    <color name="footer">@color/colorPrimaryDark</color>
+    <color name="footer">?colorPrimaryDark</color>
     <color name="milky">#5C5C5C</color>
     <color name="smoked">#DCD9CD</color>
     <color name="transparent">#00000000</color>

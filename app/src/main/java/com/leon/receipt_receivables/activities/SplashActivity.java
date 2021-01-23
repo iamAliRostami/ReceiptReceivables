@@ -13,7 +13,7 @@ import com.leon.receipt_receivables.databinding.ActivitySplashBinding;
 
 public class SplashActivity extends AppCompatActivity {
     ActivitySplashBinding binding;
-    private boolean splashLoaded = false;
+    boolean splashLoaded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class SplashActivity extends AppCompatActivity {
         binding.imageViewSplashScreen.setImageResource(R.drawable.img_splash);
     }
 
-    private void startSplash() {
+    void startSplash() {
         binding.shimmerViewContainer.startShimmer();
         Thread timerThread = new Thread() {
             public void run() {
