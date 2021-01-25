@@ -1,17 +1,32 @@
 package com.leon.receipt_receivables.activities;
 
+import android.app.Activity;
 import android.os.Debug;
 import android.view.View;
+import android.widget.AdapterView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.leon.receipt_receivables.R;
+import com.leon.receipt_receivables.adapters.ReadingAdapter;
+import com.leon.receipt_receivables.adapters.SpinnerCustomAdapter;
 import com.leon.receipt_receivables.base_items.BaseActivity;
 import com.leon.receipt_receivables.databinding.ActivityReadingBinding;
 
-public class ReadingActivity extends BaseActivity {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 
+public class ReadingActivity extends BaseActivity {
     ActivityReadingBinding binding;
+    ArrayList<ReadingAdapter.ReadingItem> readingItems = new ArrayList<>();
+    ReadingAdapter readingAdapter;
+    Activity activity;
+    ArrayList<String> items = new ArrayList<>(Arrays.asList("مرتب کردن بر اساس", "نام", "بدهی", "تاریخ"));
+    boolean ascend = true;
+    int type = 0;
 
     @Override
     protected void initialize() {
@@ -19,6 +34,70 @@ public class ReadingActivity extends BaseActivity {
         View childLayout = binding.getRoot();
         ConstraintLayout parentLayout = findViewById(R.id.base_Content);
         parentLayout.addView(childLayout);
+        activity = this;
+        setupRecyclerView();
+        setupSpinner();
+        setOnImageViewSortClickListener();
+    }
+
+    void setOnImageViewSortClickListener() {
+        binding.imageViewSort.setOnClickListener(v -> {
+            binding.imageViewSort.setImageDrawable(
+                    ContextCompat.getDrawable(activity,
+                            ascend ? R.drawable.img_sort_ascend :
+                                    R.drawable.img_sort_descend));
+            ascend = !ascend;
+            readingAdapter.sort(type, ascend);
+            readingAdapter.notifyDataSetChanged();
+        });
+    }
+
+    void setupSpinner() {
+        SpinnerCustomAdapter adapter = new SpinnerCustomAdapter(activity, items);
+        binding.spinner.setAdapter(adapter);
+        setOnSpinnerSelectedListener();
+    }
+
+    void setOnSpinnerSelectedListener() {
+        binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int i, long id) {
+                type = i;
+                readingAdapter.sort(type, ascend);
+                readingAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+    }
+
+    void setupRecyclerView() {
+        for (int i = 0; i < 100; i++) {
+            readingItems.add(new ReadingAdapter.ReadingItem("name " + i,
+                    new Random().nextInt(1000)));
+        }
+        readingAdapter = new ReadingAdapter(readingItems);
+        binding.recyclerView.setAdapter(readingAdapter);
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        recyclerViewItemClickListener();
+    }
+
+    void recyclerViewItemClickListener() {
+        binding.recyclerView.addOnItemTouchListener(
+                new ReadingAdapter.RecyclerItemClickListener(activity, binding.recyclerView,
+                        new ReadingAdapter.RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+
+                            }
+
+                            @Override
+                            public void onLongItemClick(View view, int position) {
+
+                            }
+                        }));
     }
 
     @Override

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.leon.receipt_receivables.MyApplication;
 import com.leon.receipt_receivables.R;
 
@@ -28,7 +29,7 @@ import java.util.List;
 public class NavigationDrawerAdapter extends
         RecyclerView.Adapter<NavigationDrawerAdapter.DrawerItemHolder> {
     private final List<DrawerItem> drawerItemList;
-    public Context context;
+    private final Context context;
 
     public NavigationDrawerAdapter(Context context, List<DrawerItem> listItems) {
         this.context = context;
@@ -38,7 +39,6 @@ public class NavigationDrawerAdapter extends
     @NonNull
     @Override
     public DrawerItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.e("viewType", String.valueOf(viewType));
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View drawerView = inflater.inflate(R.layout.item_navigation_drawer, parent, false);

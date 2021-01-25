@@ -59,4 +59,7 @@
     <string name="navigation_drawer_open">باز کردن منو</string>
     <string name="navigation_drawer_close">بستن منو</string>
     <string name="result">نتیجه</string>
+    <string name="name">نام</string>
+    <string name="family">نام خانوادگی</string>
+    <string name="debt">بدهی</string>
 </resources>

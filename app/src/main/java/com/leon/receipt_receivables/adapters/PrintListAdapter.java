@@ -27,7 +27,7 @@ public class PrintListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         ViewHolder holder;
-        convertView = mInflater.inflate(R.layout.print_item, parent, false);
+        convertView = mInflater.inflate(R.layout.item_print, parent, false);
         holder = new ViewHolder();
         holder.description = convertView.findViewById(R.id.txt_dscription);
         holder.name = convertView.findViewById(R.id.txt_name);

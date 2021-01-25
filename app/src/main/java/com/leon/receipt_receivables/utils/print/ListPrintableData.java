@@ -29,7 +29,7 @@ public class ListPrintableData implements PrintableData {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         @SuppressLint("InflateParams") View root = inflater.inflate(R.layout.list_printable_data, null);
 
-        ArrayAdapter<String> itemsAdapter = new ArrayAdapter<>(context, R.layout.list_item, items);
+        ArrayAdapter<String> itemsAdapter = new ArrayAdapter<>(context, R.layout.item_list, items);
         ListView listView = root.findViewById(R.id.lv_test);
         listView.setAdapter(itemsAdapter);
 
