@@ -49,8 +49,8 @@ public class PayActivity extends AppCompatActivity {
                 return;
             }
             if (isNetworkAvailable(activity)) {
-                String invoiceNumber = "4351790968";//binding.editTextPurchaseId.getText().toString();
-                String billId = "10018315";//binding.editTextBillId.getText().toString();
+                String invoiceNumber = binding.editTextPurchaseId.getText().toString();//"4351790968";
+                String billId = binding.editTextBillId.getText().toString();//"10018315";
 
                 SDKManager.billPayment(PayActivity.this, hostApp, billId, invoiceNumber, "-1", "OK", "OK", new GeneralBillPaymentCallback() {
                     @Override
