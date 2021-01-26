@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.leon.receipt_receivables.R;
@@ -14,9 +15,13 @@ import com.leon.receipt_receivables.adapters.ReadingAdapter;
 import com.leon.receipt_receivables.adapters.SpinnerCustomAdapter;
 import com.leon.receipt_receivables.base_items.BaseActivity;
 import com.leon.receipt_receivables.databinding.ActivityReadingBinding;
+import com.leon.receipt_receivables.fragments.SearchFragment;
+import com.leon.receipt_receivables.utils.CalendarTool;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 public class ReadingActivity extends BaseActivity {
@@ -24,7 +29,7 @@ public class ReadingActivity extends BaseActivity {
     ArrayList<ReadingAdapter.ReadingItem> readingItems = new ArrayList<>();
     ReadingAdapter readingAdapter;
     Activity activity;
-    ArrayList<String> items = new ArrayList<>(Arrays.asList("مرتب کردن بر اساس", "نام", "بدهی", "تاریخ"));
+    ArrayList<String> items = new ArrayList<>(Arrays.asList("نام", "بدهی", "تاریخ"));
     boolean ascend = true;
     int type = 0;
 
@@ -38,6 +43,7 @@ public class ReadingActivity extends BaseActivity {
         setupRecyclerView();
         setupSpinner();
         setOnImageViewSortClickListener();
+        setOnImageViewSearchClickListener();
     }
 
     void setOnImageViewSortClickListener() {
@@ -49,6 +55,14 @@ public class ReadingActivity extends BaseActivity {
             ascend = !ascend;
             readingAdapter.sort(type, ascend);
             readingAdapter.notifyDataSetChanged();
+        });
+    }
+
+    void setOnImageViewSearchClickListener() {
+        binding.imageViewSearch.setOnClickListener(v -> {
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            SearchFragment searchFragment = SearchFragment.newInstance();
+            searchFragment.show(fragmentTransaction, "");
         });
     }
 
@@ -75,8 +89,16 @@ public class ReadingActivity extends BaseActivity {
 
     void setupRecyclerView() {
         for (int i = 0; i < 100; i++) {
+            Random r = new Random();
+            long unixTime = (long) (+r.nextDouble() * 60 * 60 * 24 * 365);
+            Date d = new Date(unixTime);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(d);
+            CalendarTool calendarTool = new CalendarTool(calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
             readingItems.add(new ReadingAdapter.ReadingItem("name " + i,
-                    new Random().nextInt(1000)));
+                    new Random().nextInt(1000), calendarTool.getIranianDate()));
+
         }
         readingAdapter = new ReadingAdapter(readingItems);
         binding.recyclerView.setAdapter(readingAdapter);
@@ -98,6 +120,11 @@ public class ReadingActivity extends BaseActivity {
 
                             }
                         }));
+    }
+
+    public void search() {
+        readingAdapter.search();
+        readingAdapter.notifyDataSetChanged();
     }
 
     @Override

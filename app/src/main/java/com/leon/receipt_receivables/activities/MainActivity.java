@@ -22,19 +22,26 @@ public class MainActivity extends BaseActivity {
         int id = v.getId();
         if (id == R.id.image_view_exit) {
             exit = true;
+            MyApplication.POSITION = -1;
             finishAffinity();
         } else {
             Intent intent = new Intent();
-            if (id == R.id.image_view_help)
-                intent = new Intent(getApplicationContext(), HelpActivity.class);
-            else if (id == R.id.image_view_reading)
-                intent = new Intent(getApplicationContext(), ReadingActivity.class);
-            else if (id == R.id.image_view_report)
-                intent = new Intent(getApplicationContext(), ReportActivity.class);
-            else if (id == R.id.image_view_download)
+            if (id == R.id.image_view_download) {
+                MyApplication.POSITION = 0;
                 intent = new Intent(getApplicationContext(), DownloadActivity.class);
-            else if (id == R.id.image_view_upload)
+            } else if (id == R.id.image_view_reading) {
+                MyApplication.POSITION = 1;
+                intent = new Intent(getApplicationContext(), ReadingActivity.class);
+            } else if (id == R.id.image_view_upload) {
+                MyApplication.POSITION = 2;
                 intent = new Intent(getApplicationContext(), UploadActivity.class);
+            } else if (id == R.id.image_view_report) {
+                MyApplication.POSITION = 3;
+                intent = new Intent(getApplicationContext(), ReportActivity.class);
+            } else if (id == R.id.image_view_help) {
+                MyApplication.POSITION = 4;
+                intent = new Intent(getApplicationContext(), HelpActivity.class);
+            }
             startActivity(intent);
             finish();
         }

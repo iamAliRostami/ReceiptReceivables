@@ -1,6 +1,7 @@
 package com.leon.receipt_receivables.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -18,30 +19,42 @@ import java.util.Collections;
 
 public class ReadingAdapter extends
         RecyclerView.Adapter<ReadingAdapter.ReadingItemHolder> {
-    private final ArrayList<ReadingItem> readingItem;
+    private final ArrayList<ReadingItem> readingItemsTemp;
+    private final ArrayList<ReadingItem> readingItems;
 
     public ReadingAdapter(ArrayList<ReadingItem> listItems) {
-        this.readingItem = listItems;
+        this.readingItemsTemp = listItems;
+        this.readingItems = listItems;
     }
 
     public void sort(int type, boolean ascend) {
-//        Collections.sort(readingItem, (o1, o2) -> o1.debt.compareTo(
-//                o2.debt));
         switch (type) {
+            case 0:
+                if (ascend)
+                    Collections.sort(readingItemsTemp, (o1, o2) -> o1.name.compareTo(
+                            o2.name));
+                else Collections.sort(readingItemsTemp, (o2, o1) -> o1.name.compareTo(
+                        o2.name));
+                break;
             case 1:
                 if (ascend)
-                    Collections.sort(readingItem, (o1, o2) -> o1.ItemName.compareTo(
-                            o2.ItemName));
-                else Collections.sort(readingItem, (o2, o1) -> o1.ItemName.compareTo(
-                        o2.ItemName));
+                    Collections.sort(readingItemsTemp, (p1, p2) -> p1.debt - p2.debt);
+                else
+                    Collections.sort(readingItemsTemp, (p2, p1) -> p1.debt - p2.debt);
                 break;
             case 2:
                 if (ascend)
-                    Collections.sort(readingItem, (p1, p2) -> p1.debt - p2.debt);
-                else
-                    Collections.sort(readingItem, (p2, p1) -> p1.debt - p2.debt);
+                    Collections.sort(readingItemsTemp, (o1, o2) -> o1.date.compareTo(
+                            o2.date));
+                else Collections.sort(readingItemsTemp, (o2, o1) -> o1.date.compareTo(
+                        o2.date));
+                break;
         }
 
+    }
+
+    public void search() {
+        Log.e("Here", "Search");
     }
 
     @NonNull
@@ -59,9 +72,10 @@ public class ReadingAdapter extends
 
     @Override
     public void onBindViewHolder(@NonNull ReadingItemHolder holder, int position) {
-        ReadingItem readingItem = this.readingItem.get(position);
-        holder.textViewTitle.setText(readingItem.ItemName);
+        ReadingItem readingItem = this.readingItemsTemp.get(position);
+        holder.textViewTitle.setText(readingItem.name);
         holder.textViewDebt.setText(String.valueOf(readingItem.debt));
+        holder.textViewDate.setText(String.valueOf(readingItem.date));
     }
 
     @Override
@@ -71,7 +85,7 @@ public class ReadingAdapter extends
 
     @Override
     public int getItemCount() {
-        return readingItem.size();
+        return readingItemsTemp.size();
     }
 
     @Override
@@ -80,23 +94,27 @@ public class ReadingAdapter extends
     }
 
     public static class ReadingItem {
-        String ItemName;
+        String name;
         int debt;
+        String date;
 
-        public ReadingItem(String itemName, int debt) {
-            this.ItemName = itemName;
+        public ReadingItem(String name, int debt, String date) {
+            this.name = name;
             this.debt = debt;
+            this.date = date;
         }
     }
 
     static class ReadingItemHolder extends RecyclerView.ViewHolder {
         TextView textViewTitle;
         TextView textViewDebt;
+        TextView textViewDate;
 
         public ReadingItemHolder(View viewItem) {
             super(viewItem);
             this.textViewTitle = viewItem.findViewById(R.id.text_view_title);
             this.textViewDebt = viewItem.findViewById(R.id.text_view_debt);
+            this.textViewDate = viewItem.findViewById(R.id.text_view_date);
         }
     }
 

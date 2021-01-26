@@ -62,4 +62,6 @@
     <string name="name">نام</string>
     <string name="family">نام خانوادگی</string>
     <string name="debt">بدهی</string>
+    <string name="sort_by">مرتب کردن بر اساس</string>
+    <string name="search">جستجو</string>
 </resources>
