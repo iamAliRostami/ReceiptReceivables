@@ -52,7 +52,6 @@
             tools:ignore="Autofill" />
 
         <LinearLayout
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -61,7 +60,8 @@
             android:layout_marginRight="@dimen/large_dp"
             android:layout_marginBottom="@dimen/medium_dp"
             android:background="@drawable/border_white_1"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <EditText
                 android:id="@+id/edit_text_amount"

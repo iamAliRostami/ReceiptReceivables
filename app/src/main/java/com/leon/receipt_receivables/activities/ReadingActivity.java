@@ -1,6 +1,7 @@
 package com.leon.receipt_receivables.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Debug;
 import android.view.View;
 import android.widget.AdapterView;
@@ -112,7 +113,8 @@ public class ReadingActivity extends BaseActivity {
                         new ReadingAdapter.RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-
+                                Intent intent = new Intent(activity, PayActivity.class);
+                                startActivity(intent);
                             }
 
                             @Override
