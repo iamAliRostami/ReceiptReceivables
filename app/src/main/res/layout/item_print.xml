@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="384px"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     android:gravity="center"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/txt_name"
+        android:id="@+id/text_view_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="test"
-        android:layout_marginRight="@dimen/medium_dp"
-        android:gravity="right" />
+        android:layout_marginLeft="@dimen/small_dp"
+        android:layout_marginRight="@dimen/small_dp"
+        android:gravity="right"
+        android:text="test" />
 
     <LinearLayout
-        android:layout_width="384dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="300px"
@@ -38,12 +40,13 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/txt_dscription"
+        android:id="@+id/text_view_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="desc"
-        android:layout_marginRight="@dimen/medium_dp"
-        android:gravity="right" />
+        android:layout_marginLeft="@dimen/small_dp"
+        android:layout_marginRight="@dimen/small_dp"
+        android:gravity="right"
+        android:text="desc" />
 
     <View
         android:layout_width="match_parent"

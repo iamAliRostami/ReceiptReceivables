@@ -29,8 +29,8 @@ public class PrintListAdapter extends BaseAdapter {
         ViewHolder holder;
         convertView = mInflater.inflate(R.layout.item_print, parent, false);
         holder = new ViewHolder();
-        holder.description = convertView.findViewById(R.id.txt_dscription);
-        holder.name = convertView.findViewById(R.id.txt_name);
+        holder.description = convertView.findViewById(R.id.text_view_description);
+        holder.name = convertView.findViewById(R.id.text_view_name);
 
         holder.description.setText(printModels.get(position).getDescription());
         holder.name.setText(printModels.get(position).getName());

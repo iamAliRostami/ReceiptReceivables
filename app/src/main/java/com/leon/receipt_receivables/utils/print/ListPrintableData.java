@@ -24,13 +24,13 @@ public class ListPrintableData implements PrintableData {
         this.items = new ArrayList<>(Arrays.asList(itemsList));
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View toView(Context context) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        @SuppressLint("InflateParams") View root = inflater.inflate(R.layout.list_printable_data, null);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);View root = inflater.inflate(R.layout.list_printable_data, null);
 
         ArrayAdapter<String> itemsAdapter = new ArrayAdapter<>(context, R.layout.item_list, items);
-        ListView listView = root.findViewById(R.id.lv_test);
+        ListView listView = root.findViewById(R.id.list_view);
         listView.setAdapter(itemsAdapter);
 
         ViewGroup.LayoutParams layoutParams = listView.getLayoutParams();

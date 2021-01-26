@@ -30,7 +30,7 @@ public class PrintableDataList implements PrintableData {
             root = inflater.inflate(R.layout.list_printable_data, null);
         }
 
-        ListView listView = root.findViewById(R.id.lv_test);
+        ListView listView = root.findViewById(R.id.list_view);
         listView.setAdapter(new PrintListAdapter(context, items));
         ViewGroup.LayoutParams layoutParams = listView.getLayoutParams();
         listView.setLayoutParams(layoutParams);

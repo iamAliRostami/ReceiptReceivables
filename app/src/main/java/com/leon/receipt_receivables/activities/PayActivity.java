@@ -58,10 +58,10 @@ public class PayActivity extends AppCompatActivity {
                                                               String maskedPan, String panHash) {
                         startActivity(ResultActivity.putIntent(PayActivity.this,
                                 String.format(Locale.ENGLISH,
-                                        "آغاز فرایند پرداخت قبض با شناسه قبض %s و شناسه پرداخت %s با خطا مواجه شد. \nکد وضعیت: %d \n" +
+                                        "آغاز فرایند پرداخت قبض با شناسه قبض %s و شناسه پرداخت %s با خطا مواجه شد.\nکد وضعیت:%d\n" +
                                                 statusDescription, billId, paymentId, status),
-                                String.format(Locale.ENGLISH, "شماره کارت کاربر:\n %s", maskedPan),
-                                String.format(Locale.ENGLISH, "هش کارت کاربر:\n %s", panHash)));
+                                String.format(Locale.ENGLISH, "شماره کارت کاربر:%s", maskedPan),
+                                String.format(Locale.ENGLISH, "هش کارت کاربر:%s", panHash)));
                     }
 
                     @Override
@@ -72,13 +72,13 @@ public class PayActivity extends AppCompatActivity {
                                                  String maskedPan, String panHash) {
                         startActivity(ResultActivity.putIntent(PayActivity.this,
                                 "پرداخت قبض با موفقیت انجام شد.",
-                                String.format(Locale.ENGLISH, "شناسه قبض: %s", billId),
-                                String.format(Locale.ENGLISH, "شناسه پرداخت: %s", paymentId),
-                                String.format(Locale.ENGLISH, "کد پیگیری: %s", traceNumber),
-                                String.format(Locale.ENGLISH, "شماره مرجع بازیابی: %s", rrn),
-                                String.format(Locale.ENGLISH, "مبلغ تراکنش: %s", amount),
-                                String.format(Locale.ENGLISH, "شماره کارت کاربر:\n %s", maskedPan),
-                                String.format(Locale.ENGLISH, "هش کارت کاربر:\n %s", panHash)));
+                                String.format(Locale.ENGLISH, "شناسه قبض:%s", billId),
+                                String.format(Locale.ENGLISH, "شناسه پرداخت:%s", paymentId),
+                                String.format(Locale.ENGLISH, "کد پیگیری:%s", traceNumber),
+                                String.format(Locale.ENGLISH, "شماره مرجع بازیابی:%s", rrn),
+                                String.format(Locale.ENGLISH, "مبلغ تراکنش:%s", amount),
+                                String.format(Locale.ENGLISH, "شماره کارت کاربر:%s", maskedPan),
+                                String.format(Locale.ENGLISH, "هش کارت کاربر:%s", panHash)));
                     }
 
                     @Override
@@ -89,15 +89,15 @@ public class PayActivity extends AppCompatActivity {
                                                 String amount, String txnDate, String txnTime,
                                                 String maskedPan, String panHash) {
                         startActivity(ResultActivity.putIntent(PayActivity.this, "پرداخت قبض با خطا مواجه شد.",
-                                String.format(Locale.ENGLISH, "کد خطا: %d", errorCode),
-                                String.format(Locale.ENGLISH, "شرح خطا: %s", errorDescription),
-                                String.format(Locale.ENGLISH, "شناسه قبض: %s", billId),
-                                String.format(Locale.ENGLISH, "شناسه پرداخت: %s", paymentId),
-                                String.format(Locale.ENGLISH, "کد پیگیری: %s", traceNumber),
-                                String.format(Locale.ENGLISH, "شماره مرجع بازیابی: %s", rrn),
-                                String.format(Locale.ENGLISH, "مبلغ تراکنش: %s", amount),
-                                String.format(Locale.ENGLISH, "شماره کارت کاربر:\n %s", maskedPan),
-                                String.format(Locale.ENGLISH, "هش کارت کاربر:\n %s", panHash)));
+                                String.format(Locale.ENGLISH, "کد خطا:%d", errorCode),
+                                String.format(Locale.ENGLISH, "شرح خطا:%s", errorDescription),
+                                String.format(Locale.ENGLISH, "شناسه قبض:%s", billId),
+                                String.format(Locale.ENGLISH, "شناسه پرداخت:%s", paymentId),
+                                String.format(Locale.ENGLISH, "کد پیگیری:%s", traceNumber),
+                                String.format(Locale.ENGLISH, "شماره مرجع بازیابی:%s", rrn),
+                                String.format(Locale.ENGLISH, "مبلغ تراکنش:%s", amount),
+                                String.format(Locale.ENGLISH, "شماره کارت کاربر:%s", maskedPan),
+                                String.format(Locale.ENGLISH, "هش کارت کاربر:%s", panHash)));
                     }
 
                     @Override
@@ -105,8 +105,8 @@ public class PayActivity extends AppCompatActivity {
                                                    String maskedPan, String panHash) {
                         startActivity(ResultActivity.putIntent(PayActivity.this,
                                 String.format(Locale.ENGLISH, "فرایند پرداخت قبض با شناسه قبض %s و شناسه پرداخت %s توسط کاربر لغو شد.", billId, paymentId),
-                                String.format(Locale.ENGLISH, "شماره کارت کاربر:\n %s", maskedPan),
-                                String.format(Locale.ENGLISH, "هش کارت کاربر:\n %s", panHash)));
+                                String.format(Locale.ENGLISH, "شماره کارت کاربر:%s", maskedPan),
+                                String.format(Locale.ENGLISH, "هش کارت کاربر:%s", panHash)));
                     }
                 });
             } else {
