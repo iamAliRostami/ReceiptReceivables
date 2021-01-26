@@ -3,6 +3,7 @@ package com.leon.receipt_receivables;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
 
 import androidx.multidex.MultiDex;
 
@@ -36,5 +37,12 @@ public class MyApplication extends Application {
                 .setTextSize(TOAST_TEXT_SIZE)
                 .allowQueue(true).apply();
         super.onCreate();
+    }
+
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager = ((ConnectivityManager)
+                context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null &&
+                connectivityManager.getActiveNetworkInfo().isConnectedOrConnecting();
     }
 }
