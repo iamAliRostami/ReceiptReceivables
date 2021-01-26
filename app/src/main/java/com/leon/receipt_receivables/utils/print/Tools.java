@@ -1,5 +1,6 @@
 package com.leon.receipt_receivables.utils.print;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -30,6 +31,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -55,13 +57,13 @@ import javax.net.ssl.X509TrustManager;
 public class Tools {
 
 
-    private static char[] persianDigits = {'۰', '۱', '۲', '۳', '۴', '۵', '۶',
+    private static final char[] persianDigits = {'۰', '۱', '۲', '۳', '۴', '۵', '۶',
             '۷', '۸', '۹'};
-    private static char[] latinDigits = {'0', '1', '2', '3', '4', '5', '6',
+    private static final char[] latinDigits = {'0', '1', '2', '3', '4', '5', '6',
             '7', '8', '9'};
 
     public static String rot13(String s) {
-        String ret = "";
+        StringBuilder ret = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
             if (c >= 'a' && c <= 'm')
@@ -72,9 +74,9 @@ public class Tools {
                 c -= 13;
             else if (c >= 'N' && c <= 'Z')
                 c -= 13;
-            ret += c;
+            ret.append(c);
         }
-        return ret;
+        return ret.toString();
     }
 
     public static String base64encode(String s) {
@@ -87,8 +89,7 @@ public class Tools {
 
     public static Bitmap base64ToBitmap(String encodedImage) {
         byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        return decodedByte;
+        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
     }
 
     /**
@@ -102,10 +103,9 @@ public class Tools {
         boolean isValid = false;
 
         String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-        CharSequence inputStr = email;
 
         Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(inputStr);
+        Matcher matcher = pattern.matcher(email);
         if (matcher.matches()) {
             isValid = true;
         }
@@ -166,7 +166,7 @@ public class Tools {
             if (Character.isDigit(number.charAt(i))) {
                 if ((number.length() - i) % 3 == 0 && i > 0
                         && i != number.length() - 1)
-                    sb.append("," + number.charAt(i));
+                    sb.append(",").append(number.charAt(i));
                 else
 
                     sb.append(number.charAt(i));
@@ -246,7 +246,7 @@ public class Tools {
 
 
     public static String toHex(String arg) throws UnsupportedEncodingException {
-        return String.format("%x", new BigInteger(1, arg.getBytes("utf-8")));
+        return String.format("%x", new BigInteger(1, arg.getBytes(StandardCharsets.UTF_8)));
     }
 
     public static boolean isInstalledApp(Context context, String packageName) {
@@ -389,8 +389,7 @@ public class Tools {
         try {
             process = Runtime.getRuntime().exec(new String[]{"/system/xbin/which", "su"});
             BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            if (in.readLine() != null) return true;
-            return false;
+            return in.readLine() != null;
         } catch (Throwable t) {
             return false;
         } finally {
@@ -633,8 +632,8 @@ public class Tools {
     }
 
     public static boolean checkBillID(String billID) {
-        int ckeckdigit = Integer.parseInt(billID.substring(billID.length() - 1,
-                billID.length()));
+        int ckeckdigit = Integer.parseInt(billID.substring(billID.length() - 1
+        ));
         String tmp = billID.substring(0, billID.length() - 1);
         int factor = 2;
         long total = 0;
@@ -673,8 +672,8 @@ public class Tools {
 
     public static boolean checkBillIDAndPaymentID(String billID, String paymentID) {
         String ID = billID + paymentID;
-        int ckeckdigit = Integer.parseInt(ID.substring(ID.length() - 1,
-                ID.length()));
+        int ckeckdigit = Integer.parseInt(ID.substring(ID.length() - 1
+        ));
         String tmp = ID.substring(0, ID.length() - 1);
         int factor = 2;
 
@@ -722,16 +721,16 @@ public class Tools {
     }
 
     public static String convertCharArrayToHexString(String charArray) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (int i = 0; i < charArray.length(); i++)
-            result += String.format("%02x", (byte) charArray.charAt(i));
-        return result;
+            result.append(String.format("%02x", (byte) charArray.charAt(i)));
+        return result.toString();
 
     }
 
+    @SuppressLint("SimpleDateFormat")
     public static String getTimeMMDDHHMMSS() {
-        Date cDate = new Date();
-        String fDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(cDate);
+        Date cDate = new Date();String fDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(cDate);
         return fDate.replace("-", "").replace(" ", "").replace(":", "").substring(4);
     }
 
@@ -768,7 +767,7 @@ public class Tools {
         return info != null ? info.versionName : null;
     }
 
-    public static boolean setListViewHeightBasedOnChildren(ListView listView) {
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
 
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter != null) {
@@ -794,10 +793,8 @@ public class Tools {
             params.height = totalItemsHeight + totalDividersHeight + totalPadding;
             listView.setLayoutParams(params);
             listView.requestLayout();
-            return true;
 
         } else {
-            return false;
         }
     }
 

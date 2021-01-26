@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="400px"
     android:layout_height="450px"
     android:layout_gravity="center"
@@ -22,7 +23,8 @@
         android:layout_height="200px"
         android:layout_gravity="center"
         android:layout_marginTop="5dp"
-        android:src="@drawable/img_logo_footer" />
+        android:src="@drawable/img_logo_footer"
+        tools:ignore="ContentDescription" />
 
 
     <LinearLayout
