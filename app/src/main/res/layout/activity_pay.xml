@@ -31,6 +31,7 @@
             android:inputType="number"
             android:maxLength="15"
             android:padding="@dimen/medium_dp"
+            android:text="10018315"
             tools:ignore="Autofill" />
 
         <EditText
@@ -49,6 +50,7 @@
             android:inputType="number"
             android:maxLength="15"
             android:padding="@dimen/medium_dp"
+            android:text="4351790968"
             tools:ignore="Autofill" />
 
         <LinearLayout

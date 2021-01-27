@@ -6,6 +6,10 @@ public class PrintModel {
     String name,description;
     BitmapDrawable bitmapDrawable;
 
+    public PrintModel(String description) {
+        this.description = description;
+    }
+
     public PrintModel(String name, String description) {
         this.name = name;
         this.description = description;

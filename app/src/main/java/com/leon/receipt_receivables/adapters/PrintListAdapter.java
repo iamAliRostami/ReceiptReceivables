@@ -20,23 +20,43 @@ public class PrintListAdapter extends BaseAdapter {
 
     public PrintListAdapter(Context context, ArrayList<PrintModel> printModels) {
         this.printModels = printModels;
+        printModels.add(new PrintModel(""));
         this.context = context;
     }
+
     @SuppressLint("ViewHolder")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        PrintModel printModel = printModels.get(position);
         LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        ViewHolder holder;
+        ViewHolder holder = null;
         convertView = mInflater.inflate(R.layout.item_print, parent, false);
         holder = new ViewHolder();
-        holder.description = convertView.findViewById(R.id.text_view_description);
         holder.name = convertView.findViewById(R.id.text_view_name);
+        holder.name.setText(printModel.getDescription());
+        if (position + 2 == printModels.size()) {
 
-        holder.description.setText(printModels.get(position).getDescription());
-        holder.name.setText(printModels.get(position).getName());
+            holder.description = convertView.findViewById(R.id.text_view_description);
+            holder.description.setVisibility(View.VISIBLE);
+        }
+//        if (printModel.getName().isEmpty()) {
+//            convertView = mInflater.inflate(R.layout.item_print, parent, false);
+//            holder.name = convertView.findViewById(R.id.text_view_name);
+//            holder.name.setText(printModel.getDescription());
+//        } else if (printModel.getDescription().isEmpty()) {
+//            holder.name = convertView.findViewById(R.id.text_view_name);
+//            holder.name.setText(printModel.getName());
+//        } else {
+//            convertView = mInflater.inflate(R.layout.item_print_description, parent, false);
+//            holder.description = convertView.findViewById(R.id.text_view_description);
+//            holder.description.setText(printModel.getDescription());
+//            holder.name = convertView.findViewById(R.id.text_view_name);
+//            holder.name.setText(printModel.getName());
+//        }
         convertView.setTag(holder);
         return convertView;
     }
+
     @Override
     public int getCount() {
         return printModels.size();
@@ -49,8 +69,12 @@ public class PrintListAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return printModels.indexOf(getItem(position));
+        return position;
     }
+//    @Override
+//    public long getItemId(int position) {
+//        return printModels.indexOf(getItem(position));
+//    }
 
     private static class ViewHolder {
         private TextView name, description;

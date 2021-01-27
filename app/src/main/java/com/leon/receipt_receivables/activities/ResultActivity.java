@@ -28,19 +28,22 @@ public class ResultActivity extends AppCompatActivity {
         binding = ActivityResultBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         initialize();
-        print();
     }
 
     void initialize() {
         getExtra();
+        setOnButtonPrintClickListener();
+    }
+
+    void setOnButtonPrintClickListener() {
+        binding.buttonPrint.setOnClickListener(v -> print());
     }
 
     void print() {
         if (SDKManager.getPrinterStatus() == SDKManager.STATUS_OK) {
             ArrayList<PrintModel> printModels = new ArrayList<>();
             for (int i = 0; i < resultReturns.size(); i++) {
-                printModels.add(new PrintModel(resultReturns.get(i).substring(0, resultReturns.get(i).indexOf(":") + 1),
-                        resultReturns.get(i).substring(resultReturns.get(i).indexOf(":") + 1)));
+                printModels.add(new PrintModel(resultReturns.get(i)));
             }
             SDKManager.print(ResultActivity.this, new PrintableDataList(printModels), 1, null);
 
@@ -73,6 +76,7 @@ public class ResultActivity extends AppCompatActivity {
         for (String resultReturn : resultReturns) {
             resultDescription.append(resultReturn).append("\n");
         }
+        binding.textViewPrint.setText(String.valueOf(resultDescription));
         Log.e("result", String.valueOf(resultDescription));
     }
 

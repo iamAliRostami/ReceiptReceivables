@@ -45,7 +45,8 @@
 
         <activity
             android:name=".activities.ResultActivity"
-            android:label="@string/result" />
+            android:label="@string/payment_result"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/home">

@@ -46,7 +46,7 @@
         android:layout_marginLeft="@dimen/small_dp"
         android:layout_marginRight="@dimen/small_dp"
         android:gravity="right"
-        android:visibility="gone" />
+        android:text="desc" />
 
     <View
         android:layout_width="match_parent"
