@@ -47,20 +47,6 @@ public class ResultActivity extends AppCompatActivity {
             }
             SDKManager.print(ResultActivity.this, new PrintableDataList(printModels), 1, null);
 
-//            SDKManager.print(ResultActivity.this, new PrintableData(), objects -> SDKManager.print(ResultActivity.this, new ListPrintableData("این سطر اول است", "سطر دوم پایین تر است", "سطر سوم زیر سطر دوم است."), null));
-//            SDKManager.print(ResultActivity.this, new PrintableData(), data1 -> {
-//                SDKManager.print(ResultActivity.this, new PrintableDataList(printModels), data2 -> {
-//                    SDKManager.print(ResultActivity.this, new PrintableDataList(printModels), data3 -> {
-//                        SDKManager.print(ResultActivity.this, new PrintableDataList(printModels), null);
-//                    });
-//                });
-//            });
-
-            //***** Print Bitmap *****
-//            Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.bitmap_print_test);
-//            SDKManager.printBitmap(ResultActivity.this, bmp, data -> {
-//                //End of print
-//            });
         } else {
             new CustomToast().warning("پرینتر با مشکل مواجه است.", Toast.LENGTH_LONG);
         }

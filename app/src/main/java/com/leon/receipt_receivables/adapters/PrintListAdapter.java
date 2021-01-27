@@ -35,24 +35,9 @@ public class PrintListAdapter extends BaseAdapter {
         holder.name = convertView.findViewById(R.id.text_view_name);
         holder.name.setText(printModel.getDescription());
         if (position + 2 == printModels.size()) {
-
             holder.description = convertView.findViewById(R.id.text_view_description);
             holder.description.setVisibility(View.VISIBLE);
         }
-//        if (printModel.getName().isEmpty()) {
-//            convertView = mInflater.inflate(R.layout.item_print, parent, false);
-//            holder.name = convertView.findViewById(R.id.text_view_name);
-//            holder.name.setText(printModel.getDescription());
-//        } else if (printModel.getDescription().isEmpty()) {
-//            holder.name = convertView.findViewById(R.id.text_view_name);
-//            holder.name.setText(printModel.getName());
-//        } else {
-//            convertView = mInflater.inflate(R.layout.item_print_description, parent, false);
-//            holder.description = convertView.findViewById(R.id.text_view_description);
-//            holder.description.setText(printModel.getDescription());
-//            holder.name = convertView.findViewById(R.id.text_view_name);
-//            holder.name.setText(printModel.getName());
-//        }
         convertView.setTag(holder);
         return convertView;
     }
