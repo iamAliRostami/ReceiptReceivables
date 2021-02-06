@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.kishcore.sdk.hybrid.api.SDKManager;
+import com.leon.receipt_receivables.R;
 import com.leon.receipt_receivables.adapters.SpinnerCustomAdapter;
 import com.leon.receipt_receivables.databinding.ActivityResultBinding;
 import com.leon.receipt_receivables.enums.BundleEnum;
@@ -65,7 +66,7 @@ public class ResultActivity extends AppCompatActivity {
             SDKManager.print(ResultActivity.this, new PrintableDataList(printModels), 1, null);
 
         } else {
-            new CustomToast().warning("پرینتر با مشکل مواجه است.", Toast.LENGTH_LONG);
+            new CustomToast().warning(getString(R.string.printer_has_problem), Toast.LENGTH_LONG);
         }
     }
 

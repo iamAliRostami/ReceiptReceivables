@@ -13,6 +13,12 @@ import com.leon.receipt_receivables.MyApplication;
 import com.leon.receipt_receivables.R;
 import com.leon.receipt_receivables.base_items.BaseActivity;
 import com.leon.receipt_receivables.databinding.ActivityMainBinding;
+import com.leon.receipt_receivables.enums.SharedReferenceKeys;
+import com.leon.receipt_receivables.enums.SharedReferenceNames;
+import com.leon.receipt_receivables.infrastructure.ISharedPreferenceManager;
+import com.leon.receipt_receivables.tables.MyDatabaseClient;
+import com.leon.receipt_receivables.utils.CalendarTool;
+import com.leon.receipt_receivables.utils.SharedPreferenceManager;
 
 public class MainActivity extends BaseActivity {
     ActivityMainBinding binding;
@@ -56,6 +62,17 @@ public class MainActivity extends BaseActivity {
         activity = this;
         MyApplication.hostApp = SDKManager.init(this);
         setupImageViews();
+        checkExpireDate();
+    }
+
+    void checkExpireDate() {
+        ISharedPreferenceManager sharedPreferenceManager = new SharedPreferenceManager(activity,
+                SharedReferenceNames.ACCOUNT.getValue());
+        if (sharedPreferenceManager.checkIsNotEmpty(SharedReferenceKeys.DATE.getValue()) &&
+                CalendarTool.findDifferent(sharedPreferenceManager.getStringData(
+                        SharedReferenceKeys.DATE.getValue()).substring(2)) > 0) {
+            MyDatabaseClient.getInstance(activity).getMyDatabase().vosoolLoadDao().updateVosoolByArchive(true);
+        }
     }
 
     void setupImageViews() {

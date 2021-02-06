@@ -78,8 +78,8 @@ public class PayActivity extends AppCompatActivity {
                 return;
             }
             if (isNetworkAvailable(activity)) {
-                String invoiceNumber = binding.editTextPurchaseId.getText().toString();//"4351790968";
-                String billId = binding.editTextBillId.getText().toString();//"10018315";
+                String invoiceNumber = binding.editTextPurchaseId.getText().toString();
+                String billId = binding.editTextBillId.getText().toString();;
                 SDKManager.billPayment(PayActivity.this, hostApp, billId, invoiceNumber, "-1", "OK", "OK", new GeneralBillPaymentCallback() {
                     @Override
                     public void onPaymentInitializationFailed(int status, String statusDescription,

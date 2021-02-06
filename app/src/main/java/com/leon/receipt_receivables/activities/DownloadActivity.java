@@ -12,10 +12,13 @@ import com.leon.receipt_receivables.base_items.BaseActivity;
 import com.leon.receipt_receivables.databinding.ActivityDownloadBinding;
 import com.leon.receipt_receivables.enums.DialogType;
 import com.leon.receipt_receivables.enums.ProgressType;
+import com.leon.receipt_receivables.enums.SharedReferenceKeys;
+import com.leon.receipt_receivables.enums.SharedReferenceNames;
 import com.leon.receipt_receivables.infrastructure.IAbfaService;
 import com.leon.receipt_receivables.infrastructure.ICallback;
 import com.leon.receipt_receivables.infrastructure.ICallbackError;
 import com.leon.receipt_receivables.infrastructure.ICallbackIncomplete;
+import com.leon.receipt_receivables.infrastructure.ISharedPreferenceManager;
 import com.leon.receipt_receivables.tables.KarbariDictionary;
 import com.leon.receipt_receivables.tables.MyDatabase;
 import com.leon.receipt_receivables.tables.MyDatabaseClient;
@@ -23,11 +26,13 @@ import com.leon.receipt_receivables.tables.ReceiptReceivablesFeedback;
 import com.leon.receipt_receivables.tables.ResultDictionary;
 import com.leon.receipt_receivables.tables.VosoolBill;
 import com.leon.receipt_receivables.tables.VosoolLoad;
+import com.leon.receipt_receivables.utils.CalendarTool;
 import com.leon.receipt_receivables.utils.CustomDialog;
 import com.leon.receipt_receivables.utils.CustomErrorHandling;
 import com.leon.receipt_receivables.utils.CustomToast;
 import com.leon.receipt_receivables.utils.HttpClientWrapper;
 import com.leon.receipt_receivables.utils.NetworkHelper;
+import com.leon.receipt_receivables.utils.SharedPreferenceManager;
 
 import java.util.ArrayList;
 
@@ -64,7 +69,11 @@ public class DownloadActivity extends BaseActivity {
     class Download implements ICallback<ReceiptReceivablesFeedback> {
         @Override
         public void execute(Response<ReceiptReceivablesFeedback> response) {
-            ReceiptReceivablesFeedback receiptReceivablesFeedback = response.body();
+            ISharedPreferenceManager sharedPreferenceManager = new SharedPreferenceManager(activity, SharedReferenceNames.ACCOUNT.getValue());
+            CalendarTool calendarTool = new CalendarTool();
+            sharedPreferenceManager.putData(SharedReferenceKeys.DATE.getValue(), calendarTool.getIranianDate());
+
+            final ReceiptReceivablesFeedback receiptReceivablesFeedback = response.body();
             final ReceiptReceivablesFeedback receiptReceivablesFeedbackTemp = response.body();
             if (receiptReceivablesFeedback != null && receiptReceivablesFeedbackTemp != null) {
                 MyDatabase myDatabase = MyDatabaseClient.getInstance(activity).getMyDatabase();
@@ -91,6 +100,7 @@ public class DownloadActivity extends BaseActivity {
                 for (VosoolLoad vosoolLoad : vosoolLoads) {
                     for (int i = 0; i < receiptReceivablesFeedbackTemp.vosoolLoads.size(); i++) {
                         if (receiptReceivablesFeedbackTemp.vosoolLoads.get(i).billId.equals(vosoolLoad.billId)) {
+                            myDatabase.vosoolLoadDao().updateVosoolByArchive(false, vosoolLoad.billId);
                             receiptReceivablesFeedback.vosoolLoads.remove(receiptReceivablesFeedbackTemp.vosoolLoads.get(i));
                         }
                     }

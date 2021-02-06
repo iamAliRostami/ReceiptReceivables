@@ -10,7 +10,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -83,7 +82,6 @@ public class GPSTracker extends Service {
 
     void addLocation(Location location) {
         if (location != null) {
-            Log.e("accuracy ", String.valueOf(accuracy));
             latitude = location.getLatitude();
             longitude = location.getLongitude();
             accuracy = location.getAccuracy();

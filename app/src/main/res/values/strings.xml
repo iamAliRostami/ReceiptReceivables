@@ -90,4 +90,5 @@
     <string name="debt_more_than">بدهی بیش از</string>
     <string name="details">جزئیات</string>
     <string name="submit">ثبت وضعیت</string>
+    <string name="printer_has_problem">پرینتر با مشکل مواجه است.</string>
 </resources>

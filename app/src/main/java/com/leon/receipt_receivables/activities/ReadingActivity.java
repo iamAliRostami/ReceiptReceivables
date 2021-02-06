@@ -175,7 +175,7 @@ public class ReadingActivity extends BaseActivity {
             MyDatabase myDatabase = MyDatabaseClient.getInstance(activity).getMyDatabase();
             karbariDictionaries.addAll(myDatabase.karbariDictionaryDao().getAllKarbariDictionary());
             resultDictionaries.addAll(myDatabase.resultDictionaryDao().getAllResultDictionary());
-            vosoolLoads.addAll(myDatabase.vosoolLoadDao().getAllVosoolLoad());
+            vosoolLoads.addAll(myDatabase.vosoolLoadDao().getVosoolLoadByArchive(false));
             vosoolBills.addAll(myDatabase.vosoolBillDao().getAllVosoolBill());
 
             for (int i = 0; i < vosoolLoads.size(); i++) {
