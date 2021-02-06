@@ -13,11 +13,13 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.gson.Gson;
 import com.leon.receipt_receivables.R;
 import com.leon.receipt_receivables.adapters.ReadingAdapter;
 import com.leon.receipt_receivables.adapters.SpinnerCustomAdapter;
 import com.leon.receipt_receivables.base_items.BaseActivity;
 import com.leon.receipt_receivables.databinding.ActivityReadingBinding;
+import com.leon.receipt_receivables.enums.BundleEnum;
 import com.leon.receipt_receivables.fragments.SearchFragment;
 import com.leon.receipt_receivables.tables.KarbariDictionary;
 import com.leon.receipt_receivables.tables.MyDatabase;
@@ -51,7 +53,6 @@ public class ReadingActivity extends BaseActivity {
         parentLayout.addView(childLayout);
         activity = this;
         new GetDB().execute();
-        setupSpinner();
         setOnImageViewSortClickListener();
         setOnImageViewSearchClickListener();
     }
@@ -98,19 +99,6 @@ public class ReadingActivity extends BaseActivity {
     }
 
     void setupRecyclerView() {
-//        for (int i = 0; i < 100; i++) {
-//            Random r = new Random();
-//            long unixTime = (long) (+r.nextDouble() * 60 * 60 * 24 * 365);
-//            Date d = new Date(unixTime);
-//            Calendar calendar = Calendar.getInstance();
-//            calendar.setTime(d);
-//            CalendarTool calendarTool = new CalendarTool(calendar.get(Calendar.YEAR),
-//                    calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-//            readingItems.add(new ReadingAdapter.ReadingItem(new Random().nextInt(1000),
-//                    "name " + i, calendarTool.getIranianDate(), "", "",
-//                    "", "", "", ""));
-//
-//        }
         for (VosoolLoad vosoolLoad : vosoolLoads) {
             String karbari = "";
             for (KarbariDictionary karbariDictionary : karbariDictionaries)
@@ -124,6 +112,7 @@ public class ReadingActivity extends BaseActivity {
             binding.linearLayoutList.setVisibility(View.GONE);
             binding.linearLayoutEmpty.setVisibility(View.VISIBLE);
         } else {
+            setupSpinner();
             readingAdapter = new ReadingAdapter(readingItems);
             binding.recyclerView.setAdapter(readingAdapter);
             binding.recyclerView.setLayoutManager(new LinearLayoutManager(activity));
@@ -138,6 +127,13 @@ public class ReadingActivity extends BaseActivity {
                             @Override
                             public void onItemClick(View view, int position) {
                                 Intent intent = new Intent(activity, PayActivity.class);
+                                Gson gson = new Gson();
+                                for (VosoolLoad vosoolLoad : vosoolLoads) {
+                                    if (vosoolLoad.billId.equals(readingAdapter.billId(position))) {
+                                        String vosool = gson.toJson(vosoolLoad);
+                                        intent.putExtra(BundleEnum.RESULT.getValue(), vosool);
+                                    }
+                                }
                                 startActivity(intent);
                             }
 
@@ -150,7 +146,7 @@ public class ReadingActivity extends BaseActivity {
 
     public void search(int debt, String name, String billId, String Radif, String mobile,
                        String lastDatePay, String address) {
-        readingAdapter.search(debt, name, billId, Radif, mobile, lastDatePay.substring(2), address);
+        readingAdapter.search(debt, name, billId, Radif, mobile, lastDatePay, address);
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -179,9 +175,16 @@ public class ReadingActivity extends BaseActivity {
             MyDatabase myDatabase = MyDatabaseClient.getInstance(activity).getMyDatabase();
             karbariDictionaries.addAll(myDatabase.karbariDictionaryDao().getAllKarbariDictionary());
             resultDictionaries.addAll(myDatabase.resultDictionaryDao().getAllResultDictionary());
-            vosoolBills.addAll(myDatabase.vosoolBillDao().getAllVosoolBill());
             vosoolLoads.addAll(myDatabase.vosoolLoadDao().getAllVosoolLoad());
+            vosoolBills.addAll(myDatabase.vosoolBillDao().getAllVosoolBill());
 
+            for (int i = 0; i < vosoolLoads.size(); i++) {
+                vosoolLoads.get(i).vosoolBills = new ArrayList<>();
+                for (int j = 0; j < vosoolBills.size(); j++) {
+                    if (vosoolBills.get(j).billId.equals(vosoolLoads.get(i).billId))
+                        vosoolLoads.get(i).vosoolBills.add(vosoolBills.get(j));
+                }
+            }
             runOnUiThread(ReadingActivity.this::setupRecyclerView);
             return null;
         }

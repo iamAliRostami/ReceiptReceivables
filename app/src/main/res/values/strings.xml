@@ -87,4 +87,5 @@
     <string name="mobile">موبایل</string>
     <string name="last_pay_day">آخرین پرداخت</string>
     <string name="debt_more_than">بدهی بیش از</string>
+    <string name="details">جزئیات</string>
 </resources>

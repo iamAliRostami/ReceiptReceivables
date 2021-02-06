@@ -5,33 +5,62 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.gson.Gson;
 import com.kishcore.sdk.hybrid.api.GeneralBillPaymentCallback;
 import com.kishcore.sdk.hybrid.api.SDKManager;
 import com.leon.receipt_receivables.R;
-import com.leon.receipt_receivables.databinding.ActivityPayBinding;
+import com.leon.receipt_receivables.adapters.DetailsAdapter;
+import com.leon.receipt_receivables.enums.BundleEnum;
+import com.leon.receipt_receivables.tables.VosoolBill;
+import com.leon.receipt_receivables.tables.VosoolLoad;
 import com.leon.receipt_receivables.utils.CustomToast;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import static com.leon.receipt_receivables.MyApplication.hostApp;
 import static com.leon.receipt_receivables.utils.PermissionManager.isNetworkAvailable;
 
 public class PayActivity extends AppCompatActivity {
-    ActivityPayBinding binding;
+    com.leon.receipt_receivables.databinding.ActivityPayBinding binding;
     Activity activity;
+    VosoolLoad vosoolLoad;
+    ArrayList<DetailsAdapter.DetailsItem> detailsItems = new ArrayList<>();
+    DetailsAdapter detailsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityPayBinding.inflate(getLayoutInflater());
+        binding = com.leon.receipt_receivables.databinding.ActivityPayBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         activity = this;
+        if (getIntent() != null) {
+            String vosool = getIntent().getExtras().getString(BundleEnum.RESULT.getValue());
+            Gson gson = new Gson();
+            vosoolLoad = gson.fromJson(vosool, VosoolLoad.class);
+            setupRecyclerView();
+        }
         initialize();
     }
 
     void initialize() {
+        binding.editTextBillId.setText(vosoolLoad.billId);
+        binding.editTextBillId.setEnabled(false);
+        binding.editTextPurchaseId.setText(vosoolLoad.vosoolBills.get(vosoolLoad.vosoolBills.size() - 1).payId);
+        binding.editTextPurchaseId.setEnabled(false);
         onButtonBillPaymentClickListener();
+        binding.buttonDetails.setOnClickListener(v -> binding.recyclerViewDetails.setVisibility(View.VISIBLE));
+    }
+
+    void setupRecyclerView() {
+        for (VosoolBill vosoolBill : vosoolLoad.vosoolBills) {
+            detailsItems.add(new DetailsAdapter.DetailsItem(vosoolBill.amount, vosoolBill.dateBed));
+        }
+        detailsAdapter = new DetailsAdapter(detailsItems);
+        binding.recyclerViewDetails.setAdapter(detailsAdapter);
+        binding.recyclerViewDetails.setLayoutManager(new LinearLayoutManager(activity));
     }
 
     void onButtonBillPaymentClickListener() {

@@ -1,7 +1,6 @@
 package com.leon.receipt_receivables.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -71,10 +70,8 @@ public class ReadingAdapter extends
         }
 
         if (lastDatePay.length() > 0) {
+            lastDatePay = lastDatePay.substring(2);
             for (ReadingItem readingItem : readingItemsSearch) {
-                Log.e("lastPayDate 1", String.valueOf(readingItem.lastPayDate.compareTo(lastDatePay)));
-                Log.e("lastPayDate 2", lastDatePay);
-                Log.e("lastPayDate 3", readingItem.lastPayDate);
                 if (((readingItem.lastPayDate != null && readingItem.lastPayDate.compareTo(lastDatePay) > 0))) {
                     readingItemsTemp.remove(readingItem);
                 }
@@ -155,7 +152,7 @@ public class ReadingAdapter extends
         ReadingItem readingItem = this.readingItemsTemp.get(position);
         holder.textViewDebt.setText(String.valueOf(readingItem.debt));
         holder.textViewName.setText(readingItem.name);
-        holder.textViewLastPayDate.setText(String.valueOf(readingItem.lastPayDate));
+        holder.textViewLastPayDate.setText(readingItem.lastPayDate);
 
         holder.textViewMobile.setText(readingItem.mobile);
         holder.textViewAddress.setText(readingItem.address);
@@ -178,6 +175,10 @@ public class ReadingAdapter extends
     @Override
     public int getItemViewType(int position) {
         return position % 2;
+    }
+
+    public String billId(int position) {
+        return readingItemsTemp.get(position).billId;
     }
 
     public static class ReadingItem {
