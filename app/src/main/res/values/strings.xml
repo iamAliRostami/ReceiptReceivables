@@ -78,6 +78,7 @@
     <string name="family">نام خانوادگی</string>
     <string name="debt">بدهی</string>
     <string name="sort_by">مرتب کردن بر اساس</string>
+    <string name="status">وضعیت اشتراک</string>
     <string name="search">جستجو</string>
     <string name="print">چاپ</string>
     <string name="not_found">داده ای یافت نشد!</string>
@@ -88,4 +89,5 @@
     <string name="last_pay_day">آخرین پرداخت</string>
     <string name="debt_more_than">بدهی بیش از</string>
     <string name="details">جزئیات</string>
+    <string name="submit">ثبت وضعیت</string>
 </resources>

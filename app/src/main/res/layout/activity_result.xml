@@ -8,25 +8,75 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="@dimen/medium_dp">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/text_view_print"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_margin="@dimen/medium_dp"
             android:layout_weight="1"
+            android:background="@drawable/border_gray_3"
             android:padding="@dimen/medium_dp"
             android:textSize="@dimen/text_size_medium"
             android:textStyle="bold|italic" />
 
-        <Button
-            android:id="@+id/button_print"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/border_green_1"
-            android:text="@string/print"
-            android:textColor="@color/text_color_light"
-            android:textSize="@dimen/text_size_large" />
+            android:layout_margin="@dimen/medium_dp"
+            android:background="@drawable/border_gray_white"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/spinner"
+                style="@style/Widget.AppCompat.Spinner.DropDown"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/low_dp"
+                android:layout_marginBottom="@dimen/low_dp"
+                android:layout_weight="1"
+                android:popupBackground="@drawable/border_gray_1"
+                android:prompt="@string/status"
+                android:spinnerMode="dialog"
+                tools:listitem="@layout/item_dropdown" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/button_submit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/medium_dp"
+                android:layout_marginRight="@dimen/medium_dp"
+                android:layout_marginBottom="@dimen/low_dp"
+                android:layout_weight="1"
+                android:background="@drawable/border_blue_3"
+                android:text="@string/submit"
+                android:textColor="@color/text_color_light"
+                android:textSize="@dimen/text_size_large"
+                tools:ignore="ButtonStyle" />
+
+            <Button
+                android:id="@+id/button_print"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/medium_dp"
+                android:layout_marginRight="@dimen/medium_dp"
+                android:layout_marginBottom="@dimen/low_dp"
+                android:layout_weight="1"
+                android:background="@drawable/border_green_3"
+                android:text="@string/print"
+                android:textColor="@color/text_color_light"
+                android:textSize="@dimen/text_size_large"
+                tools:ignore="ButtonStyle" />
+        </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
