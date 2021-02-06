@@ -23,8 +23,8 @@ public class ReadingAdapter extends
     private final ArrayList<ReadingItem> readingItems;
 
     public ReadingAdapter(ArrayList<ReadingItem> listItems) {
-        this.readingItemsTemp = listItems;
-        this.readingItems = listItems;
+        this.readingItemsTemp = new ArrayList<>(listItems);
+        this.readingItems = new ArrayList<>(listItems);
     }
 
     public void sort(int type, boolean ascend) {
@@ -44,18 +44,97 @@ public class ReadingAdapter extends
                 break;
             case 2:
                 if (ascend)
-                    Collections.sort(readingItemsTemp, (o1, o2) -> o1.date.compareTo(
-                            o2.date));
-                else Collections.sort(readingItemsTemp, (o2, o1) -> o1.date.compareTo(
-                        o2.date));
+                    Collections.sort(readingItemsTemp, (o1, o2) -> o1.lastPayDate.compareTo(
+                            o2.lastPayDate));
+                else Collections.sort(readingItemsTemp, (o2, o1) -> o1.lastPayDate.compareTo(
+                        o2.lastPayDate));
                 break;
         }
 
     }
 
-    public void search(String name, String billId, String Radif, String trackNumber,
+    public void search(int debt, String name, String billId, String radif,
                        String mobile, String lastDatePay, String address) {
-        Log.e("Here", "Search");
+        ArrayList<ReadingItem> readingItemsSearch = new ArrayList<>(readingItems);
+        readingItemsTemp.clear();
+        if (name.length() == 0)
+            readingItemsTemp.addAll(readingItemsSearch);
+        else {
+            for (ReadingItem readingItem : readingItemsSearch) {
+                if (((readingItem.name != null && readingItem.name.contains(name)))) {
+                    readingItemsTemp.remove(readingItem);
+                    readingItemsTemp.add(readingItem);
+                }
+            }
+            readingItemsSearch.clear();
+            readingItemsSearch.addAll(readingItemsTemp);
+        }
+
+        if (lastDatePay.length() > 0) {
+            for (ReadingItem readingItem : readingItemsSearch) {
+                Log.e("lastPayDate 1", String.valueOf(readingItem.lastPayDate.compareTo(lastDatePay)));
+                Log.e("lastPayDate 2", lastDatePay);
+                Log.e("lastPayDate 3", readingItem.lastPayDate);
+                if (((readingItem.lastPayDate != null && readingItem.lastPayDate.compareTo(lastDatePay) > 0))) {
+                    readingItemsTemp.remove(readingItem);
+                }
+            }
+            readingItemsSearch.clear();
+            readingItemsSearch.addAll(readingItemsTemp);
+        }
+
+        if (billId.length() > 0) {
+            readingItemsTemp.clear();
+            for (ReadingItem readingItem : readingItemsSearch) {
+                if (((readingItem.billId != null && readingItem.billId.contains(billId)))) {
+                    readingItemsTemp.remove(readingItem);
+                    readingItemsTemp.add(readingItem);
+                }
+            }
+            readingItemsSearch.clear();
+            readingItemsSearch.addAll(readingItemsTemp);
+        }
+
+        if (radif.length() > 0) {
+            readingItemsTemp.clear();
+            for (ReadingItem readingItem : readingItemsSearch) {
+                if (((readingItem.radif != null && readingItem.radif.contains(radif)))) {
+                    readingItemsTemp.remove(readingItem);
+                    readingItemsTemp.add(readingItem);
+                }
+            }
+            readingItemsSearch.clear();
+            readingItemsSearch.addAll(readingItemsTemp);
+        }
+
+        if (mobile.length() > 0) {
+            readingItemsTemp.clear();
+            for (ReadingItem readingItem : readingItemsSearch) {
+                if (((readingItem.mobile != null && readingItem.mobile.contains(mobile)))) {
+                    readingItemsTemp.remove(readingItem);
+                    readingItemsTemp.add(readingItem);
+                }
+            }
+            readingItemsSearch.clear();
+            readingItemsSearch.addAll(readingItemsTemp);
+        }
+        if (address.length() > 0) {
+            readingItemsTemp.clear();
+            for (ReadingItem readingItem : readingItemsSearch) {
+                if (((readingItem.address != null && readingItem.address.contains(address)))) {
+                    readingItemsTemp.remove(readingItem);
+                    readingItemsTemp.add(readingItem);
+                }
+            }
+            readingItemsSearch.clear();
+            readingItemsSearch.addAll(readingItemsTemp);
+        }
+        for (ReadingItem readingItem : readingItemsSearch) {
+            if (((readingItem.debt < debt))) {
+                readingItemsTemp.remove(readingItem);
+            }
+        }
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -74,9 +153,16 @@ public class ReadingAdapter extends
     @Override
     public void onBindViewHolder(@NonNull ReadingItemHolder holder, int position) {
         ReadingItem readingItem = this.readingItemsTemp.get(position);
-        holder.textViewTitle.setText(readingItem.name);
         holder.textViewDebt.setText(String.valueOf(readingItem.debt));
-        holder.textViewDate.setText(String.valueOf(readingItem.date));
+        holder.textViewName.setText(readingItem.name);
+        holder.textViewLastPayDate.setText(String.valueOf(readingItem.lastPayDate));
+
+        holder.textViewMobile.setText(readingItem.mobile);
+        holder.textViewAddress.setText(readingItem.address);
+        holder.textViewBillId.setText(readingItem.billId);
+        holder.textViewTrackNumber.setText(readingItem.trackNumber);
+        holder.textViewRadif.setText(readingItem.radif);
+        holder.textViewKarbari.setText(readingItem.karbari);
     }
 
     @Override
@@ -95,27 +181,54 @@ public class ReadingAdapter extends
     }
 
     public static class ReadingItem {
-        String name;
         int debt;
-        String date;
+        String name;
+        String lastPayDate;
+        String mobile;
+        String address;
+        String radif;
+        String billId;
+        String trackNumber;
+        String karbari;
 
-        public ReadingItem(String name, int debt, String date) {
-            this.name = name;
+        public ReadingItem(int debt, String name, String lastPayDate, String mobile, String address,
+                           int radif, String billId, String trackNumber, String karbari) {
             this.debt = debt;
-            this.date = date;
+            this.name = name;
+            this.lastPayDate = lastPayDate;
+            this.mobile = mobile;
+            this.address = address;
+            this.radif = String.valueOf(radif);
+            this.billId = billId;
+            this.trackNumber = trackNumber;
+            this.karbari = karbari;
         }
     }
 
     static class ReadingItemHolder extends RecyclerView.ViewHolder {
-        TextView textViewTitle;
+        TextView textViewName;
         TextView textViewDebt;
-        TextView textViewDate;
+        TextView textViewLastPayDate;
+        TextView textViewAddress;
+        TextView textViewMobile;
+        TextView textViewTrackNumber;
+        TextView textViewRadif;
+        TextView textViewBillId;
+        TextView textViewKarbari;
 
         public ReadingItemHolder(View viewItem) {
             super(viewItem);
-            this.textViewTitle = viewItem.findViewById(R.id.text_view_name);
+            this.textViewName = viewItem.findViewById(R.id.text_view_name);
             this.textViewDebt = viewItem.findViewById(R.id.text_view_debt);
-            this.textViewDate = viewItem.findViewById(R.id.text_view_date);
+            this.textViewLastPayDate = viewItem.findViewById(R.id.text_view_last_pay_date);
+
+
+            this.textViewMobile = viewItem.findViewById(R.id.text_view_mobile);
+            this.textViewAddress = viewItem.findViewById(R.id.text_view_address);
+            this.textViewTrackNumber = viewItem.findViewById(R.id.text_view_track_number);
+            this.textViewRadif = viewItem.findViewById(R.id.text_view_radif);
+            this.textViewBillId = viewItem.findViewById(R.id.text_view_bill_id);
+            this.textViewKarbari = viewItem.findViewById(R.id.text_view_Karbari);
         }
     }
 

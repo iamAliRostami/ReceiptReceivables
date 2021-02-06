@@ -55,7 +55,7 @@
         tools:ignore="UselessParent">
 
         <TextView
-            android:id="@+id/text_view_date"
+            android:id="@+id/text_view_last_pay_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

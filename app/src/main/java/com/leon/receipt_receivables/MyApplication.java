@@ -44,4 +44,8 @@ public class MyApplication extends Application {
                 .allowQueue(true).apply();
         super.onCreate();
     }
+
+    public static String getDBName() {
+        return "MyDatabase";
+    }
 }

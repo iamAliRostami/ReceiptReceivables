@@ -22,6 +22,10 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.leon.receipt_receivables.MyApplication;
 import com.leon.receipt_receivables.R;
+import com.leon.receipt_receivables.tables.MyDatabaseClient;
+import com.leon.receipt_receivables.tables.SavedLocation;
+
+import java.util.ArrayList;
 
 import static com.leon.receipt_receivables.MyApplication.FASTEST_INTERVAL;
 import static com.leon.receipt_receivables.MyApplication.MIN_DISTANCE_CHANGE_FOR_UPDATES;
@@ -35,6 +39,7 @@ public class GPSTracker extends Service {
     boolean checkGPS = false;
     boolean checkNetwork = false;
     Location location;
+    final ArrayList<SavedLocation> savedLocations = new ArrayList<>();
     LocationManager locationManager;
     FusedLocationProviderClient fusedLocationClient;
     LocationRequest locationRequest;
@@ -82,6 +87,10 @@ public class GPSTracker extends Service {
             latitude = location.getLatitude();
             longitude = location.getLongitude();
             accuracy = location.getAccuracy();
+            SavedLocation savedLocation = new SavedLocation(accuracy, longitude, latitude);
+            MyDatabaseClient.getInstance(activity).getMyDatabase().savedLocationDao().
+                    insertSavedLocation(savedLocation);
+            savedLocations.add(savedLocation);
         }
     }
 

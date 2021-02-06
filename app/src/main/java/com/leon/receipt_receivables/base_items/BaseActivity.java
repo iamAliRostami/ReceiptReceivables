@@ -38,6 +38,7 @@ import com.leon.receipt_receivables.databinding.BaseActivityBinding;
 import com.leon.receipt_receivables.enums.SharedReferenceKeys;
 import com.leon.receipt_receivables.enums.SharedReferenceNames;
 import com.leon.receipt_receivables.infrastructure.ISharedPreferenceManager;
+import com.leon.receipt_receivables.tables.MyDatabaseClient;
 import com.leon.receipt_receivables.utils.CustomToast;
 import com.leon.receipt_receivables.utils.GPSTracker;
 import com.leon.receipt_receivables.utils.PermissionManager;
@@ -69,6 +70,7 @@ public abstract class BaseActivity extends AppCompatActivity
         overridePendingTransition(R.anim.slide_up_info, R.anim.no_change);
         binding = BaseActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        MyDatabaseClient.migration(this);
         initializeBase();
 
         if (isNetworkAvailable(activity))

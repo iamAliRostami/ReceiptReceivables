@@ -1,7 +1,9 @@
 package com.leon.receipt_receivables.activities;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Debug;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,19 +19,26 @@ import com.leon.receipt_receivables.adapters.SpinnerCustomAdapter;
 import com.leon.receipt_receivables.base_items.BaseActivity;
 import com.leon.receipt_receivables.databinding.ActivityReadingBinding;
 import com.leon.receipt_receivables.fragments.SearchFragment;
-import com.leon.receipt_receivables.utils.CalendarTool;
+import com.leon.receipt_receivables.tables.KarbariDictionary;
+import com.leon.receipt_receivables.tables.MyDatabase;
+import com.leon.receipt_receivables.tables.MyDatabaseClient;
+import com.leon.receipt_receivables.tables.ResultDictionary;
+import com.leon.receipt_receivables.tables.VosoolBill;
+import com.leon.receipt_receivables.tables.VosoolLoad;
+import com.leon.receipt_receivables.utils.CustomProgressBar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Random;
 
 public class ReadingActivity extends BaseActivity {
     ActivityReadingBinding binding;
     ArrayList<ReadingAdapter.ReadingItem> readingItems = new ArrayList<>();
     ReadingAdapter readingAdapter;
     Activity activity;
+    ArrayList<KarbariDictionary> karbariDictionaries = new ArrayList<>();
+    ArrayList<ResultDictionary> resultDictionaries = new ArrayList<>();
+    ArrayList<VosoolBill> vosoolBills = new ArrayList<>();
+    ArrayList<VosoolLoad> vosoolLoads = new ArrayList<>();
     ArrayList<String> items = new ArrayList<>(Arrays.asList("نام", "بدهی", "تاریخ"));
     boolean ascend = true;
     int type = 0;
@@ -41,7 +50,7 @@ public class ReadingActivity extends BaseActivity {
         ConstraintLayout parentLayout = findViewById(R.id.base_Content);
         parentLayout.addView(childLayout);
         activity = this;
-        setupRecyclerView();
+        new GetDB().execute();
         setupSpinner();
         setOnImageViewSortClickListener();
         setOnImageViewSearchClickListener();
@@ -89,17 +98,27 @@ public class ReadingActivity extends BaseActivity {
     }
 
     void setupRecyclerView() {
-        for (int i = 0; i < 100; i++) {
-            Random r = new Random();
-            long unixTime = (long) (+r.nextDouble() * 60 * 60 * 24 * 365);
-            Date d = new Date(unixTime);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(d);
-            CalendarTool calendarTool = new CalendarTool(calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-            readingItems.add(new ReadingAdapter.ReadingItem("name " + i,
-                    new Random().nextInt(1000), calendarTool.getIranianDate()));
-
+//        for (int i = 0; i < 100; i++) {
+//            Random r = new Random();
+//            long unixTime = (long) (+r.nextDouble() * 60 * 60 * 24 * 365);
+//            Date d = new Date(unixTime);
+//            Calendar calendar = Calendar.getInstance();
+//            calendar.setTime(d);
+//            CalendarTool calendarTool = new CalendarTool(calendar.get(Calendar.YEAR),
+//                    calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+//            readingItems.add(new ReadingAdapter.ReadingItem(new Random().nextInt(1000),
+//                    "name " + i, calendarTool.getIranianDate(), "", "",
+//                    "", "", "", ""));
+//
+//        }
+        for (VosoolLoad vosoolLoad : vosoolLoads) {
+            String karbari = "";
+            for (KarbariDictionary karbariDictionary : karbariDictionaries)
+                if (karbariDictionary.id == vosoolLoad.karbariId)
+                    karbari = karbariDictionary.title;
+            readingItems.add(new ReadingAdapter.ReadingItem(vosoolLoad.payable, vosoolLoad.fullName,
+                    vosoolLoad.lastPayDate, vosoolLoad.mobile, vosoolLoad.address, vosoolLoad.radif,
+                    vosoolLoad.billId, vosoolLoad.trackNumber, karbari));
         }
         if (readingItems.isEmpty()) {
             binding.linearLayoutList.setVisibility(View.GONE);
@@ -129,10 +148,43 @@ public class ReadingActivity extends BaseActivity {
                         }));
     }
 
-    public void search(String name, String billId, String Radif, String trackNumber,
-                       String mobile, String lastDatePay, String address) {
-        readingAdapter.search(name, billId, Radif, trackNumber, mobile, lastDatePay, address);
-        readingAdapter.notifyDataSetChanged();
+    public void search(int debt, String name, String billId, String Radif, String mobile,
+                       String lastDatePay, String address) {
+        readingAdapter.search(debt, name, billId, Radif, mobile, lastDatePay.substring(2), address);
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    class GetDB extends AsyncTask<Integer, Integer, Integer> {
+        CustomProgressBar customProgressBar;
+
+        public GetDB() {
+            super();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            customProgressBar = new CustomProgressBar();
+            customProgressBar.show(activity, false);
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            super.onPostExecute(integer);
+            customProgressBar.getDialog().dismiss();
+        }
+
+        @Override
+        protected Integer doInBackground(Integer... integers) {
+            MyDatabase myDatabase = MyDatabaseClient.getInstance(activity).getMyDatabase();
+            karbariDictionaries.addAll(myDatabase.karbariDictionaryDao().getAllKarbariDictionary());
+            resultDictionaries.addAll(myDatabase.resultDictionaryDao().getAllResultDictionary());
+            vosoolBills.addAll(myDatabase.vosoolBillDao().getAllVosoolBill());
+            vosoolLoads.addAll(myDatabase.vosoolLoadDao().getAllVosoolLoad());
+
+            runOnUiThread(ReadingActivity.this::setupRecyclerView);
+            return null;
+        }
     }
 
     @Override

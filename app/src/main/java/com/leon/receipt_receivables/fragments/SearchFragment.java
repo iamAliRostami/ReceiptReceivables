@@ -45,10 +45,12 @@ public class SearchFragment extends DialogFragment {
 
     void initialize() {
         binding.buttonSearch.setOnClickListener(v -> {
-            ((ReadingActivity) activity).search(binding.editTextName.getText().toString(),
+            int debt = 0;
+            if (binding.editTextDebt.getText().toString().length() > 0)
+                debt = Integer.parseInt(binding.editTextDebt.getText().toString());
+            ((ReadingActivity) activity).search(debt, binding.editTextName.getText().toString(),
                     binding.editTextBillId.getText().toString(),
                     binding.editTextRadif.getText().toString(),
-                    binding.editTextTrackNumber.getText().toString(),
                     binding.editTextMobile.getText().toString(),
                     binding.textViewLastPay.getText().toString(),
                     binding.editTextAddress.getText().toString());
