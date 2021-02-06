@@ -55,6 +55,21 @@
     <string name="help">راهنما</string>
     <string name="home">خانه</string>
 
+    <string name="gps_setting">تنظیمات جی پی اس</string>
+    <string name="setting">تنظیمات</string>
+    <string name="allow_permission">اعطای دسترسی</string>
+    <string name="close">بستن</string>
+    <string name="active_gps">مکان یابی شما غیر فعال است، با مراجعه به تنظیمات، آن را فعال کنید.</string>
+    <string name="confirm_permission">جهت استفاده از برنامه مجوزهای پیشنهادی را قبول فرمایید</string>
+    <string name="if_reject_permission">در صورت رد این مجوز قادر به استفاده از این دستگاه نخواهید بود\nلطفا با فشار دادن دکمه اعطای دسترسی و سپس در بخش دسترسی ها با این مجوز ها موافقت نمایید</string>
+    <string name="access_granted">مجوز ها داده شده</string>
+    <string name="active_network">اینترنت شما غیر فعال است، با مراجعه به تنظیمات، آن را فعال کنید.</string>
+    <string name="network_setting">تنظیمات اینترنت</string>
+    <string name="services_is_not_available">سرویس در دسترس  نیست</string>
+    <string name="google_is_not_available">سرویس های گوگل برای شما در دسترس نیست.</string>
+    <string name="google_is_available_but_not_installed">سرویس های گوگل در دسترس است، گوگل پلی نصب را نصب کنید.</string>
+    <string name="permission_not_completed">مجوزها کامل نیست، پس از اعطای دسترسی کامل، مجددا تلاش کنید.</string>
+
     <string name="how_to_exit">جهت خروج، از فهرست، گزینه «خروج» را بزنید.</string>
     <string name="navigation_drawer_open">باز کردن منو</string>
     <string name="navigation_drawer_close">بستن منو</string>
@@ -65,4 +80,10 @@
     <string name="sort_by">مرتب کردن بر اساس</string>
     <string name="search">جستجو</string>
     <string name="print">چاپ</string>
+    <string name="not_found">داده ای یافت نشد!</string>
+    <string name="address">نشانی</string>
+    <string name="radif">ردیف</string>
+    <string name="track_number">شماره پیگیری</string>
+    <string name="mobile">موبایل</string>
+    <string name="last_pay_day">آخرین پرداخت</string>
 </resources>

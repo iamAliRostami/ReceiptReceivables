@@ -1,7 +1,10 @@
 package com.leon.receipt_receivables.base_items;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Debug;
 import android.view.Gravity;
@@ -10,6 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -18,6 +22,8 @@ import androidx.core.view.GravityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.navigation.NavigationView;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 import com.leon.receipt_receivables.BuildConfig;
 import com.leon.receipt_receivables.MyApplication;
 import com.leon.receipt_receivables.R;
@@ -33,10 +39,14 @@ import com.leon.receipt_receivables.enums.SharedReferenceKeys;
 import com.leon.receipt_receivables.enums.SharedReferenceNames;
 import com.leon.receipt_receivables.infrastructure.ISharedPreferenceManager;
 import com.leon.receipt_receivables.utils.CustomToast;
+import com.leon.receipt_receivables.utils.GPSTracker;
+import com.leon.receipt_receivables.utils.PermissionManager;
 import com.leon.receipt_receivables.utils.SharedPreferenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.leon.receipt_receivables.utils.PermissionManager.isNetworkAvailable;
 
 public abstract class BaseActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,6 +56,8 @@ public abstract class BaseActivity extends AppCompatActivity
     BaseActivityBinding binding;
     ISharedPreferenceManager sharedPreferenceManager;
     boolean exit = false;
+    Activity activity;
+    GPSTracker gpsTracker;
 
     protected abstract void initialize();
 
@@ -58,7 +70,47 @@ public abstract class BaseActivity extends AppCompatActivity
         binding = BaseActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         initializeBase();
-        initialize();
+
+        if (isNetworkAvailable(activity))
+            checkPermissions();
+        else PermissionManager.enableNetwork(this);
+    }
+
+    void checkPermissions() {
+        if (PermissionManager.gpsEnabled(this))
+            if (!PermissionManager.checkLocationPermission(activity)) {
+                askLocationPermission();
+            } else {
+                initialize();
+                gpsTracker = new GPSTracker(activity);
+            }
+    }
+
+    void askLocationPermission() {
+        PermissionListener permissionlistener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                CustomToast customToast = new CustomToast();
+                customToast.info(getString(R.string.access_granted));
+                checkPermissions();
+            }
+
+            @Override
+            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                PermissionManager.forceClose(activity);
+            }
+        };
+        new TedPermission(this)
+                .setPermissionListener(permissionlistener)
+                .setRationaleMessage(getString(R.string.confirm_permission))
+                .setRationaleConfirmText(getString(R.string.allow_permission))
+                .setDeniedMessage(getString(R.string.if_reject_permission))
+                .setDeniedCloseButtonText(getString(R.string.close))
+                .setGotoSettingButtonText(getString(R.string.allow_permission))
+                .setPermissions(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                ).check();
     }
 
     @Override
@@ -144,7 +196,8 @@ public abstract class BaseActivity extends AppCompatActivity
 
     @SuppressLint("WrongConstant")
     private void initializeBase() {
-        TextView textView = findViewById(R.id.text_view_title);
+        activity = this;
+        TextView textView = findViewById(R.id.text_view_name);
         textView.setText(sharedPreferenceManager.getStringData(
                 SharedReferenceKeys.DISPLAY_NAME.getValue()).concat(" (").concat(
                 sharedPreferenceManager.getStringData(
@@ -181,6 +234,25 @@ public abstract class BaseActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == PackageManager.PERMISSION_GRANTED) {
+            if (requestCode == MyApplication.GPS_CODE)
+                checkPermissions();
+            if (requestCode == MyApplication.REQUEST_NETWORK_CODE) {
+                if (isNetworkAvailable(getApplicationContext()))
+                    checkPermissions();
+                else PermissionManager.setMobileWifiEnabled(this);
+            }
+            if (requestCode == MyApplication.REQUEST_WIFI_CODE) {
+                if (isNetworkAvailable(getApplicationContext()))
+                    checkPermissions();
+                else PermissionManager.enableNetwork(this);
+            }
+        }
+    }
+
+    @Override
     protected void onStop() {
         Debug.getNativeHeapAllocatedSize();
         System.runFinalization();
@@ -194,6 +266,8 @@ public abstract class BaseActivity extends AppCompatActivity
 
     @Override
     protected void onDestroy() {
+        gpsTracker.onBind(getIntent());
+        gpsTracker.onDestroy();
         Debug.getNativeHeapAllocatedSize();
         System.runFinalization();
         Runtime.getRuntime().totalMemory();

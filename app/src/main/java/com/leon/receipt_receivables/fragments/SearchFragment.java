@@ -45,10 +45,16 @@ public class SearchFragment extends DialogFragment {
 
     void initialize() {
         binding.buttonSearch.setOnClickListener(v -> {
-            ((ReadingActivity) activity).search();
-
+            ((ReadingActivity) activity).search(binding.editTextName.getText().toString(),
+                    binding.editTextBillId.getText().toString(),
+                    binding.editTextRadif.getText().toString(),
+                    binding.editTextTrackNumber.getText().toString(),
+                    binding.editTextMobile.getText().toString(),
+                    binding.textViewLastPay.getText().toString(),
+                    binding.editTextAddress.getText().toString());
+            dismiss();
         });
-        binding.textViewStartDate.setOnClickListener(v -> {
+        binding.textViewLastPay.setOnClickListener(v -> {
             DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity());
             datePickerDialog.setSelectionMode(DateRangeCalendarView.SelectionMode.Single);
             datePickerDialog.setDisableDaysAgo(false);
@@ -57,7 +63,7 @@ public class SearchFragment extends DialogFragment {
             datePickerDialog.setTextSizeDate(14.0f);
             datePickerDialog.setCanceledOnTouchOutside(true);
             datePickerDialog.setOnSingleDateSelectedListener(date ->
-                    binding.textViewStartDate.setText(date.getPersianShortDate()));
+                    binding.textViewLastPay.setText(date.getPersianShortDate()));
             datePickerDialog.showDialog();
         });
     }

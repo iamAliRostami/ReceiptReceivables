@@ -15,7 +15,7 @@ import com.leon.receipt_receivables.utils.CustomToast;
 import java.util.Locale;
 
 import static com.leon.receipt_receivables.MyApplication.hostApp;
-import static com.leon.receipt_receivables.MyApplication.isNetworkAvailable;
+import static com.leon.receipt_receivables.utils.PermissionManager.isNetworkAvailable;
 
 public class PayActivity extends AppCompatActivity {
     ActivityPayBinding binding;

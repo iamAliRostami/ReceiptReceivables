@@ -53,7 +53,8 @@ public class ReadingAdapter extends
 
     }
 
-    public void search() {
+    public void search(String name, String billId, String Radif, String trackNumber,
+                       String mobile, String lastDatePay, String address) {
         Log.e("Here", "Search");
     }
 
@@ -112,7 +113,7 @@ public class ReadingAdapter extends
 
         public ReadingItemHolder(View viewItem) {
             super(viewItem);
-            this.textViewTitle = viewItem.findViewById(R.id.text_view_title);
+            this.textViewTitle = viewItem.findViewById(R.id.text_view_name);
             this.textViewDebt = viewItem.findViewById(R.id.text_view_debt);
             this.textViewDate = viewItem.findViewById(R.id.text_view_date);
         }

@@ -15,22 +15,29 @@ import com.leon.receipt_receivables.BuildConfig;
 import com.leon.receipt_receivables.R;
 import com.leon.receipt_receivables.databinding.ActivityLoginBinding;
 import com.leon.receipt_receivables.enums.DialogType;
+import com.leon.receipt_receivables.enums.ProgressType;
 import com.leon.receipt_receivables.enums.SharedReferenceKeys;
 import com.leon.receipt_receivables.enums.SharedReferenceNames;
+import com.leon.receipt_receivables.infrastructure.IAbfaService;
 import com.leon.receipt_receivables.infrastructure.ICallback;
 import com.leon.receipt_receivables.infrastructure.ICallbackError;
 import com.leon.receipt_receivables.infrastructure.ICallbackIncomplete;
 import com.leon.receipt_receivables.infrastructure.ISharedPreferenceManager;
 import com.leon.receipt_receivables.tables.LoginFeedBack;
+import com.leon.receipt_receivables.tables.LoginInfo;
 import com.leon.receipt_receivables.utils.Crypto;
 import com.leon.receipt_receivables.utils.CustomDialog;
 import com.leon.receipt_receivables.utils.CustomErrorHandling;
 import com.leon.receipt_receivables.utils.CustomToast;
+import com.leon.receipt_receivables.utils.HttpClientWrapper;
+import com.leon.receipt_receivables.utils.NetworkHelper;
 import com.leon.receipt_receivables.utils.SharedPreferenceManager;
 
 import java.util.List;
 
+import retrofit2.Call;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -126,6 +133,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     void attemptLogin() {
+        Retrofit retrofit = NetworkHelper.getInstance(false);
+        final IAbfaService loginInfo = retrofit.create(IAbfaService.class);
+        Call<LoginFeedBack> call = loginInfo.login(new LoginInfo(username, password));
+        HttpClientWrapper.callHttpAsync(call, ProgressType.SHOW.getValue(), this,
+                new Login(), new GetErrorIncomplete(), new GetError());
     }
 
     void savePreference(LoginFeedBack loginFeedBack) {

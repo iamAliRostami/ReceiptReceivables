@@ -101,10 +101,15 @@ public class ReadingActivity extends BaseActivity {
                     new Random().nextInt(1000), calendarTool.getIranianDate()));
 
         }
-        readingAdapter = new ReadingAdapter(readingItems);
-        binding.recyclerView.setAdapter(readingAdapter);
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(activity));
-        recyclerViewItemClickListener();
+        if (readingItems.isEmpty()) {
+            binding.linearLayoutList.setVisibility(View.GONE);
+            binding.linearLayoutEmpty.setVisibility(View.VISIBLE);
+        } else {
+            readingAdapter = new ReadingAdapter(readingItems);
+            binding.recyclerView.setAdapter(readingAdapter);
+            binding.recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+            recyclerViewItemClickListener();
+        }
     }
 
     void recyclerViewItemClickListener() {
@@ -124,8 +129,9 @@ public class ReadingActivity extends BaseActivity {
                         }));
     }
 
-    public void search() {
-        readingAdapter.search();
+    public void search(String name, String billId, String Radif, String trackNumber,
+                       String mobile, String lastDatePay, String address) {
+        readingAdapter.search(name, billId, Radif, trackNumber, mobile, lastDatePay, address);
         readingAdapter.notifyDataSetChanged();
     }
 

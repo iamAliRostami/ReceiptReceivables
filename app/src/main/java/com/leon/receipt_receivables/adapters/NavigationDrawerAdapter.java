@@ -107,7 +107,7 @@ public class NavigationDrawerAdapter extends
 
         public DrawerItemHolder(View viewItem) {
             super(viewItem);
-            this.textViewTitle = viewItem.findViewById(R.id.text_view_title);
+            this.textViewTitle = viewItem.findViewById(R.id.text_view_name);
             this.imageViewIcon = viewItem.findViewById(R.id.image_view_icon);
             this.linearLayout = viewItem.findViewById(R.id.linear_layout_background);
         }

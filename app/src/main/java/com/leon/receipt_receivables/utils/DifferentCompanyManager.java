@@ -44,7 +44,7 @@ public class DifferentCompanyManager {
     public static String getBaseUrl(CompanyNames companyNames) {
         switch (companyNames) {
             case ESF:
-                return "http://37.191.92.130/";
+                return "https://37.191.92.157/";
             case DEBUG:
                 return "http://192.168.43.185:45458/";
             default:

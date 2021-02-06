@@ -5,7 +5,6 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import com.leon.receipt_receivables.MyApplication;
 import com.leon.receipt_receivables.R;
 import com.leon.receipt_receivables.enums.ProgressType;
 import com.leon.receipt_receivables.infrastructure.ICallback;
@@ -15,6 +14,8 @@ import com.leon.receipt_receivables.infrastructure.ICallbackIncomplete;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.leon.receipt_receivables.utils.PermissionManager.isNetworkAvailable;
 
 
 public class HttpClientWrapper {
@@ -34,7 +35,7 @@ public class HttpClientWrapper {
         } else if (dialogType == ProgressType.SHOW_CANCELABLE_REDIRECT.getValue()) {
             progressBar.show(context, context.getString(R.string.waiting), true);
         }
-        if (MyApplication.isNetworkAvailable(context)) {
+        if (isNetworkAvailable(context)) {
             HttpClientWrapper.call.enqueue(new Callback<T>() {
                 @Override
                 public void onResponse(@NonNull Call<T> call, @NonNull Response<T> response) {
