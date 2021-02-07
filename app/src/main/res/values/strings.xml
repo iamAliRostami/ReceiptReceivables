@@ -91,4 +91,8 @@
     <string name="details">جزئیات</string>
     <string name="submit">ثبت وضعیت</string>
     <string name="printer_has_problem">پرینتر با مشکل مواجه است.</string>
+    <string name="total_number">تعداد کل</string>
+    <string name="_0">0</string>
+    <string name="reading_number">خوانده شده</string>
+    <string name="payed">پرداخت شده</string>
 </resources>

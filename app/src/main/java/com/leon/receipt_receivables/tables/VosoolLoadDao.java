@@ -14,8 +14,18 @@ public interface VosoolLoadDao {
 
     @Query("Select * From VosoolLoad WHERE isArchive = :isArchive")
     List<VosoolLoad> getVosoolLoadByArchive(boolean isArchive);
+
     @Insert
     void insertVosoolLoad(VosoolLoad vosoolLoad);
+
+    @Query("SELECT COUNT(*) FROM VosoolLoad")
+    int countTotalVossolLoad();
+
+    @Query("SELECT COUNT(*) FROM VosoolLoad WHERE isSent = :isSent")
+    int countSentVossolLoad(boolean isSent);
+
+    @Query("SELECT COUNT(*) FROM VosoolLoad WHERE isPayed = :isPayed")
+    int countPayedVossolLoad(boolean isPayed);
 
     @Insert
     void insertAllVosoolLoad(List<VosoolLoad> vosoolLoad);

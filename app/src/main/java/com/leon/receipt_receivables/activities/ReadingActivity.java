@@ -134,13 +134,13 @@ public class ReadingActivity extends BaseActivity {
                                 for (VosoolLoad vosoolLoad : vosoolLoads) {
                                     if (vosoolLoad.billId.equals(
                                             readingAdapter.getReading(position).billId) &&
-                                            !vosoolLoad.isSent) {
+                                            !vosoolLoad.isPayed) {
                                         vosool = gson.toJson(vosoolLoad);
                                         isSent = false;
                                     }
                                 }
                                 if (isSent) {
-                                    new CustomToast().warning("این اشتراک مشاهده شده است.");
+                                    new CustomToast().warning("بدهی این اشتراک پرداخت شده است.");
                                 } else {
                                     intent.putExtra(BundleEnum.RESULT.getValue(), vosool);
                                     startActivity(intent);
