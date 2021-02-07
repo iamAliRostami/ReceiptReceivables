@@ -3,6 +3,7 @@ package com.leon.receipt_receivables.tables;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -17,4 +18,7 @@ public interface VosoolBillDao {
 
     @Insert
     void insertAllVosoolBill(List<VosoolBill> vosoolBills);
+
+    @Update
+    void updateVosool(VosoolLoad vosoolLoad);
 }

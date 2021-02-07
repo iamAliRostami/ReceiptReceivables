@@ -96,7 +96,6 @@ public class DownloadActivity extends BaseActivity {
                         if (receiptReceivablesFeedbackTemp.resultDictionary.get(i).id == resultDictionary.id)
                             receiptReceivablesFeedback.resultDictionary.remove(receiptReceivablesFeedback.resultDictionary.get(i));
                 }
-
                 for (VosoolLoad vosoolLoad : vosoolLoads) {
                     for (int i = 0; i < receiptReceivablesFeedbackTemp.vosoolLoads.size(); i++) {
                         if (receiptReceivablesFeedbackTemp.vosoolLoads.get(i).billId.equals(vosoolLoad.billId)) {

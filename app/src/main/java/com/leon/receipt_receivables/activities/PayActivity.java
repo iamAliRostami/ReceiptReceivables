@@ -48,8 +48,8 @@ public class PayActivity extends AppCompatActivity {
     void initialize() {
         binding.editTextBillId.setText(vosoolLoad.billId);
         binding.editTextBillId.setEnabled(false);
-        binding.editTextPurchaseId.setText(vosoolLoad.vosoolBills.get(vosoolLoad.vosoolBills.size() - 1).payId);
-        binding.editTextPurchaseId.setEnabled(false);
+        binding.editTextPaymentId.setText(vosoolLoad.vosoolBills.get(vosoolLoad.vosoolBills.size() - 1).payId);
+        binding.editTextPaymentId.setEnabled(false);
         onButtonBillPaymentClickListener();
         binding.buttonDetails.setOnClickListener(v -> binding.recyclerViewDetails.setVisibility(View.VISIBLE));
     }
@@ -71,26 +71,30 @@ public class PayActivity extends AppCompatActivity {
                 view.requestFocus();
                 return;
             }
-            if (binding.editTextPurchaseId.getText().toString().isEmpty()) {
-                binding.editTextPurchaseId.setError(getString(R.string.error_empty));
-                View view = binding.editTextPurchaseId;
+            if (binding.editTextPaymentId.getText().toString().isEmpty()) {
+                binding.editTextPaymentId.setError(getString(R.string.error_empty));
+                View view = binding.editTextPaymentId;
                 view.requestFocus();
                 return;
             }
             if (isNetworkAvailable(activity)) {
-                String invoiceNumber = binding.editTextPurchaseId.getText().toString();
-                String billId = binding.editTextBillId.getText().toString();;
-                SDKManager.billPayment(PayActivity.this, hostApp, billId, invoiceNumber, "-1", "OK", "OK", new GeneralBillPaymentCallback() {
+                String paymentId = binding.editTextPaymentId.getText().toString();
+                String billId = binding.editTextBillId.getText().toString();
+                SDKManager.billPayment(PayActivity.this, hostApp, billId, paymentId, "-1", "OK", "OK", new GeneralBillPaymentCallback() {
                     @Override
                     public void onPaymentInitializationFailed(int status, String statusDescription,
                                                               String billId, String paymentId,
                                                               String maskedPan, String panHash) {
-                        startActivity(ResultActivity.putIntent(PayActivity.this,
-                                String.format(Locale.ENGLISH,
-                                        "آغاز فرایند پرداخت قبض با شناسه قبض %s و شناسه پرداخت %s با خطا مواجه شد.", billId, paymentId),
-                                String.format(Locale.ENGLISH,
-                                        "کد وضعیت: %d", status),
-                                String.format(Locale.ENGLISH, "شرح خطا:\n%s", statusDescription)));
+                        startActivity(
+                                ResultActivity.putIntentResult(ResultActivity.putIntent(PayActivity.this,
+                                        String.format(Locale.ENGLISH,
+                                                "آغاز فرایند پرداخت قبض با شناسه قبض %s و شناسه پرداخت %s با خطا مواجه شد.", billId, paymentId),
+                                        String.format(Locale.ENGLISH,
+                                                "کد وضعیت: %d", status),
+                                        String.format(Locale.ENGLISH, "شرح خطا:\n%s", statusDescription)),
+                                        billId, paymentId, maskedPan, "terminalNo",
+                                        "merchantId", "traceNumber",
+                                        "rrn", "ref", "amount", "txnDate", "txnTime"));
                     }
 
                     @Override
@@ -99,39 +103,48 @@ public class PayActivity extends AppCompatActivity {
                                                  String traceNumber, String rrn, String ref,
                                                  String amount, String txnDate, String txnTime,
                                                  String maskedPan, String panHash) {
-                        startActivity(ResultActivity.putIntent(PayActivity.this,
-                                "پرداخت قبض با موفقیت انجام شد.",
-                                String.format(Locale.ENGLISH, "شناسه قبض:\n%s", billId),
-                                String.format(Locale.ENGLISH, "شناسه پرداخت:\n%s", paymentId),
-                                String.format(Locale.ENGLISH, "کد پیگیری:\n%s", traceNumber),
-                                String.format(Locale.ENGLISH, "شماره مرجع بازیابی:\n%s", rrn),
-                                String.format(Locale.ENGLISH, "مبلغ تراکنش:\n%s", amount),
-                                String.format(Locale.ENGLISH, "شماره کارت کاربر:\n%s", maskedPan)));
+                        startActivity(ResultActivity.putIntentResult(
+                                ResultActivity.putIntent(PayActivity.this,
+                                        "پرداخت قبض با موفقیت انجام شد.",
+                                        String.format(Locale.ENGLISH, "شناسه قبض:\n%s", billId),
+                                        String.format(Locale.ENGLISH, "شناسه پرداخت:\n%s", paymentId),
+                                        String.format(Locale.ENGLISH, "کد پیگیری:\n%s", traceNumber),
+                                        String.format(Locale.ENGLISH, "شماره مرجع بازیابی:\n%s", rrn),
+                                        String.format(Locale.ENGLISH, "مبلغ تراکنش:\n%s", amount),
+                                        String.format(Locale.ENGLISH, "شماره کارت کاربر:\n%s", maskedPan)),
+                                billId, paymentId, maskedPan, terminalNo, merchantId, traceNumber,
+                                rrn, ref, amount, txnDate, txnTime));
                     }
 
                     @Override
                     public void onPaymentFailed(int errorCode, String errorDescription,
                                                 String terminalNo, String merchantId,
-                                                String posSerial, String billId, String paymentId,
+                                                String posSerial, String billId1, String paymentId,
                                                 String traceNumber, String rrn, String ref,
                                                 String amount, String txnDate, String txnTime,
                                                 String maskedPan, String panHash) {
-                        startActivity(ResultActivity.putIntent(PayActivity.this, "پرداخت قبض با خطا مواجه شد.",
-                                String.format(Locale.ENGLISH, "کد خطا: %d", errorCode),
-                                String.format(Locale.ENGLISH, "شرح خطا:\n%s", errorDescription),
-                                String.format(Locale.ENGLISH, "شناسه قبض:\n%s", billId),
-                                String.format(Locale.ENGLISH, "شناسه پرداخت:\n%s", paymentId),
-                                String.format(Locale.ENGLISH, "کد پیگیری:\n%s", traceNumber),
-                                String.format(Locale.ENGLISH, "شماره مرجع بازیابی:\n%s", rrn),
-                                String.format(Locale.ENGLISH, "مبلغ تراکنش: %s", amount),
-                                String.format(Locale.ENGLISH, "شماره کارت کاربر:\n%s", maskedPan)));
+                        startActivity(ResultActivity.putIntentResult(
+                                ResultActivity.putIntent(PayActivity.this, "پرداخت قبض با خطا مواجه شد.",
+                                        String.format(Locale.ENGLISH, "کد خطا: %d", errorCode),
+                                        String.format(Locale.ENGLISH, "شرح خطا:\n%s", errorDescription),
+                                        String.format(Locale.ENGLISH, "شناسه قبض:\n%s", billId),
+                                        String.format(Locale.ENGLISH, "شناسه پرداخت:\n%s", paymentId),
+                                        String.format(Locale.ENGLISH, "کد پیگیری:\n%s", traceNumber),
+                                        String.format(Locale.ENGLISH, "شماره مرجع بازیابی:\n%s", rrn),
+                                        String.format(Locale.ENGLISH, "مبلغ تراکنش: %s", amount),
+                                        String.format(Locale.ENGLISH, "شماره کارت کاربر:\n%s", maskedPan)),
+                                billId, paymentId, maskedPan, terminalNo, merchantId, traceNumber,
+                                rrn, ref, amount, txnDate, txnTime));
                     }
 
                     @Override
-                    public void onPaymentCancelled(String billId, String paymentId,
+                    public void onPaymentCancelled(String billId1, String paymentId,
                                                    String maskedPan, String panHash) {
-                        startActivity(ResultActivity.putIntent(PayActivity.this,
-                                String.format(Locale.ENGLISH, "فرایند پرداخت قبض با شناسه قبض %s و شناسه پرداخت %s توسط کاربر لغو شد.", billId, paymentId)));
+                        startActivity(ResultActivity.putIntentResult(ResultActivity.putIntent(PayActivity.this,
+                                String.format(Locale.ENGLISH, "فرایند پرداخت قبض با شناسه قبض %s و شناسه پرداخت %s توسط کاربر لغو شد.", billId, paymentId)),
+                                billId, paymentId, maskedPan, "terminalNo",
+                                "merchantId", "traceNumber", "rrn",
+                                "ref", "amount", "txnDate", "txnTime"));
                     }
                 });
             } else {

@@ -38,6 +38,7 @@ public class VosoolLoad {
     public double y;
 
     public boolean isPayed;
+    public boolean isSent;
     public boolean isArchive;
 
     @Ignore

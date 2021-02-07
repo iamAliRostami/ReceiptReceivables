@@ -89,4 +89,22 @@ public class ResultActivity extends AppCompatActivity {
         intent.putStringArrayListExtra(BundleEnum.RESULT.getValue(), resultValuesList);
         return intent;
     }
+
+    public static Intent putIntentResult(Intent intent, String billId, String paymentId,
+                                         String maskedPan, String terminalNo, String merchantId,
+                                         String trackNumber, String rrn, String ref,
+                                         String amount, String txnDate, String txnTime) {
+        intent.putExtra(BundleEnum.BILL_ID.getValue(), billId);
+        intent.putExtra(BundleEnum.PAYMENT_ID.getValue(), paymentId);
+        intent.putExtra(BundleEnum.MESKED_PAN.getValue(), maskedPan);
+        intent.putExtra(BundleEnum.TERMINAL_NO.getValue(), terminalNo);
+        intent.putExtra(BundleEnum.MERCHANT_ID.getValue(), merchantId);
+        intent.putExtra(BundleEnum.TRACK_NUMBER.getValue(), trackNumber);
+        intent.putExtra(BundleEnum.RRN.getValue(), rrn);
+        intent.putExtra(BundleEnum.REF.getValue(), ref);
+        intent.putExtra(BundleEnum.AMOUNT.getValue(), amount);
+        intent.putExtra(BundleEnum.TXN_DATE.getValue(), txnDate);
+        intent.putExtra(BundleEnum.TXN_TIME.getValue(), txnTime);
+        return intent;
+    }
 }

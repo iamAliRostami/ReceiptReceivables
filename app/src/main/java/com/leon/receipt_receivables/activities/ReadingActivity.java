@@ -28,6 +28,7 @@ import com.leon.receipt_receivables.tables.ResultDictionary;
 import com.leon.receipt_receivables.tables.VosoolBill;
 import com.leon.receipt_receivables.tables.VosoolLoad;
 import com.leon.receipt_receivables.utils.CustomProgressBar;
+import com.leon.receipt_receivables.utils.CustomToast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -106,7 +107,7 @@ public class ReadingActivity extends BaseActivity {
                     karbari = karbariDictionary.title;
             readingItems.add(new ReadingAdapter.ReadingItem(vosoolLoad.payable, vosoolLoad.fullName,
                     vosoolLoad.lastPayDate, vosoolLoad.mobile, vosoolLoad.address, vosoolLoad.radif,
-                    vosoolLoad.billId, vosoolLoad.trackNumber, karbari));
+                    vosoolLoad.billId, vosoolLoad.trackNumber, karbari, vosoolLoad.isSent));
         }
         if (readingItems.isEmpty()) {
             binding.linearLayoutList.setVisibility(View.GONE);
@@ -128,13 +129,22 @@ public class ReadingActivity extends BaseActivity {
                             public void onItemClick(View view, int position) {
                                 Intent intent = new Intent(activity, PayActivity.class);
                                 Gson gson = new Gson();
+                                boolean isSent = true;
+                                String vosool = null;
                                 for (VosoolLoad vosoolLoad : vosoolLoads) {
-                                    if (vosoolLoad.billId.equals(readingAdapter.billId(position))) {
-                                        String vosool = gson.toJson(vosoolLoad);
-                                        intent.putExtra(BundleEnum.RESULT.getValue(), vosool);
+                                    if (vosoolLoad.billId.equals(
+                                            readingAdapter.getReading(position).billId) &&
+                                            !vosoolLoad.isSent) {
+                                        vosool = gson.toJson(vosoolLoad);
+                                        isSent = false;
                                     }
                                 }
-                                startActivity(intent);
+                                if (isSent) {
+                                    new CustomToast().warning("این اشتراک مشاهده شده است.");
+                                } else {
+                                    intent.putExtra(BundleEnum.RESULT.getValue(), vosool);
+                                    startActivity(intent);
+                                }
                             }
 
                             @Override

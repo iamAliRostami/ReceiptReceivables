@@ -5,8 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     android:layout_marginBottom="@dimen/low_dp"
-    android:id="@+id/linear_layout_background"
-    android:background="@drawable/border_blue_2"
+    android:background="@drawable/border_red_2"
     android:gravity="center_horizontal"
     android:layoutDirection="rtl"
     android:orientation="vertical"
@@ -25,13 +24,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/blue"
+            android:textColor="@color/red"
             android:textSize="@dimen/text_size_medium" />
 
         <LinearLayout
             android:layout_width="@dimen/small_dp"
             android:layout_height="match_parent"
-            android:background="@color/blue" />
+            android:background="@color/red" />
 
         <TextView
             android:id="@+id/text_view_debt"
@@ -39,14 +38,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/blue"
+            android:textColor="@color/red"
             android:textSize="@dimen/text_size_medium" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/small_dp"
-        android:background="@color/blue" />
+        android:background="@color/red" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -61,13 +60,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/blue"
+            android:textColor="@color/red"
             android:textSize="@dimen/text_size_medium" />
 
         <LinearLayout
             android:layout_width="@dimen/small_dp"
             android:layout_height="match_parent"
-            android:background="@color/blue" />
+            android:background="@color/red" />
 
         <TextView
             android:id="@+id/text_view_mobile"
@@ -75,27 +74,27 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/blue"
+            android:textColor="@color/red"
             android:textSize="@dimen/text_size_medium" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/small_dp"
-        android:background="@color/blue" />
+        android:background="@color/red" />
 
     <TextView
         android:id="@+id/text_view_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textColor="@color/blue"
+        android:textColor="@color/red"
         android:textSize="@dimen/text_size_medium" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/small_dp"
-        android:background="@color/blue" />
+        android:background="@color/red" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -110,13 +109,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/blue"
+            android:textColor="@color/red"
             android:textSize="@dimen/text_size_medium" />
 
         <LinearLayout
             android:layout_width="@dimen/small_dp"
             android:layout_height="match_parent"
-            android:background="@color/blue" />
+            android:background="@color/red" />
 
         <TextView
             android:id="@+id/text_view_radif"
@@ -124,14 +123,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/blue"
+            android:textColor="@color/red"
             android:textSize="@dimen/text_size_medium" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/small_dp"
-        android:background="@color/blue" />
+        android:background="@color/red" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -146,13 +145,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/blue"
+            android:textColor="@color/red"
             android:textSize="@dimen/text_size_medium" />
 
         <LinearLayout
             android:layout_width="@dimen/small_dp"
             android:layout_height="match_parent"
-            android:background="@color/blue" />
+            android:background="@color/red" />
 
         <TextView
             android:id="@+id/text_view_Karbari"
@@ -160,7 +159,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/blue"
+            android:textColor="@color/red"
             android:textSize="@dimen/text_size_medium" />
     </LinearLayout>
 

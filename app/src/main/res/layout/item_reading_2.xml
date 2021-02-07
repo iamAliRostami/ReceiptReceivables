@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     android:layout_marginBottom="@dimen/low_dp"
+    android:id="@+id/linear_layout_background"
     android:background="@drawable/border_blue_1"
     android:gravity="center_horizontal"
     android:layoutDirection="rtl"

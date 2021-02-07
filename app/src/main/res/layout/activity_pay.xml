@@ -12,7 +12,10 @@
         android:layout_gravity="top"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="@dimen/large_dp"
+        android:paddingLeft="@dimen/large_dp"
+        android:paddingTop="@dimen/medium_dp"
+        android:paddingRight="@dimen/large_dp"
+        android:paddingBottom="@dimen/medium_dp"
         tools:ignore="UselessParent">
 
         <EditText
@@ -21,7 +24,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/large_dp"
-            android:layout_marginTop="@dimen/low_dp"
             android:layout_marginRight="@dimen/large_dp"
             android:layout_marginBottom="@dimen/low_dp"
             android:background="@drawable/border_white_1"
@@ -34,7 +36,7 @@
             tools:ignore="Autofill" />
 
         <EditText
-            android:id="@+id/edit_text_purchase_id"
+            android:id="@+id/edit_text_payment_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -129,7 +131,6 @@
             android:layout_marginLeft="@dimen/large_dp"
             android:layout_marginTop="@dimen/low_dp"
             android:layout_marginRight="@dimen/large_dp"
-            android:layout_marginBottom="@dimen/low_dp"
             android:visibility="gone"
             tools:listitem="@layout/item_details_1" />
     </LinearLayout>

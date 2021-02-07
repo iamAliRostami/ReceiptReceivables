@@ -7,12 +7,12 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 @Database(entities = {SavedLocation.class, VosoolBill.class, ResultDictionary.class,
         KarbariDictionary.class, VosoolLoad.class},
-        version = 1, exportSchema = false)
+        version = 2, exportSchema = false)
 public abstract class MyDatabase extends RoomDatabase {
     public static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
-//            database.execSQL("CREATE TABLE t1_backup AS SELECT * FROM KarbariDto");
+            database.execSQL("Alter TABLE \"VosoolLoad\" Add column  isSent Integer;");
         }
     };
 

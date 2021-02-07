@@ -1,11 +1,13 @@
 package com.leon.receipt_receivables.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -49,7 +51,6 @@ public class ReadingAdapter extends
                         o2.lastPayDate));
                 break;
         }
-
     }
 
     public void search(int debt, String name, String billId, String radif,
@@ -147,9 +148,11 @@ public class ReadingAdapter extends
         return new ReadingItemHolder(view);
     }
 
+
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public void onBindViewHolder(@NonNull ReadingItemHolder holder, int position) {
-        ReadingItem readingItem = this.readingItemsTemp.get(position);
+        ReadingItem readingItem = readingItemsTemp.get(position);
         holder.textViewDebt.setText(String.valueOf(readingItem.debt));
         holder.textViewName.setText(readingItem.name);
         holder.textViewLastPayDate.setText(readingItem.lastPayDate);
@@ -177,8 +180,8 @@ public class ReadingAdapter extends
         return position % 2;
     }
 
-    public String billId(int position) {
-        return readingItemsTemp.get(position).billId;
+    public ReadingItem getReading(int position) {
+        return readingItemsTemp.get(position);
     }
 
     public static class ReadingItem {
@@ -188,12 +191,13 @@ public class ReadingAdapter extends
         String mobile;
         String address;
         String radif;
-        String billId;
+        public String billId;
         String trackNumber;
         String karbari;
+        boolean isSent;
 
         public ReadingItem(int debt, String name, String lastPayDate, String mobile, String address,
-                           int radif, String billId, String trackNumber, String karbari) {
+                           int radif, String billId, String trackNumber, String karbari, boolean isSent) {
             this.debt = debt;
             this.name = name;
             this.lastPayDate = lastPayDate;
@@ -203,10 +207,12 @@ public class ReadingAdapter extends
             this.billId = billId;
             this.trackNumber = trackNumber;
             this.karbari = karbari;
+            this.isSent = isSent;
         }
     }
 
     static class ReadingItemHolder extends RecyclerView.ViewHolder {
+        LinearLayout linearLayoutBackground;
         TextView textViewName;
         TextView textViewDebt;
         TextView textViewLastPayDate;
@@ -222,7 +228,7 @@ public class ReadingAdapter extends
             this.textViewName = viewItem.findViewById(R.id.text_view_name);
             this.textViewDebt = viewItem.findViewById(R.id.text_view_debt);
             this.textViewLastPayDate = viewItem.findViewById(R.id.text_view_last_pay_date);
-
+            this.linearLayoutBackground = viewItem.findViewById(R.id.linear_layout_background);
 
             this.textViewMobile = viewItem.findViewById(R.id.text_view_mobile);
             this.textViewAddress = viewItem.findViewById(R.id.text_view_address);

@@ -18,9 +18,9 @@ public class SharedPreferenceManager implements ISharedPreferenceManager {
 
     public boolean checkIsNotEmpty(String key) {
         if (appPrefs == null) {
-            return true;
+            return false;
         } else if (appPrefs.getString(key, "").length() < 1) {
-            return true;
+            return false;
         } else return !appPrefs.getString(key, "").isEmpty();
     }
 
