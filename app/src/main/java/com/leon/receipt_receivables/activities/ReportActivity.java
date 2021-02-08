@@ -31,7 +31,7 @@ public class ReportActivity extends BaseActivity {
         MyDatabase myDatabase = MyDatabaseClient.getInstance(activity).getMyDatabase();
         total = myDatabase.vosoolLoadDao().countTotalVossolLoad();
         payed = myDatabase.vosoolLoadDao().countPayedVossolLoad(true);
-        reading = myDatabase.vosoolLoadDao().countPayedVossolLoad(true);
+        reading = myDatabase.vosoolLoadDao().countSentVossolLoad(true);
         binding.textViewPayed.setText(String.valueOf(payed));
         binding.textViewTotal.setText(String.valueOf(total));
         binding.textViewRead.setText(String.valueOf(reading));

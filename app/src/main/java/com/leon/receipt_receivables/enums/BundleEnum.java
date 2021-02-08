@@ -1,9 +1,12 @@
 package com.leon.receipt_receivables.enums;
 
 public enum BundleEnum {
+    DESCRIPTION("description"),
     TERMINAL_NO("terminal_No"),
     MERCHANT_ID("merchant_Id"),
-    MESKED_PAN("masked_Pan"),
+    MASKED_PAN("masked_Pan"),
+    X("x"),
+    Y("Y"),
     TRACK_NUMBER("track_Number"),
     RRN("rrn"),
     REF("ref"),
@@ -12,6 +15,7 @@ public enum BundleEnum {
     TXN_TIME("txn_Time"),
     PAYMENT_ID("payment_Id"),
     BILL_ID("bill_Id"),
+    IS_PAYED("is_payed"),
     THEME("theme"),
     TYPE("type"),
     RESULT("resultValues");

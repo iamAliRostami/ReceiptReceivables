@@ -38,7 +38,6 @@ public class UploadActivity extends BaseActivity {
 
     @Override
     protected void onStop() {
-        binding.imageViewUpload.setImageDrawable(null);
         Debug.getNativeHeapAllocatedSize();
         System.runFinalization();
         Runtime.getRuntime().totalMemory();
@@ -51,6 +50,7 @@ public class UploadActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
+        binding.imageViewUpload.setImageDrawable(null);
         Debug.getNativeHeapAllocatedSize();
         System.runFinalization();
         Runtime.getRuntime().totalMemory();

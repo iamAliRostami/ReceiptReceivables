@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Debug;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
@@ -129,18 +130,24 @@ public class ReadingActivity extends BaseActivity {
                             public void onItemClick(View view, int position) {
                                 Intent intent = new Intent(activity, PayActivity.class);
                                 Gson gson = new Gson();
-                                boolean isSent = true;
+                                boolean isPayed = true, isSent = false;
                                 String vosool = null;
                                 for (VosoolLoad vosoolLoad : vosoolLoads) {
                                     if (vosoolLoad.billId.equals(
-                                            readingAdapter.getReading(position).billId) &&
-                                            !vosoolLoad.isPayed) {
-                                        vosool = gson.toJson(vosoolLoad);
-                                        isSent = false;
+                                            readingAdapter.getReading(position).billId)) {
+                                        if (!vosoolLoad.isPayed) {
+                                            vosool = gson.toJson(vosoolLoad);
+                                            isPayed = false;
+                                        }
+                                        if (vosoolLoad.isSent)
+                                            isSent = true;
                                     }
                                 }
                                 if (isSent) {
-                                    new CustomToast().warning("بدهی این اشتراک پرداخت شده است.");
+                                    new CustomToast().info("اطلاعات این اشتراک بارگذاری شده است.", Toast.LENGTH_LONG);
+                                }
+                                if (isPayed) {
+                                    new CustomToast().warning("بدهی این اشتراک پرداخت شده است.", Toast.LENGTH_SHORT);
                                 } else {
                                     intent.putExtra(BundleEnum.RESULT.getValue(), vosool);
                                     startActivity(intent);

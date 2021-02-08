@@ -12,117 +12,99 @@
         android:layout_gravity="top"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/large_dp"
-        android:paddingTop="@dimen/medium_dp"
-        android:paddingRight="@dimen/large_dp"
-        android:paddingBottom="@dimen/medium_dp"
+        android:paddingLeft="@dimen/medium_dp"
+        android:paddingTop="@dimen/low_dp"
+        android:paddingRight="@dimen/medium_dp"
+        android:paddingBottom="@dimen/low_dp"
         tools:ignore="UselessParent">
 
-        <EditText
-            android:id="@+id/edit_text_bill_id"
+        <LinearLayout
+            android:id="@+id/linear_layout_bill"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/large_dp"
-            android:layout_marginRight="@dimen/large_dp"
-            android:layout_marginBottom="@dimen/low_dp"
-            android:background="@drawable/border_white_1"
-            android:digits="0123456789"
-            android:gravity="center"
-            android:hint="@string/bill_id"
-            android:inputType="number"
-            android:maxLength="15"
-            android:padding="@dimen/medium_dp"
-            tools:ignore="Autofill" />
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/edit_text_payment_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/large_dp"
-            android:layout_marginTop="@dimen/low_dp"
-            android:layout_marginRight="@dimen/large_dp"
-            android:layout_marginBottom="@dimen/low_dp"
-            android:background="@drawable/border_white_1"
-            android:digits="0123456789"
-            android:gravity="center"
-            android:hint="@string/purchase_id"
-            android:inputType="number"
-            android:maxLength="15"
-            android:padding="@dimen/medium_dp"
-            tools:ignore="Autofill" />
+            <EditText
+                android:id="@+id/edit_text_bill_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/large_dp"
+                android:layout_marginRight="@dimen/large_dp"
+                android:layout_marginBottom="@dimen/low_dp"
+                android:background="@drawable/border_white_1"
+                android:digits="0123456789"
+                android:gravity="center"
+                android:hint="@string/bill_id"
+                android:inputType="number"
+                android:maxLength="15"
+                android:padding="@dimen/medium_dp"
+                tools:ignore="Autofill" />
+
+            <EditText
+                android:id="@+id/edit_text_payment_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/large_dp"
+                android:layout_marginRight="@dimen/large_dp"
+                android:layout_marginBottom="@dimen/low_dp"
+                android:background="@drawable/border_white_1"
+                android:digits="0123456789"
+                android:gravity="center"
+                android:hint="@string/purchase_id"
+                android:inputType="number"
+                android:maxLength="15"
+                android:padding="@dimen/medium_dp"
+                tools:ignore="Autofill" />
+
+            <Button
+                android:id="@+id/button_bill_payment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/large_dp"
+                android:layout_marginRight="@dimen/large_dp"
+                android:background="@drawable/border_green_1"
+                android:text="@string/bill_payment"
+                android:textColor="@android:color/primary_text_dark"
+                android:textSize="@dimen/text_size_medium" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginLeft="@dimen/large_dp"
-            android:layout_marginTop="@dimen/medium_dp"
             android:layout_marginRight="@dimen/large_dp"
-            android:layout_marginBottom="@dimen/medium_dp"
-            android:background="@drawable/border_white_1"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <EditText
-                android:id="@+id/edit_text_amount"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:digits="0123456789"
-                android:gravity="center"
-                android:hint="@string/amount"
-                android:inputType="number"
-                android:maxLength="13"
-                tools:ignore="Autofill" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:padding="@dimen/medium_dp"
-                android:text="@string/rial"
-                android:textColor="@android:color/primary_text_light" />
+            android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button_purchase"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@drawable/border_blue_1"
-                android:text="@string/purchase"
+                android:id="@+id/button_details"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/low_dp"
+                android:layout_marginBottom="@dimen/low_dp"
+                android:layout_weight="1"
+                android:background="@drawable/border_gray_1"
+                android:text="@string/details"
                 android:textColor="@android:color/primary_text_dark"
-                android:textStyle="bold" />
+                android:textSize="@dimen/text_size_medium"
+                tools:ignore="ButtonStyle" />
+
+            <Button
+                android:id="@+id/button_map"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/low_dp"
+                android:layout_marginBottom="@dimen/low_dp"
+                android:layout_weight="1"
+                android:background="@drawable/border_blue_1"
+                android:text="@string/map"
+                android:textColor="@android:color/primary_text_dark"
+                android:textSize="@dimen/text_size_medium"
+                android:visibility="gone"
+                tools:ignore="ButtonStyle" />
         </LinearLayout>
-
-        <Button
-            android:id="@+id/button_bill_payment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/large_dp"
-            android:layout_marginTop="@dimen/low_dp"
-            android:layout_marginRight="@dimen/large_dp"
-            android:layout_marginBottom="@dimen/low_dp"
-            android:background="@drawable/border_green_1"
-            android:text="@string/bill_payment"
-            android:textColor="@android:color/primary_text_dark"
-            android:textSize="@dimen/text_size_medium" />
-
-        <Button
-            android:id="@+id/button_details"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/large_dp"
-            android:layout_marginTop="@dimen/low_dp"
-            android:layout_marginRight="@dimen/large_dp"
-            android:layout_marginBottom="@dimen/low_dp"
-            android:background="@drawable/border_gray_1"
-            android:text="@string/details"
-            android:textColor="@android:color/primary_text_dark"
-            android:textSize="@dimen/text_size_medium" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_details"
@@ -133,6 +115,13 @@
             android:layout_marginRight="@dimen/large_dp"
             android:visibility="gone"
             tools:listitem="@layout/item_details_1" />
+
+        <org.osmdroid.views.MapView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/border_gray_3"
+            android:visibility="gone" />
     </LinearLayout>
 
     <include layout="@layout/footer" />

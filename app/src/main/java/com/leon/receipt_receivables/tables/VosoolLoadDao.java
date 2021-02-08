@@ -30,6 +30,9 @@ public interface VosoolLoadDao {
     @Insert
     void insertAllVosoolLoad(List<VosoolLoad> vosoolLoad);
 
+    @Query("UPDATE VosoolLoad SET isPayed = :isPayed WHERE billId = :billId")
+    void updateVosoolByPayed(boolean isPayed, String billId);
+
     @Query("UPDATE VosoolLoad SET isArchive = :isArchive WHERE billId = :billId")
     void updateVosoolByArchive(boolean isArchive, String billId);
 

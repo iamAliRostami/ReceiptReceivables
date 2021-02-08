@@ -67,6 +67,9 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-scalars:2.6.2"
     implementation 'com.google.code.gson:gson:2.8.6'
 
+    implementation 'com.github.MKergall:osmbonuspack:6.3'
+    implementation 'org.osmdroid:osmdroid-android:6.1.7@aar'
+
     api 'io.jsonwebtoken:jjwt-api:0.11.2'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
     runtimeOnly('io.jsonwebtoken:jjwt-orgjson:0.11.2') {

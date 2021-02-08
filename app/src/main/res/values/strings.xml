@@ -95,4 +95,5 @@
     <string name="_0">0</string>
     <string name="reading_number">خوانده شده</string>
     <string name="payed">پرداخت شده</string>
+    <string name="map">نقشه</string>
 </resources>
