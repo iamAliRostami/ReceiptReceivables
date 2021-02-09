@@ -183,7 +183,6 @@ public class ResultActivity extends AppCompatActivity {
             vosoolOffloadDto.x1 = getIntent().getExtras().getDouble(BundleEnum.X.getValue());
             vosoolOffloadDto.y1 = getIntent().getExtras().getDouble(BundleEnum.Y.getValue());
 
-            String txnDate = getIntent().getExtras().getString(BundleEnum.TXN_DATE.getValue());
             String txnTime = getIntent().getExtras().getString(BundleEnum.TXN_TIME.getValue());
 
             String ref = getIntent().getExtras().getString(BundleEnum.REF.getValue());
