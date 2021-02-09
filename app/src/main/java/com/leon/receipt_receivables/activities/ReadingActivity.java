@@ -129,6 +129,8 @@ public class ReadingActivity extends BaseActivity {
                             @Override
                             public void onItemClick(View view, int position) {
                                 Intent intent = new Intent(activity, PayActivity.class);
+                                intent.putExtra(BundleEnum.Y.getValue(), BaseActivity.getGpsTracker().getLatitude());
+                                intent.putExtra(BundleEnum.X.getValue(), BaseActivity.getGpsTracker().getLongitude());
                                 Gson gson = new Gson();
                                 boolean isPayed = true, isSent = false;
                                 String vosool = null;

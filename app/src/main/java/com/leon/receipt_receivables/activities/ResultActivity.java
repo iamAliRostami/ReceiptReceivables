@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -56,10 +57,22 @@ public class ResultActivity extends AppCompatActivity {
 
     void initialize() {
         getExtra();
+        gpsTracker = new GPSTracker(activity);
+        if (vosoolOffloadDto.isPaySuccess) {
+            binding.spinner.setVisibility(View.GONE);
+            vosoolOffloadDto.x2 = gpsTracker.getLongitude();
+            vosoolOffloadDto.y2 = gpsTracker.getLatitude();
+            vosoolOffloadDto.accuracy = gpsTracker.getAccuracy();
+            vosoolOffloadDto.resultId =
+                    resultDictionaries.get(binding.spinner.getSelectedItemPosition()).id;
+            MyDatabaseClient.getInstance(activity).getMyDatabase().vosoolOffloadDao().
+                    insertVosoolOffloadDto(vosoolOffloadDto);
+            MyDatabaseClient.getInstance(activity).getMyDatabase().vosoolLoadDao().
+                    updateVosoolByPayed(vosoolOffloadDto.isPaySuccess, vosoolOffloadDto.posBillId);
+        }
         setOnButtonPrintClickListener();
         setOnButtonSubmitClickListener();
         setupSpinner();
-        gpsTracker = new GPSTracker(activity);
     }
 
     void setupSpinner() {
@@ -79,15 +92,17 @@ public class ResultActivity extends AppCompatActivity {
 
     void setOnButtonSubmitClickListener() {
         binding.buttonSubmit.setOnClickListener(v -> {
-            vosoolOffloadDto.x2 = gpsTracker.getLongitude();
-            vosoolOffloadDto.y2 = gpsTracker.getLatitude();
-            vosoolOffloadDto.accuracy = gpsTracker.getAccuracy();
-            vosoolOffloadDto.resultId =
-                    resultDictionaries.get(binding.spinner.getSelectedItemPosition()).id;
-            MyDatabaseClient.getInstance(activity).getMyDatabase().vosoolOffloadDao().
-                    insertVosoolOffloadDto(vosoolOffloadDto);
-            MyDatabaseClient.getInstance(activity).getMyDatabase().vosoolLoadDao().
-                    updateVosoolByPayed(vosoolOffloadDto.isPaySuccess, vosoolOffloadDto.posBillId);
+            if (!vosoolOffloadDto.isPaySuccess) {
+                vosoolOffloadDto.x2 = gpsTracker.getLongitude();
+                vosoolOffloadDto.y2 = gpsTracker.getLatitude();
+                vosoolOffloadDto.accuracy = gpsTracker.getAccuracy();
+                vosoolOffloadDto.resultId =
+                        resultDictionaries.get(binding.spinner.getSelectedItemPosition()).id;
+                MyDatabaseClient.getInstance(activity).getMyDatabase().vosoolOffloadDao().
+                        insertVosoolOffloadDto(vosoolOffloadDto);
+                MyDatabaseClient.getInstance(activity).getMyDatabase().vosoolLoadDao().
+                        updateVosoolByPayed(vosoolOffloadDto.isPaySuccess, vosoolOffloadDto.posBillId);
+            }
             finish();
         });
     }
@@ -184,7 +199,7 @@ public class ResultActivity extends AppCompatActivity {
                 new GetXY(), new GetXYIncomplete(), new GetError());
     }
 
-    class GetXY implements ICallback<CustomPlace> {
+    static class GetXY implements ICallback<CustomPlace> {
         @Override
         public void execute(Response<CustomPlace> response) {
             if (response.body() != null && response.body().X != 0 && response.body().Y != 0) {

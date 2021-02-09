@@ -3,6 +3,7 @@ package com.leon.receipt_receivables.activities;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 
@@ -30,11 +31,10 @@ import com.leon.receipt_receivables.utils.HttpClientWrapper;
 import com.leon.receipt_receivables.utils.NetworkHelper;
 
 import org.osmdroid.api.IMapController;
+import org.osmdroid.config.Configuration;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.CustomZoomButtonsController;
 import org.osmdroid.views.overlay.Marker;
-import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
-import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -52,25 +52,30 @@ public class PayActivity extends AppCompatActivity {
     VosoolLoad vosoolLoad;
     ArrayList<DetailsAdapter.DetailsItem> detailsItems = new ArrayList<>();
     DetailsAdapter detailsAdapter;
-    boolean detail = true, map = true;
+    private boolean detail = true, map = true;
     GPSTracker gpsTracker;
-    double x, y;
+    double x, y, latitude, longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
         binding = com.leon.receipt_receivables.databinding.ActivityPayBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         activity = this;
+        gpsTracker = new GPSTracker(activity);
         if (getIntent() != null) {
             String vosool = getIntent().getExtras().getString(BundleEnum.RESULT.getValue());
+            latitude = getIntent().getExtras().getDouble(BundleEnum.Y.getValue());
+            longitude = getIntent().getExtras().getDouble(BundleEnum.X.getValue());
             Gson gson = new Gson();
             vosoolLoad = gson.fromJson(vosool, VosoolLoad.class);
             setupRecyclerView();
         }
-        getXY(vosoolLoad.billId);
+        getXY(vosoolLoad.billId/*"1040475216313"*/);
         initialize();
     }
+
 
     void initialize() {
         initializeMap();
@@ -94,15 +99,15 @@ public class PayActivity extends AppCompatActivity {
     void onButtonsClickListener() {
         binding.buttonDetails.setOnClickListener(v -> {
             binding.recyclerViewDetails.setVisibility(detail ? View.VISIBLE : View.GONE);
-            binding.mapView.setVisibility(!detail ? View.VISIBLE : View.GONE);
+            binding.mapView.setVisibility(View.GONE);
             detail = !detail;
-            map = !detail;
+            map = true;
         });
         binding.buttonMap.setOnClickListener(v -> {
             binding.mapView.setVisibility(map ? View.VISIBLE : View.GONE);
-            binding.recyclerViewDetails.setVisibility(!map ? View.VISIBLE : View.GONE);
-            detail = !detail;
-            map = !detail;
+            binding.recyclerViewDetails.setVisibility(View.GONE);
+            map = !map;
+            detail = true;
         });
         binding.buttonBillPayment.setOnClickListener(v -> {
             if (binding.editTextBillId.getText().toString().isEmpty()) {
@@ -200,29 +205,46 @@ public class PayActivity extends AppCompatActivity {
 
     @SuppressLint("MissingPermission")
     void initializeMap() {
-        gpsTracker = new GPSTracker(activity);
         binding.mapView.getZoomController().
                 setVisibility(CustomZoomButtonsController.Visibility.SHOW_AND_FADEOUT);
         binding.mapView.setMultiTouchControls(true);
         IMapController mapController = binding.mapView.getController();
-        mapController.setZoom(19.0);
-        double latitude = gpsTracker.getLatitude();
-        double longitude = gpsTracker.getLongitude();
+        mapController.setZoom(15.5);
 
         GeoPoint startPoint = new GeoPoint(latitude, longitude);
+        if (latitude == 0 || longitude == 0) {
+            startPoint = new GeoPoint(x, y);
+        }
         mapController.setCenter(startPoint);
-        MyLocationNewOverlay locationOverlay =
-                new MyLocationNewOverlay(new GpsMyLocationProvider(activity), binding.mapView);
-        locationOverlay.enableMyLocation();
-        binding.mapView.getOverlays().add(locationOverlay);
+
+        addPlace(startPoint, true);
+
+//        MyLocationNewOverlay locationOverlay =
+//                new MyLocationNewOverlay(new GpsMyLocationProvider(activity), binding.mapView);
+//        MyLocationNewOverlay locationOverlay =
+//                new MyLocationNewOverlay(binding.mapView);
+//        locationOverlay.enableFollowLocation();
+//
+//        Drawable currentDraw = ResourcesCompat.getDrawable(getResources(), R.mipmap.ic_launcher, null);
+//        Bitmap currentIcon = null;
+//        if (currentDraw != null) {
+//            currentIcon = ((BitmapDrawable) currentDraw).getBitmap();
+//        }
+//        locationOverlay.setPersonIcon(currentIcon);
+//
+//        locationOverlay.enableMyLocation();
+//        binding.mapView.getOverlays().add(locationOverlay);
     }
 
 
-    private void addPlace(GeoPoint p) {
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private void addPlace(GeoPoint p, boolean currentLocation) {
         GeoPoint startPoint = new GeoPoint(p.getLatitude(), p.getLongitude());
         Marker startMarker = new Marker(binding.mapView);
         startMarker.setPosition(startPoint);
         startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        if (currentLocation)
+            startMarker.setIcon(getResources().getDrawable(R.drawable.osm_ic_follow_me));
         binding.mapView.getOverlayManager().add(startMarker);
     }
 
@@ -245,9 +267,8 @@ public class PayActivity extends AppCompatActivity {
                 x = latLong[0];
                 y = latLong[1];
                 if (x != 0 && y != 0) {
-//                    binding.mapView.setVisibility(View.VISIBLE);
                     binding.buttonMap.setVisibility(View.VISIBLE);
-                    addPlace(new GeoPoint(latLong[0], latLong[1]));
+                    addPlace(new GeoPoint(latLong[0], latLong[1]), false);
                 }
             }
         }

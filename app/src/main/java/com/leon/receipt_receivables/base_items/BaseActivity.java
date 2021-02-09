@@ -58,7 +58,7 @@ public abstract class BaseActivity extends AppCompatActivity
     ISharedPreferenceManager sharedPreferenceManager;
     boolean exit = false;
     Activity activity;
-    GPSTracker gpsTracker;
+    static GPSTracker gpsTracker;
 
     protected abstract void initialize();
 
@@ -80,8 +80,10 @@ public abstract class BaseActivity extends AppCompatActivity
 
     void checkPermissions() {
         if (PermissionManager.gpsEnabled(this))
-            if (!PermissionManager.checkLocationPermission(activity)) {
+            if (!PermissionManager.checkLocationPermission(getApplicationContext())) {
                 askLocationPermission();
+            } else if (!PermissionManager.checkStoragePermission(getApplicationContext())) {
+                askStoragePermission();
             } else {
                 initialize();
                 gpsTracker = new GPSTracker(activity);
@@ -112,6 +114,33 @@ public abstract class BaseActivity extends AppCompatActivity
                 .setPermissions(
                         Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.ACCESS_COARSE_LOCATION
+                ).check();
+    }
+
+    void askStoragePermission() {
+        PermissionListener permissionlistener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                CustomToast customToast = new CustomToast();
+                customToast.info(getString(R.string.access_granted));
+                checkPermissions();
+            }
+
+            @Override
+            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                PermissionManager.forceClose(activity);
+            }
+        };
+        new TedPermission(this)
+                .setPermissionListener(permissionlistener)
+                .setRationaleMessage(getString(R.string.confirm_permission))
+                .setRationaleConfirmText(getString(R.string.allow_permission))
+                .setDeniedMessage(getString(R.string.if_reject_permission))
+                .setDeniedCloseButtonText(getString(R.string.close))
+                .setGotoSettingButtonText(getString(R.string.allow_permission))
+                .setPermissions(
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
                 ).check();
     }
 
@@ -253,7 +282,9 @@ public abstract class BaseActivity extends AppCompatActivity
             }
         }
     }
-
+    public static GPSTracker getGpsTracker() {
+        return gpsTracker;
+    }
     @Override
     protected void onStop() {
         Debug.getNativeHeapAllocatedSize();
