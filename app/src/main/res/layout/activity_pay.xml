@@ -58,17 +58,37 @@
                 android:padding="@dimen/medium_dp"
                 tools:ignore="Autofill" />
 
-            <Button
-                android:id="@+id/button_bill_payment"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/large_dp"
                 android:layout_marginRight="@dimen/large_dp"
-                android:background="@drawable/border_green_1"
-                android:text="@string/bill_payment"
-                android:textColor="@android:color/primary_text_dark"
-                android:textSize="@dimen/text_size_medium" />
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button_bill_payment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@drawable/border_green_1"
+                    android:text="@string/bill_payment"
+                    android:textColor="@android:color/primary_text_dark"
+                    android:textSize="@dimen/text_size_medium"
+                    tools:ignore="ButtonStyle" />
+
+                <Button
+                    android:id="@+id/button_status"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@drawable/border_blue_1"
+                    android:text="@string/submit_status"
+                    android:textColor="@android:color/primary_text_dark"
+                    android:textSize="@dimen/text_size_medium"
+                    tools:ignore="ButtonStyle" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -98,7 +118,7 @@
                 android:layout_marginTop="@dimen/low_dp"
                 android:layout_marginBottom="@dimen/low_dp"
                 android:layout_weight="1"
-                android:background="@drawable/border_blue_1"
+                android:background="@drawable/border_yellow_1"
                 android:text="@string/map"
                 android:textColor="@android:color/primary_text_dark"
                 android:textSize="@dimen/text_size_medium"

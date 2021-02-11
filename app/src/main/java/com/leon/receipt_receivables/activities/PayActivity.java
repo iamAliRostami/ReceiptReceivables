@@ -109,6 +109,27 @@ public class PayActivity extends AppCompatActivity {
             map = !map;
             detail = true;
         });
+        binding.buttonStatus.setOnClickListener(v -> {
+            if (binding.editTextBillId.getText().toString().isEmpty()) {
+                binding.editTextBillId.setError(getString(R.string.error_empty));
+                View view = binding.editTextBillId;
+                view.requestFocus();
+                return;
+            }
+            if (binding.editTextPaymentId.getText().toString().isEmpty()) {
+                binding.editTextPaymentId.setError(getString(R.string.error_empty));
+                View view = binding.editTextPaymentId;
+                view.requestFocus();
+                return;
+            }
+
+            String paymentId = binding.editTextPaymentId.getText().toString();
+            String billId = binding.editTextBillId.getText().toString();
+            startActivity(
+                    ResultCustomActivity.putIntentResult(PayActivity.this, billId,
+                            paymentId, x, y));
+            finish();
+        });
         binding.buttonBillPayment.setOnClickListener(v -> {
             if (binding.editTextBillId.getText().toString().isEmpty()) {
                 binding.editTextBillId.setError(getString(R.string.error_empty));
