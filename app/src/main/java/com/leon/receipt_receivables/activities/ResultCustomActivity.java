@@ -24,7 +24,7 @@ import com.leon.receipt_receivables.utils.GPSTracker;
 
 import java.util.ArrayList;
 
-public class ResultCustomActivity extends AppCompatActivity {
+public class  ResultCustomActivity extends AppCompatActivity {
     ActivityResultBinding binding;
     ArrayList<String> resultReturns;
     ArrayList<ResultDictionary> resultDictionaries = new ArrayList<>();

@@ -82,7 +82,8 @@ public class DownloadActivity extends BaseActivity {
                 ArrayList<ResultDictionary> resultDictionaries = new ArrayList<>(
                         myDatabase.resultDictionaryDao().getAllResultDictionary());
                 ArrayList<VosoolLoad> vosoolLoads = new ArrayList<>(
-                        myDatabase.vosoolLoadDao().getAllVosoolLoad());
+//                        myDatabase.vosoolLoadDao().getAllVosoolLoad());
+                        myDatabase.vosoolLoadDao().getSentVosoolLoad(false));
                 ArrayList<VosoolBill> vosoolBills = new ArrayList<>(
                         myDatabase.vosoolBillDao().getAllVosoolBill());
 

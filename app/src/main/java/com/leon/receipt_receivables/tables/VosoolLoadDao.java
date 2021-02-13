@@ -12,6 +12,9 @@ public interface VosoolLoadDao {
     @Query("Select * From VosoolLoad")
     List<VosoolLoad> getAllVosoolLoad();
 
+    @Query("Select * From VosoolLoad WHERE isSent = :isSent")
+    List<VosoolLoad> getSentVosoolLoad(boolean isSent);
+
     @Query("Select * From VosoolLoad WHERE isArchive = :isArchive")
     List<VosoolLoad> getVosoolLoadByArchive(boolean isArchive);
 
