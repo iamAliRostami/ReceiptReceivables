@@ -43,6 +43,7 @@ import retrofit2.Retrofit;
 public class DownloadActivity extends BaseActivity {
     ActivityDownloadBinding binding;
     Activity activity;
+    ISharedPreferenceManager sharedPreferenceManager;
 
     @Override
     protected void initialize() {
@@ -51,6 +52,7 @@ public class DownloadActivity extends BaseActivity {
         ConstraintLayout parentLayout = findViewById(R.id.base_Content);
         parentLayout.addView(childLayout);
         activity = this;
+        sharedPreferenceManager = new SharedPreferenceManager(activity, SharedReferenceNames.ACCOUNT.getValue());
         binding.imageViewDownload.setImageDrawable(ContextCompat.getDrawable(activity,
                 R.drawable.img_download));
         setOnButtonDownloadClickListener();
@@ -58,7 +60,8 @@ public class DownloadActivity extends BaseActivity {
 
     void setOnButtonDownloadClickListener() {
         binding.buttonDownload.setOnClickListener(v -> {
-            Retrofit retrofit = NetworkHelper.getInstance(false);
+            Retrofit retrofit = NetworkHelper.getInstance(sharedPreferenceManager.getStringData(
+                    SharedReferenceKeys.TOKEN.getValue()), false);
             IAbfaService iAbfaService = retrofit.create(IAbfaService.class);
             Call<ReceiptReceivablesFeedback> call = iAbfaService.download();
             HttpClientWrapper.callHttpAsync(call, ProgressType.SHOW.getValue(), activity,
@@ -69,10 +72,17 @@ public class DownloadActivity extends BaseActivity {
     class Download implements ICallback<ReceiptReceivablesFeedback> {
         @Override
         public void execute(Response<ReceiptReceivablesFeedback> response) {
-            ISharedPreferenceManager sharedPreferenceManager = new SharedPreferenceManager(activity, SharedReferenceNames.ACCOUNT.getValue());
+            ISharedPreferenceManager sharedPreferenceManager =
+                    new SharedPreferenceManager(activity, SharedReferenceNames.ACCOUNT.getValue());
             CalendarTool calendarTool = new CalendarTool();
-            sharedPreferenceManager.putData(SharedReferenceKeys.DATE.getValue(), calendarTool.getIranianDate());
-
+            String date = String.valueOf(calendarTool.getIranianYear()).concat("/").
+                    concat(calendarTool.getIranianMonth() < 10 ?
+                            "0".concat(String.valueOf(calendarTool.getIranianMonth())) :
+                            String.valueOf(calendarTool.getIranianMonth())).concat("/").
+                    concat(calendarTool.getIranianDay() < 10 ?
+                            "0".concat(String.valueOf(calendarTool.getIranianDay())) :
+                            String.valueOf(calendarTool.getIranianDay()));
+            sharedPreferenceManager.putData(SharedReferenceKeys.DATE.getValue(), date);
             final ReceiptReceivablesFeedback receiptReceivablesFeedback = response.body();
             final ReceiptReceivablesFeedback receiptReceivablesFeedbackTemp = response.body();
             if (receiptReceivablesFeedback != null && receiptReceivablesFeedbackTemp != null) {
@@ -151,7 +161,6 @@ public class DownloadActivity extends BaseActivity {
                     DownloadActivity.this.getString(R.string.download),
                     DownloadActivity.this.getString(R.string.accepted));
         }
-
     }
 
     @Override

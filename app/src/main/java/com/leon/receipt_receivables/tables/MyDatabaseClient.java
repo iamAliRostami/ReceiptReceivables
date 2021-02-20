@@ -34,11 +34,12 @@ public class MyDatabaseClient {
     }
 
     public static void deleteAndReset(Context context) {
-        SQLiteDatabase database;
-        database = SQLiteDatabase.openOrCreateDatabase(context.getDatabasePath(MyApplication.getDBName()), null);
+        SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase(
+                context.getDatabasePath(MyApplication.getDBName()), null);
         String deleteTable = "DELETE FROM " + MyApplication.getDBName();
         database.execSQL(deleteTable);
-        String deleteSqLiteSequence = "DELETE FROM sqlite_sequence WHERE name = '" + MyApplication.getDBName() + "'";
+        String deleteSqLiteSequence =
+                "DELETE FROM sqlite_sequence WHERE name = '" + MyApplication.getDBName() + "'";
         database.execSQL(deleteSqLiteSequence);
     }
 

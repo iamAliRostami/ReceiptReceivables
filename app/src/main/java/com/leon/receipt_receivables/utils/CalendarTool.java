@@ -1,6 +1,7 @@
 package com.leon.receipt_receivables.utils;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -127,11 +127,12 @@ public class ResultActivity extends AppCompatActivity {
         return intent;
     }
 
-    public static Intent putIntentResult(Intent intent, String billId, String paymentId,
+    public static Intent putIntentResult(Intent intent,String id, String billId, String paymentId,
                                          String maskedPan, String terminalNo, String merchantId,
                                          String trackNumber, String rrn, String ref, String amount,
                                          String txnDate, String txnTime, String description,
                                          double x, double y, boolean isPayed) {
+        intent.putExtra(BundleEnum.ID.getValue(), id);
         intent.putExtra(BundleEnum.BILL_ID.getValue(), billId);
         intent.putExtra(BundleEnum.PAYMENT_ID.getValue(), paymentId);
         intent.putExtra(BundleEnum.MASKED_PAN.getValue(), maskedPan);
@@ -154,6 +155,7 @@ public class ResultActivity extends AppCompatActivity {
         vosoolOffloadDto = new VosoolOffloadDto();
         if (getIntent() != null) {
             vosoolOffloadDto.posBillId = getIntent().getExtras().getString(BundleEnum.BILL_ID.getValue());
+            vosoolOffloadDto.id = getIntent().getExtras().getString(BundleEnum.ID.getValue());
             vosoolOffloadDto.posPayId = getIntent().getExtras().getString(BundleEnum.PAYMENT_ID.getValue());
             vosoolOffloadDto.posTerminal = getIntent().getExtras().getString(BundleEnum.TERMINAL_NO.getValue());
             vosoolOffloadDto.bankTrackNumber = getIntent().getExtras().getString(BundleEnum.TRACK_NUMBER.getValue());

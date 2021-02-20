@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Debug;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
@@ -204,6 +205,7 @@ public class ReadingActivity extends BaseActivity {
                         vosoolLoads.get(i).vosoolBills.add(vosoolBills.get(j));
                 }
             }
+            Log.e("size", String.valueOf(vosoolLoads.size()));
             runOnUiThread(ReadingActivity.this::setupRecyclerView);
             return null;
         }

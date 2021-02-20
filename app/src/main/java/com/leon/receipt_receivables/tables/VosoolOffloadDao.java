@@ -6,6 +6,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import java.util.List;
+
 @Dao
 public interface VosoolOffloadDao {
 
@@ -23,6 +24,9 @@ public interface VosoolOffloadDao {
 
     @Query("UPDATE VosoolOffloadDto SET isSent = :isSent WHERE posBillId = :billId")
     void VosoolOffloadDtoBySent(boolean isSent, String billId);
+
+    @Query("UPDATE VosoolOffloadDto SET isSent = :isSent")
+    void updateVosoolOffloadDtoBySent(boolean isSent);
 
     @Update
     void VosoolOffloadDtoBySent(VosoolOffloadDto vosoolOffloadDto);

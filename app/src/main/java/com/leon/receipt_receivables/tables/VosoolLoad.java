@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class VosoolLoad {
     @PrimaryKey(autoGenerate = true)
     public int customId;
-
+    public String id;
     public String trackNumber;
     public int radif;
     public int zoneId;

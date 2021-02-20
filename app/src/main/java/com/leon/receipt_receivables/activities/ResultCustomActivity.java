@@ -105,10 +105,11 @@ public class  ResultCustomActivity extends AppCompatActivity {
         }
     }
 
-    public static Intent putIntentResult(Context context, String billId, String paymentId,
+    public static Intent putIntentResult(Context context,String id, String billId, String paymentId,
                                          double x, double y) {
         Intent intent = new Intent(context, ResultCustomActivity.class);
         intent.putExtra(BundleEnum.BILL_ID.getValue(), billId);
+        intent.putExtra(BundleEnum.ID.getValue(), id);
         intent.putExtra(BundleEnum.PAYMENT_ID.getValue(), paymentId);
         intent.putExtra(BundleEnum.X.getValue(), x);
         intent.putExtra(BundleEnum.Y.getValue(), y);
@@ -119,6 +120,7 @@ public class  ResultCustomActivity extends AppCompatActivity {
         vosoolOffloadDto = new VosoolOffloadDto();
         if (getIntent() != null) {
             vosoolOffloadDto.posBillId = getIntent().getExtras().getString(BundleEnum.BILL_ID.getValue());
+            vosoolOffloadDto.id = getIntent().getExtras().getString(BundleEnum.ID.getValue());
             vosoolOffloadDto.posPayId = getIntent().getExtras().getString(BundleEnum.PAYMENT_ID.getValue());
             vosoolOffloadDto.x1 = getIntent().getExtras().getDouble(BundleEnum.X.getValue());
             vosoolOffloadDto.y1 = getIntent().getExtras().getDouble(BundleEnum.Y.getValue());

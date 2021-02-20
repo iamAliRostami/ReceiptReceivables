@@ -10,6 +10,7 @@ public class ResultDictionary {
     public int customId;
     public int id;
     public String title;
+    public boolean isSuccess;
     public boolean isSelected;
     public boolean isDisabled;
     public boolean hasSms;

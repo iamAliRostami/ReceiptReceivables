@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 public class VosoolOffloadDto {
     @PrimaryKey(autoGenerate = true)
     public int customId;
-
+    public String id;
     public int resultId;
     public String description;
     public String bankTrackNumber;

@@ -71,7 +71,8 @@ public class MainActivity extends BaseActivity {
         if (sharedPreferenceManager.checkIsNotEmpty(SharedReferenceKeys.DATE.getValue()) &&
                 CalendarTool.findDifferent(sharedPreferenceManager.getStringData(
                         SharedReferenceKeys.DATE.getValue()).substring(2)) > 0) {
-            MyDatabaseClient.getInstance(activity).getMyDatabase().vosoolLoadDao().updateVosoolByArchive(true);
+            MyDatabaseClient.getInstance(activity).getMyDatabase().vosoolLoadDao().
+                    updateVosoolByArchive(true);
         }
     }
 

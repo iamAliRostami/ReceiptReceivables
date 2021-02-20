@@ -24,7 +24,6 @@ import com.leon.receipt_receivables.infrastructure.ICallbackError;
 import com.leon.receipt_receivables.infrastructure.ICallbackIncomplete;
 import com.leon.receipt_receivables.infrastructure.ISharedPreferenceManager;
 import com.leon.receipt_receivables.tables.LoginFeedBack;
-import com.leon.receipt_receivables.tables.LoginInfo;
 import com.leon.receipt_receivables.utils.Crypto;
 import com.leon.receipt_receivables.utils.CustomDialog;
 import com.leon.receipt_receivables.utils.CustomErrorHandling;
@@ -32,8 +31,6 @@ import com.leon.receipt_receivables.utils.CustomToast;
 import com.leon.receipt_receivables.utils.HttpClientWrapper;
 import com.leon.receipt_receivables.utils.NetworkHelper;
 import com.leon.receipt_receivables.utils.SharedPreferenceManager;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -135,7 +132,7 @@ public class LoginActivity extends AppCompatActivity {
     void attemptLogin() {
         Retrofit retrofit = NetworkHelper.getInstance(false);
         final IAbfaService loginInfo = retrofit.create(IAbfaService.class);
-        Call<LoginFeedBack> call = loginInfo.login(new LoginInfo(username, password));
+        Call<LoginFeedBack> call = loginInfo.login(username, password);
         HttpClientWrapper.callHttpAsync(call, ProgressType.SHOW.getValue(), this,
                 new Login(), new GetErrorIncomplete(), new GetError());
     }
@@ -143,9 +140,9 @@ public class LoginActivity extends AppCompatActivity {
     void savePreference(LoginFeedBack loginFeedBack) {
         sharedPreferenceManager.putData(SharedReferenceKeys.DISPLAY_NAME.getValue(), loginFeedBack.displayName);
         sharedPreferenceManager.putData(SharedReferenceKeys.USER_CODE.getValue(), loginFeedBack.userCode);
+//        sharedPreferenceManager.putData(SharedReferenceKeys.XSRF.getValue(), loginFeedBack.XSRFToken);
         sharedPreferenceManager.putData(SharedReferenceKeys.TOKEN.getValue(), loginFeedBack.access_token);
         sharedPreferenceManager.putData(SharedReferenceKeys.REFRESH_TOKEN.getValue(), loginFeedBack.refresh_token);
-        sharedPreferenceManager.putData(SharedReferenceKeys.XSRF.getValue(), loginFeedBack.XSRFToken);
         sharedPreferenceManager.putData(SharedReferenceKeys.USERNAME_TEMP.getValue(), username);
         sharedPreferenceManager.putData(SharedReferenceKeys.PASSWORD_TEMP.getValue(), Crypto.encrypt(password));
         if (binding.checkBoxSave.isChecked()) {
@@ -175,11 +172,11 @@ public class LoginActivity extends AppCompatActivity {
                 CustomToast customToast = new CustomToast();
                 customToast.warning(getString(R.string.error_is_not_match));
             } else {
-                List<String> cookieList = response.headers().values("Set-Cookie");
-                loginFeedBack.XSRFToken = (cookieList.get(1).split(";"))[0];
+//                List<String> cookieList = response.headers().values("Set-Cookie");
+//                loginFeedBack.XSRFToken = (cookieList.get(1).split(";"))[0];
                 JWT jwt = new JWT(loginFeedBack.access_token);
-                loginFeedBack.displayName = jwt.getClaim("DisplayName").asString();
-                loginFeedBack.userCode = jwt.getClaim("UserCode").asString();
+                loginFeedBack.displayName = jwt.getClaim("displayName").asString();
+                loginFeedBack.userCode = jwt.getClaim("userCode").asString();
                 savePreference(loginFeedBack);
                 Intent intent = new Intent(context, MainActivity.class);
                 startActivity(intent);
