@@ -155,7 +155,8 @@ public class ReadingAdapter extends
         ReadingItem readingItem = readingItemsTemp.get(position);
         holder.textViewDebt.setText(String.valueOf(readingItem.debt));
         holder.textViewName.setText(readingItem.name);
-        holder.textViewLastPayDate.setText(readingItem.lastPayDate);
+        if (readingItem.lastPayDate != null && !readingItem.lastPayDate.isEmpty())
+            holder.textViewLastPayDate.setText(readingItem.lastPayDate);
 
         holder.textViewMobile.setText(readingItem.mobile);
         holder.textViewAddress.setText(readingItem.address);

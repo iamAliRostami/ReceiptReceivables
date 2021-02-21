@@ -32,16 +32,14 @@
 
             <Spinner
                 android:id="@+id/spinner"
-                style="@style/Widget.AppCompat.Spinner.DropDown"
+                style="@style/custom_spinner"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/low_dp"
                 android:layout_marginBottom="@dimen/low_dp"
                 android:layout_weight="1"
-                android:popupBackground="@drawable/border_gray_1"
                 android:prompt="@string/status"
-                android:spinnerMode="dialog"
                 tools:listitem="@layout/item_dropdown" />
 
         </LinearLayout>

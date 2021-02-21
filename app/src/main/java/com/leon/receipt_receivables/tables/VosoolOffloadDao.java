@@ -23,11 +23,11 @@ public interface VosoolOffloadDao {
     void insertVosoolOffloadDto(List<VosoolOffloadDto> vosoolOffloadDto);
 
     @Query("UPDATE VosoolOffloadDto SET isSent = :isSent WHERE posBillId = :billId")
-    void VosoolOffloadDtoBySent(boolean isSent, String billId);
+    void updateVosoolOffloadDtoBySent(boolean isSent, String billId);
 
     @Query("UPDATE VosoolOffloadDto SET isSent = :isSent")
     void updateVosoolOffloadDtoBySent(boolean isSent);
 
     @Update
-    void VosoolOffloadDtoBySent(VosoolOffloadDto vosoolOffloadDto);
+    void updateVosoolOffloadDtoBySent(VosoolOffloadDto vosoolOffloadDto);
 }

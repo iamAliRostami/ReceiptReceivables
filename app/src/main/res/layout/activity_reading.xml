@@ -50,14 +50,12 @@
 
             <Spinner
                 android:id="@+id/spinner"
-                style="@style/Widget.AppCompat.Spinner.DropDown"
+                style="@style/custom_spinner"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:popupBackground="@drawable/border_gray_1"
                 android:prompt="@string/sort_by"
-                android:spinnerMode="dialog"
                 tools:listitem="@layout/item_dropdown" />
 
             <ImageView

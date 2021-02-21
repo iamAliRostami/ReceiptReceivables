@@ -3,6 +3,7 @@ package com.leon.receipt_receivables.activities;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Debug;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
@@ -79,10 +80,8 @@ public class PayActivity extends AppCompatActivity {
 
     void initialize() {
         initializeMap();
-        binding.editTextBillId.setText(vosoolLoad.billId);
-        binding.editTextBillId.setEnabled(false);
-        binding.editTextPaymentId.setText(vosoolLoad.vosoolBills.get(vosoolLoad.vosoolBills.size() - 1).payId);
-        binding.editTextPaymentId.setEnabled(false);
+        binding.textViewBillId.setText(vosoolLoad.billId);
+        binding.textViewPaymentId.setText(vosoolLoad.vosoolBills.get(vosoolLoad.vosoolBills.size() - 1).payId);
 
         onButtonsClickListener();
     }
@@ -110,42 +109,17 @@ public class PayActivity extends AppCompatActivity {
             detail = true;
         });
         binding.buttonStatus.setOnClickListener(v -> {
-            if (binding.editTextBillId.getText().toString().isEmpty()) {
-                binding.editTextBillId.setError(getString(R.string.error_empty));
-                View view = binding.editTextBillId;
-                view.requestFocus();
-                return;
-            }
-            if (binding.editTextPaymentId.getText().toString().isEmpty()) {
-                binding.editTextPaymentId.setError(getString(R.string.error_empty));
-                View view = binding.editTextPaymentId;
-                view.requestFocus();
-                return;
-            }
-
-            String paymentId = binding.editTextPaymentId.getText().toString();
-            String billId = binding.editTextBillId.getText().toString();
+            String paymentId = binding.textViewPaymentId.getText().toString();
+            String billId = binding.textViewBillId.getText().toString();
             startActivity(
                     ResultCustomActivity.putIntentResult(PayActivity.this, vosoolLoad.id,
                             billId, paymentId, x, y));
             finish();
         });
         binding.buttonBillPayment.setOnClickListener(v -> {
-            if (binding.editTextBillId.getText().toString().isEmpty()) {
-                binding.editTextBillId.setError(getString(R.string.error_empty));
-                View view = binding.editTextBillId;
-                view.requestFocus();
-                return;
-            }
-            if (binding.editTextPaymentId.getText().toString().isEmpty()) {
-                binding.editTextPaymentId.setError(getString(R.string.error_empty));
-                View view = binding.editTextPaymentId;
-                view.requestFocus();
-                return;
-            }
             if (isNetworkAvailable(activity)) {
-                String paymentId = binding.editTextPaymentId.getText().toString();
-                String billId = binding.editTextBillId.getText().toString();
+                String paymentId = binding.textViewPaymentId.getText().toString();
+                String billId = binding.textViewBillId.getText().toString();
                 SDKManager.billPayment(PayActivity.this, hostApp, billId, paymentId, "-1", "OK", "OK", new GeneralBillPaymentCallback() {
                     @Override
                     public void onPaymentInitializationFailed(int status, String statusDescription,
@@ -307,5 +281,29 @@ public class PayActivity extends AppCompatActivity {
         public void executeError(Throwable t) {
             Log.e("Error", t.getMessage());
         }
+    }
+
+    @Override
+    protected void onStop() {
+        Debug.getNativeHeapAllocatedSize();
+        System.runFinalization();
+        Runtime.getRuntime().totalMemory();
+        Runtime.getRuntime().freeMemory();
+        Runtime.getRuntime().maxMemory();
+        Runtime.getRuntime().gc();
+        System.gc();
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Debug.getNativeHeapAllocatedSize();
+        System.runFinalization();
+        Runtime.getRuntime().totalMemory();
+        Runtime.getRuntime().freeMemory();
+        Runtime.getRuntime().maxMemory();
+        Runtime.getRuntime().gc();
+        System.gc();
+        super.onDestroy();
     }
 }

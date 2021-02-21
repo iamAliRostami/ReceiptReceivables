@@ -22,47 +22,45 @@
             android:id="@+id/linear_layout_bill"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/large_dp"
+            android:layout_marginRight="@dimen/large_dp"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/edit_text_bill_id"
+            <TextView
+                android:id="@+id/text_view_bill_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/large_dp"
-                android:layout_marginRight="@dimen/large_dp"
                 android:layout_marginBottom="@dimen/low_dp"
-                android:background="@drawable/border_white_1"
-                android:digits="0123456789"
+                android:background="@drawable/border_white_2"
                 android:gravity="center"
                 android:hint="@string/bill_id"
-                android:inputType="number"
                 android:maxLength="15"
                 android:padding="@dimen/medium_dp"
+                android:textColor="@color/text_color_dark"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold"
                 tools:ignore="Autofill" />
 
-            <EditText
-                android:id="@+id/edit_text_payment_id"
+            <TextView
+                android:id="@+id/text_view_payment_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/large_dp"
-                android:layout_marginRight="@dimen/large_dp"
                 android:layout_marginBottom="@dimen/low_dp"
-                android:background="@drawable/border_white_1"
-                android:digits="0123456789"
+                android:background="@drawable/border_white_2"
                 android:gravity="center"
                 android:hint="@string/purchase_id"
-                android:inputType="number"
                 android:maxLength="15"
                 android:padding="@dimen/medium_dp"
+                android:textColor="@color/text_color_dark"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold"
                 tools:ignore="Autofill" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/large_dp"
-                android:layout_marginRight="@dimen/large_dp"
                 android:orientation="horizontal">
 
                 <Button
@@ -89,41 +87,39 @@
                     android:textSize="@dimen/text_size_medium"
                     tools:ignore="ButtonStyle" />
             </LinearLayout>
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/large_dp"
-            android:layout_marginRight="@dimen/large_dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/button_details"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/low_dp"
-                android:layout_marginBottom="@dimen/low_dp"
-                android:layout_weight="1"
-                android:background="@drawable/border_gray_1"
-                android:text="@string/details"
-                android:textColor="@android:color/primary_text_dark"
-                android:textSize="@dimen/text_size_medium"
-                tools:ignore="ButtonStyle" />
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/button_map"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/low_dp"
-                android:layout_marginBottom="@dimen/low_dp"
-                android:layout_weight="1"
-                android:background="@drawable/border_yellow_1"
-                android:text="@string/map"
-                android:textColor="@android:color/primary_text_dark"
-                android:textSize="@dimen/text_size_medium"
-                android:visibility="gone"
-                tools:ignore="ButtonStyle" />
+                <Button
+                    android:id="@+id/button_details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/low_dp"
+                    android:layout_marginBottom="@dimen/low_dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/border_gray_1"
+                    android:text="@string/details"
+                    android:textColor="@android:color/primary_text_dark"
+                    android:textSize="@dimen/text_size_medium"
+                    tools:ignore="ButtonStyle" />
+
+                <Button
+                    android:id="@+id/button_map"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/low_dp"
+                    android:layout_marginBottom="@dimen/low_dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/border_yellow_1"
+                    android:text="@string/map"
+                    android:textColor="@android:color/primary_text_dark"
+                    android:textSize="@dimen/text_size_medium"
+                    android:visibility="gone"
+                    tools:ignore="ButtonStyle" />
+            </LinearLayout>
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

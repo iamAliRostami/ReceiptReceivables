@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Debug;
 import android.view.View;
 import android.widget.Toast;
 
@@ -14,16 +15,33 @@ import com.leon.receipt_receivables.R;
 import com.leon.receipt_receivables.adapters.SpinnerCustomAdapter;
 import com.leon.receipt_receivables.databinding.ActivityResultBinding;
 import com.leon.receipt_receivables.enums.BundleEnum;
+import com.leon.receipt_receivables.enums.ProgressType;
+import com.leon.receipt_receivables.enums.SharedReferenceKeys;
+import com.leon.receipt_receivables.enums.SharedReferenceNames;
+import com.leon.receipt_receivables.infrastructure.IAbfaService;
+import com.leon.receipt_receivables.infrastructure.ICallback;
+import com.leon.receipt_receivables.infrastructure.ICallbackError;
+import com.leon.receipt_receivables.infrastructure.ICallbackIncomplete;
+import com.leon.receipt_receivables.infrastructure.ISharedPreferenceManager;
 import com.leon.receipt_receivables.tables.MyDatabaseClient;
 import com.leon.receipt_receivables.tables.PrintModel;
 import com.leon.receipt_receivables.tables.PrintableDataList;
 import com.leon.receipt_receivables.tables.ResultDictionary;
+import com.leon.receipt_receivables.tables.VosoolOffload;
 import com.leon.receipt_receivables.tables.VosoolOffloadDto;
+import com.leon.receipt_receivables.tables.VosoolOffloadResponse;
 import com.leon.receipt_receivables.utils.CustomToast;
 import com.leon.receipt_receivables.utils.GPSTracker;
+import com.leon.receipt_receivables.utils.HttpClientWrapper;
+import com.leon.receipt_receivables.utils.NetworkHelper;
+import com.leon.receipt_receivables.utils.SharedPreferenceManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class ResultActivity extends AppCompatActivity {
     ActivityResultBinding binding;
@@ -64,7 +82,6 @@ public class ResultActivity extends AppCompatActivity {
     void setupSpinner() {
         resultDictionaries.addAll(MyDatabaseClient.getInstance(activity).getMyDatabase().
                 resultDictionaryDao().getAllResultDictionary());
-
         ArrayList<String> items = new ArrayList<>();
         for (ResultDictionary resultDictionary : resultDictionaries)
             items.add(resultDictionary.title);
@@ -84,13 +101,60 @@ public class ResultActivity extends AppCompatActivity {
                 vosoolOffloadDto.accuracy = gpsTracker.getAccuracy();
                 vosoolOffloadDto.resultId =
                         resultDictionaries.get(binding.spinner.getSelectedItemPosition()).id;
-                MyDatabaseClient.getInstance(activity).getMyDatabase().vosoolOffloadDao().
-                        insertVosoolOffloadDto(vosoolOffloadDto);
                 MyDatabaseClient.getInstance(activity).getMyDatabase().vosoolLoadDao().
                         updateVosoolByPayed(vosoolOffloadDto.isPaySuccess, vosoolOffloadDto.posBillId);
             }
-            finish();
+            upload();
         });
+    }
+
+    void upload() {
+        ISharedPreferenceManager sharedPreferenceManager = new SharedPreferenceManager(activity,
+                SharedReferenceNames.ACCOUNT.getValue());
+        Retrofit retrofit = NetworkHelper.getInstance(sharedPreferenceManager.getStringData(
+                SharedReferenceKeys.TOKEN.getValue()), false);
+        IAbfaService iAbfaService = retrofit.create(IAbfaService.class);
+        ArrayList<VosoolOffloadDto> vosoolOffloadDtos = new ArrayList<>();
+        vosoolOffloadDtos.add(vosoolOffloadDto);
+        Call<VosoolOffloadResponse> call = iAbfaService.upload(new VosoolOffload(vosoolOffloadDtos));
+        HttpClientWrapper.callHttpAsync(call, ProgressType.SHOW.getValue(), activity,
+                new Upload(), new GetErrorIncomplete(), new GetError());
+    }
+
+    class Upload implements ICallback<VosoolOffloadResponse> {
+        @Override
+        public void execute(Response<VosoolOffloadResponse> response) {
+            if (response.body() != null && response.body().errorCode == 200) {
+                MyDatabaseClient.getInstance(activity).getMyDatabase().vosoolLoadDao().
+                        updateVosoolBySent(true, vosoolOffloadDto.posBillId);
+                MyDatabaseClient.getInstance(activity).getMyDatabase().vosoolOffloadDao().
+                        updateVosoolOffloadDtoBySent(true, vosoolOffloadDto.posBillId);
+            } else if (!vosoolOffloadDto.isPaySuccess) {
+                MyDatabaseClient.getInstance(activity).getMyDatabase().vosoolOffloadDao().
+                        insertVosoolOffloadDto(vosoolOffloadDto);
+            }
+            finish();
+        }
+    }
+
+    class GetErrorIncomplete implements ICallbackIncomplete<VosoolOffloadResponse> {
+        @Override
+        public void executeIncomplete(Response<VosoolOffloadResponse> response) {
+            if (!vosoolOffloadDto.isPaySuccess)
+                MyDatabaseClient.getInstance(activity).getMyDatabase().vosoolOffloadDao().
+                        insertVosoolOffloadDto(vosoolOffloadDto);
+            finish();
+        }
+    }
+
+    class GetError implements ICallbackError {
+        @Override
+        public void executeError(Throwable t) {
+            if (!vosoolOffloadDto.isPaySuccess)
+                MyDatabaseClient.getInstance(activity).getMyDatabase().vosoolOffloadDao().
+                        insertVosoolOffloadDto(vosoolOffloadDto);
+            finish();
+        }
     }
 
     void print() {
@@ -127,7 +191,7 @@ public class ResultActivity extends AppCompatActivity {
         return intent;
     }
 
-    public static Intent putIntentResult(Intent intent,String id, String billId, String paymentId,
+    public static Intent putIntentResult(Intent intent, String id, String billId, String paymentId,
                                          String maskedPan, String terminalNo, String merchantId,
                                          String trackNumber, String rrn, String ref, String amount,
                                          String txnDate, String txnTime, String description,
@@ -179,4 +243,27 @@ public class ResultActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onStop() {
+        Debug.getNativeHeapAllocatedSize();
+        System.runFinalization();
+        Runtime.getRuntime().totalMemory();
+        Runtime.getRuntime().freeMemory();
+        Runtime.getRuntime().maxMemory();
+        Runtime.getRuntime().gc();
+        System.gc();
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Debug.getNativeHeapAllocatedSize();
+        System.runFinalization();
+        Runtime.getRuntime().totalMemory();
+        Runtime.getRuntime().freeMemory();
+        Runtime.getRuntime().maxMemory();
+        Runtime.getRuntime().gc();
+        System.gc();
+        super.onDestroy();
+    }
 }
