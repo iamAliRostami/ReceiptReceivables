@@ -98,4 +98,5 @@
     <string name="map">نقشه</string>
     <string name="submit_status">ثبت وضعیت</string>
     <string name="no_payment">بدون پرداختی</string>
+    <string name="repetitive">مراجعه مجدد</string>
 </resources>

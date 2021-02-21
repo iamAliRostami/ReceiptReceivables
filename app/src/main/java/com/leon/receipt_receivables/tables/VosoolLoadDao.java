@@ -21,13 +21,13 @@ public interface VosoolLoadDao {
     @Insert
     void insertVosoolLoad(VosoolLoad vosoolLoad);
 
-    @Query("SELECT COUNT(*) FROM VosoolLoad")
+    @Query("SELECT COUNT(1) FROM VosoolLoad")
     int countTotalVossolLoad();
 
-    @Query("SELECT COUNT(*) FROM VosoolLoad WHERE isSent = :isSent")
+    @Query("SELECT COUNT(1) FROM VosoolLoad WHERE isSent = :isSent")
     int countSentVossolLoad(boolean isSent);
 
-    @Query("SELECT COUNT(*) FROM VosoolLoad WHERE isPayed = :isPayed")
+    @Query("SELECT COUNT(1) FROM VosoolLoad WHERE isPayed = :isPayed")
     int countPayedVossolLoad(boolean isPayed);
 
     @Insert

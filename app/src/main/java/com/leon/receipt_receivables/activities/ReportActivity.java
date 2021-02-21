@@ -14,7 +14,7 @@ import com.leon.receipt_receivables.tables.MyDatabaseClient;
 
 public class ReportActivity extends BaseActivity {
     ActivityReportBinding binding;
-    int payed, reading, total;
+    int payed, reading, total,repetitive;
     Activity activity;
 
     @Override
@@ -32,9 +32,15 @@ public class ReportActivity extends BaseActivity {
         total = myDatabase.vosoolLoadDao().countTotalVossolLoad();
         payed = myDatabase.vosoolLoadDao().countPayedVossolLoad(true);
         reading = myDatabase.vosoolLoadDao().countSentVossolLoad(true);
+        repetitive = myDatabase.vosoolOffloadDao().getRepetitiveBillId();
+//        repetitive = new ArrayList<>(myDatabase.vosoolOffloadDao().getRepetitiveBillId());
+//        Log.e("size", String.valueOf(repetitive.size()));
+//        for (int i = 0; i < repetitive.size(); i++)
+//            Log.e("index", String.valueOf(repetitive.get(i)));
         binding.textViewPayed.setText(String.valueOf(payed));
         binding.textViewTotal.setText(String.valueOf(total));
         binding.textViewRead.setText(String.valueOf(reading));
+        binding.textViewRepetitiveRead.setText(String.valueOf(repetitive));
     }
 
     @Override

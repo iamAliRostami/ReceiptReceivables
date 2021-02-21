@@ -16,6 +16,12 @@ public interface VosoolOffloadDao {
     @Query("Select * From VosoolOffloadDto WHERE isSent = :isSent")
     List<VosoolOffloadDto> getVosoolOffloadDtoBySent(boolean isSent);
 
+    //    @Query("SELECT COUNT(VosoolOffloadDto.posBillId) FROM VosoolOffloadDto")
+    //    @Query("SELECT COUNT(1) FROM VosoolOffloadDto GROUP BY VosoolOffloadDto.posBillId HAVING COUNT(1) > 3")
+//    List<Integer> getRepetitiveBillId();
+    @Query("SELECT COUNT(1) FROM (SELECT COUNT(1) FROM VosoolOffloadDto GROUP BY VosoolOffloadDto.posBillId HAVING COUNT(1) > 2)")
+    int getRepetitiveBillId();
+
     @Insert
     void insertVosoolOffloadDto(VosoolOffloadDto vosoolOffloadDto);
 

@@ -103,6 +103,8 @@ public class ResultCustomActivity extends AppCompatActivity {
                         resultDictionaries.get(binding.spinner.getSelectedItemPosition()).id;
                 MyDatabaseClient.getInstance(activity).getMyDatabase().vosoolLoadDao().
                         updateVosoolByPayed(vosoolOffloadDto.isPaySuccess, vosoolOffloadDto.posBillId);
+                MyDatabaseClient.getInstance(activity).getMyDatabase().vosoolOffloadDao().
+                        insertVosoolOffloadDto(vosoolOffloadDto);
             }
             upload();
         });
@@ -129,9 +131,6 @@ public class ResultCustomActivity extends AppCompatActivity {
                         updateVosoolBySent(true, vosoolOffloadDto.posBillId);
                 MyDatabaseClient.getInstance(activity).getMyDatabase().vosoolOffloadDao().
                         updateVosoolOffloadDtoBySent(true, vosoolOffloadDto.posBillId);
-            } else if (!vosoolOffloadDto.isPaySuccess) {
-                MyDatabaseClient.getInstance(activity).getMyDatabase().vosoolOffloadDao().
-                        insertVosoolOffloadDto(vosoolOffloadDto);
             }
             finish();
         }
@@ -140,9 +139,6 @@ public class ResultCustomActivity extends AppCompatActivity {
     class GetErrorIncomplete implements ICallbackIncomplete<VosoolOffloadResponse> {
         @Override
         public void executeIncomplete(Response<VosoolOffloadResponse> response) {
-            if (!vosoolOffloadDto.isPaySuccess)
-                MyDatabaseClient.getInstance(activity).getMyDatabase().vosoolOffloadDao().
-                        insertVosoolOffloadDto(vosoolOffloadDto);
             finish();
         }
     }
@@ -150,9 +146,6 @@ public class ResultCustomActivity extends AppCompatActivity {
     class GetError implements ICallbackError {
         @Override
         public void executeError(Throwable t) {
-            if (!vosoolOffloadDto.isPaySuccess)
-                MyDatabaseClient.getInstance(activity).getMyDatabase().vosoolOffloadDao().
-                        insertVosoolOffloadDto(vosoolOffloadDto);
             finish();
         }
     }
