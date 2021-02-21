@@ -61,12 +61,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/payed"
+                    android:text="@string/reading_number"
                     android:textColor="@color/text_color_dark"
                     android:textSize="@dimen/text_size_medium" />
 
                 <TextView
-                    android:id="@+id/text_view_payed"
+                    android:id="@+id/text_view_read"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/_0"
@@ -83,12 +83,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/reading_number"
+                    android:text="@string/payed"
                     android:textColor="@color/text_color_dark"
                     android:textSize="@dimen/text_size_medium" />
 
                 <TextView
-                    android:id="@+id/text_view_read"
+                    android:id="@+id/text_view_payed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/_0"
