@@ -24,7 +24,7 @@ public class VosoolLoad {
     public int tedadMaskooni;
     public int tedadTejari;
     public int tedadSaier;
-    public int payable;
+    public long payable;
     public int owePeriods;
     public int oweDays;
     public String lastPayDate;

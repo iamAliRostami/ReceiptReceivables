@@ -39,9 +39,9 @@ public class ReadingAdapter extends
                 break;
             case 1:
                 if (ascend)
-                    Collections.sort(readingItemsTemp, (p1, p2) -> p1.debt - p2.debt);
+                    Collections.sort(readingItemsTemp, (p1, p2) -> Long.compare(p1.debt, p2.debt));
                 else
-                    Collections.sort(readingItemsTemp, (p2, p1) -> p1.debt - p2.debt);
+                    Collections.sort(readingItemsTemp, (p2, p1) -> Long.compare(p1.debt, p2.debt));
                 break;
             case 2:
                 if (ascend)
@@ -153,11 +153,10 @@ public class ReadingAdapter extends
     @Override
     public void onBindViewHolder(@NonNull ReadingItemHolder holder, int position) {
         ReadingItem readingItem = readingItemsTemp.get(position);
-        holder.textViewDebt.setText(String.valueOf(readingItem.debt));
+        holder.textViewDebt.setText(readingItem.debtString);
         holder.textViewName.setText(readingItem.name);
         if (readingItem.lastPayDate != null && !readingItem.lastPayDate.isEmpty())
             holder.textViewLastPayDate.setText(readingItem.lastPayDate);
-
         holder.textViewMobile.setText(readingItem.mobile);
         holder.textViewAddress.setText(readingItem.address);
         holder.textViewBillId.setText(readingItem.billId);
@@ -185,8 +184,10 @@ public class ReadingAdapter extends
         return readingItemsTemp.get(position);
     }
 
+
     public static class ReadingItem {
-        int debt;
+        long debt;
+        String debtString;
         String name;
         String lastPayDate;
         String mobile;
@@ -197,18 +198,31 @@ public class ReadingAdapter extends
         String karbari;
         boolean isSent;
 
-        public ReadingItem(int debt, String name, String lastPayDate, String mobile, String address,
+        public ReadingItem(long debt, String name, String lastPayDate, String mobile, String address,
                            int radif, String billId, String trackNumber, String karbari, boolean isSent) {
             this.debt = debt;
-            this.name = name;
-            this.lastPayDate = lastPayDate;
-            this.mobile = mobile;
-            this.address = address;
+            this.debtString = String.valueOf(debt);
+            this.debtString = getNumberSeparator(this.debtString);
+            this.name = name.trim();
+            this.lastPayDate = lastPayDate.trim();
+            this.mobile = mobile.trim();
+            this.address = address.trim();
             this.radif = String.valueOf(radif);
-            this.billId = billId;
-            this.trackNumber = trackNumber;
-            this.karbari = karbari;
+            this.billId = billId.trim();
+            this.trackNumber = trackNumber.trim();
+            this.karbari = karbari.trim();
             this.isSent = isSent;
+        }
+
+        @SuppressLint("DefaultLocale")
+        public String getNumberSeparator(String number) {
+            String s;
+            try {
+                s = String.format("%,d", Long.parseLong(number));
+            } catch (NumberFormatException e) {
+                s = number;
+            }
+            return s;
         }
     }
 

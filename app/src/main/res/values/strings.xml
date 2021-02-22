@@ -99,4 +99,5 @@
     <string name="submit_status">ثبت وضعیت</string>
     <string name="no_payment">بدون پرداختی</string>
     <string name="repetitive">مراجعه مجدد</string>
+    <string name="description">توضیحات</string>
 </resources>

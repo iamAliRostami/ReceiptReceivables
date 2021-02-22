@@ -61,10 +61,10 @@ public class DetailsAdapter extends
     }
 
     public static class DetailsItem {
-        int debt;
+        long debt;
         String lastPayDate;
 
-        public DetailsItem(int debt, String lastPayDate) {
+        public DetailsItem(long debt, String lastPayDate) {
             this.debt = debt;
             this.lastPayDate = lastPayDate;
         }

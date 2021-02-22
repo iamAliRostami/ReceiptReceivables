@@ -2,6 +2,7 @@ package com.leon.receipt_receivables.activities;
 
 import android.app.Activity;
 import android.os.Debug;
+import android.util.Log;
 import android.view.View;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -72,6 +73,7 @@ public class DownloadActivity extends BaseActivity {
     class Download implements ICallback<ReceiptReceivablesFeedback> {
         @Override
         public void execute(Response<ReceiptReceivablesFeedback> response) {
+            Log.e("here","0");
             ISharedPreferenceManager sharedPreferenceManager =
                     new SharedPreferenceManager(activity, SharedReferenceNames.ACCOUNT.getValue());
             CalendarTool calendarTool = new CalendarTool();
@@ -92,21 +94,23 @@ public class DownloadActivity extends BaseActivity {
                 ArrayList<ResultDictionary> resultDictionaries = new ArrayList<>(
                         myDatabase.resultDictionaryDao().getAllResultDictionary());
                 ArrayList<VosoolLoad> vosoolLoads = new ArrayList<>(
-//                        myDatabase.vosoolLoadDao().getAllVosoolLoad());
                         myDatabase.vosoolLoadDao().getSentVosoolLoad(false));
                 ArrayList<VosoolBill> vosoolBills = new ArrayList<>(
                         myDatabase.vosoolBillDao().getAllVosoolBill());
-
+                Log.e("here","1");
                 for (int i = 0; i < receiptReceivablesFeedbackTemp.karbariDictionary.size(); i++) {
                     for (KarbariDictionary karbariDictionary : karbariDictionaries)
                         if (receiptReceivablesFeedbackTemp.karbariDictionary.get(i).id == karbariDictionary.id)
                             receiptReceivablesFeedback.karbariDictionary.remove(receiptReceivablesFeedback.karbariDictionary.get(i));
                 }
+                Log.e("here","2");
                 for (int i = 0; i < receiptReceivablesFeedbackTemp.resultDictionary.size(); i++) {
                     for (ResultDictionary resultDictionary : resultDictionaries)
                         if (receiptReceivablesFeedbackTemp.resultDictionary.get(i).id == resultDictionary.id)
                             receiptReceivablesFeedback.resultDictionary.remove(receiptReceivablesFeedback.resultDictionary.get(i));
                 }
+
+                Log.e("here","3");
                 for (VosoolLoad vosoolLoad : vosoolLoads) {
                     for (int i = 0; i < receiptReceivablesFeedbackTemp.vosoolLoads.size(); i++) {
                         if (receiptReceivablesFeedbackTemp.vosoolLoads.get(i).billId.equals(vosoolLoad.billId)) {
@@ -115,7 +119,7 @@ public class DownloadActivity extends BaseActivity {
                         }
                     }
                 }
-
+                Log.e("here","4");
                 for (VosoolBill vosoolBill : vosoolBills)
                     for (int i = 0; i < receiptReceivablesFeedbackTemp.vosoolLoads.size(); i++) {
                         for (int j = 0; j < receiptReceivablesFeedbackTemp.vosoolLoads.get(i).vosoolBills.size(); j++)
@@ -123,9 +127,11 @@ public class DownloadActivity extends BaseActivity {
                                 receiptReceivablesFeedback.vosoolLoads.get(i).vosoolBills.remove(receiptReceivablesFeedbackTemp.vosoolLoads.get(i).vosoolBills.get(j));
                     }
 
+                Log.e("here","5");
                 for (int i = 0; i < receiptReceivablesFeedback.vosoolLoads.size(); i++) {
                     myDatabase.vosoolBillDao().insertAllVosoolBill(receiptReceivablesFeedback.vosoolLoads.get(i).vosoolBills);
                 }
+                Log.e("here","6");
                 myDatabase.karbariDictionaryDao().insertKarbariDictionary(
                         receiptReceivablesFeedback.karbariDictionary);
                 myDatabase.resultDictionaryDao().insertAllResultDictionary(

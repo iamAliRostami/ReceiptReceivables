@@ -95,6 +95,7 @@ public class ResultCustomActivity extends AppCompatActivity {
 
     void setOnButtonSubmitClickListener() {
         binding.buttonSubmit.setOnClickListener(v -> {
+            vosoolOffloadDto.description = binding.editTextDescription.getText().toString();
             if (!vosoolOffloadDto.isPaySuccess) {
                 vosoolOffloadDto.x2 = gpsTracker.getLongitude();
                 vosoolOffloadDto.y2 = gpsTracker.getLatitude();

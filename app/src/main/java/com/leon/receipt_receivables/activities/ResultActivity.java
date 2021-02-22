@@ -95,6 +95,8 @@ public class ResultActivity extends AppCompatActivity {
 
     void setOnButtonSubmitClickListener() {
         binding.buttonSubmit.setOnClickListener(v -> {
+            vosoolOffloadDto.description = vosoolOffloadDto.description.concat("\n".
+                    concat(binding.editTextDescription.getText().toString()));
             if (!vosoolOffloadDto.isPaySuccess) {
                 vosoolOffloadDto.x2 = gpsTracker.getLongitude();
                 vosoolOffloadDto.y2 = gpsTracker.getLatitude();
@@ -174,6 +176,9 @@ public class ResultActivity extends AppCompatActivity {
         for (String resultReturn : resultReturns) {
             resultDescription.append(resultReturn).append("\n");
         }
+        ISharedPreferenceManager sharedPreferenceManager = new SharedPreferenceManager(activity, SharedReferenceNames.ACCOUNT.getValue());
+        resultReturns.add("کد مامور: ".concat(sharedPreferenceManager.getStringData(SharedReferenceKeys.USER_CODE.getValue())));
+        resultReturns.add("شرکت آب و فاضلاب استان اصفهان");
         binding.textViewPrint.setText(String.valueOf(resultDescription));
     }
 
