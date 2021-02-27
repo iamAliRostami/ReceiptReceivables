@@ -18,6 +18,9 @@ public class HelpActivity extends BaseActivity {
         View childLayout = binding.getRoot();
         ConstraintLayout parentLayout = findViewById(R.id.base_Content);
         parentLayout.addView(childLayout);
+//        binding.pdfView.fromAsset("v.pdf")
+//                .showMinimap(false).enableSwipe(true).load();
+        binding.pdfView.fromAsset("v.pdf").load();
     }
 
     @Override

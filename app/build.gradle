@@ -41,14 +41,14 @@ android {
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'androidx.multidex:multidex:2.0.1'
 
-    implementation 'com.google.android.gms:play-services-location:17.1.0'
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
 
     implementation project(path: ':Rahyab_Hybrid_CPSDK_1.0.15')
     implementation 'com.facebook.shimmer:shimmer:0.5.0@aar'
@@ -76,4 +76,7 @@ dependencies {
         exclude group: 'org.json', module: 'json'
     }
     implementation 'com.auth0.android:jwtdecode:2.0.0'
+
+//    implementation 'com.joanzapata.pdfview:android-pdfview:1.0.4@aar'
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
 }
