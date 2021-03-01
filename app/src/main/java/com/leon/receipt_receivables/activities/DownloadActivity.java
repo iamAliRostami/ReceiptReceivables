@@ -2,7 +2,6 @@ package com.leon.receipt_receivables.activities;
 
 import android.app.Activity;
 import android.os.Debug;
-import android.util.Log;
 import android.view.View;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -30,7 +29,6 @@ import com.leon.receipt_receivables.tables.VosoolLoad;
 import com.leon.receipt_receivables.utils.CalendarTool;
 import com.leon.receipt_receivables.utils.CustomDialog;
 import com.leon.receipt_receivables.utils.CustomErrorHandling;
-import com.leon.receipt_receivables.utils.CustomToast;
 import com.leon.receipt_receivables.utils.HttpClientWrapper;
 import com.leon.receipt_receivables.utils.NetworkHelper;
 import com.leon.receipt_receivables.utils.SharedPreferenceManager;
@@ -73,7 +71,6 @@ public class DownloadActivity extends BaseActivity {
     class Download implements ICallback<ReceiptReceivablesFeedback> {
         @Override
         public void execute(Response<ReceiptReceivablesFeedback> response) {
-            Log.e("here","0");
             ISharedPreferenceManager sharedPreferenceManager =
                     new SharedPreferenceManager(activity, SharedReferenceNames.ACCOUNT.getValue());
             CalendarTool calendarTool = new CalendarTool();
@@ -97,20 +94,16 @@ public class DownloadActivity extends BaseActivity {
                         myDatabase.vosoolLoadDao().getSentVosoolLoad(false));
                 ArrayList<VosoolBill> vosoolBills = new ArrayList<>(
                         myDatabase.vosoolBillDao().getAllVosoolBill());
-                Log.e("here","1");
                 for (int i = 0; i < receiptReceivablesFeedbackTemp.karbariDictionary.size(); i++) {
                     for (KarbariDictionary karbariDictionary : karbariDictionaries)
                         if (receiptReceivablesFeedbackTemp.karbariDictionary.get(i).id == karbariDictionary.id)
                             receiptReceivablesFeedback.karbariDictionary.remove(receiptReceivablesFeedback.karbariDictionary.get(i));
                 }
-                Log.e("here","2");
                 for (int i = 0; i < receiptReceivablesFeedbackTemp.resultDictionary.size(); i++) {
                     for (ResultDictionary resultDictionary : resultDictionaries)
                         if (receiptReceivablesFeedbackTemp.resultDictionary.get(i).id == resultDictionary.id)
                             receiptReceivablesFeedback.resultDictionary.remove(receiptReceivablesFeedback.resultDictionary.get(i));
                 }
-
-                Log.e("here","3");
                 for (VosoolLoad vosoolLoad : vosoolLoads) {
                     for (int i = 0; i < receiptReceivablesFeedbackTemp.vosoolLoads.size(); i++) {
                         if (receiptReceivablesFeedbackTemp.vosoolLoads.get(i).billId.equals(vosoolLoad.billId)) {
@@ -119,19 +112,15 @@ public class DownloadActivity extends BaseActivity {
                         }
                     }
                 }
-                Log.e("here","4");
                 for (VosoolBill vosoolBill : vosoolBills)
                     for (int i = 0; i < receiptReceivablesFeedbackTemp.vosoolLoads.size(); i++) {
                         for (int j = 0; j < receiptReceivablesFeedbackTemp.vosoolLoads.get(i).vosoolBills.size(); j++)
                             if (vosoolBill.id.equals(receiptReceivablesFeedbackTemp.vosoolLoads.get(i).vosoolBills.get(j).id))
                                 receiptReceivablesFeedback.vosoolLoads.get(i).vosoolBills.remove(receiptReceivablesFeedbackTemp.vosoolLoads.get(i).vosoolBills.get(j));
                     }
-
-                Log.e("here","5");
                 for (int i = 0; i < receiptReceivablesFeedback.vosoolLoads.size(); i++) {
                     myDatabase.vosoolBillDao().insertAllVosoolBill(receiptReceivablesFeedback.vosoolLoads.get(i).vosoolBills);
                 }
-                Log.e("here","6");
                 myDatabase.karbariDictionaryDao().insertKarbariDictionary(
                         receiptReceivablesFeedback.karbariDictionary);
                 myDatabase.resultDictionaryDao().insertAllResultDictionary(
@@ -151,9 +140,17 @@ public class DownloadActivity extends BaseActivity {
     class GetErrorIncomplete implements ICallbackIncomplete<ReceiptReceivablesFeedback> {
         @Override
         public void executeIncomplete(Response<ReceiptReceivablesFeedback> response) {
-            CustomErrorHandling customErrorHandlingNew = new CustomErrorHandling(activity);
-            String error = customErrorHandlingNew.getErrorMessageDefault(response);
-            new CustomToast().warning(error);
+            String error;
+            if (response.code() == 400) {
+                error = "داده ای  برای بارگیری وجود ندارد";
+            } else {
+                CustomErrorHandling customErrorHandlingNew = new CustomErrorHandling(activity);
+                error = customErrorHandlingNew.getErrorMessageDefault(response);
+            }
+            new CustomDialog(DialogType.YellowRedirect, DownloadActivity.this, error,
+                    DownloadActivity.this.getString(R.string.dear_user),
+                    DownloadActivity.this.getString(R.string.download),
+                    DownloadActivity.this.getString(R.string.accepted));
         }
     }
 
