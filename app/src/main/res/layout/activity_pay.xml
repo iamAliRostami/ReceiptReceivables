@@ -101,7 +101,7 @@
                     android:layout_marginBottom="@dimen/low_dp"
                     android:layout_weight="1"
                     android:background="@drawable/border_gray_1"
-                    android:text="@string/details"
+                    android:text="@string/bills"
                     android:textColor="@android:color/primary_text_dark"
                     android:textSize="@dimen/text_size_medium"
                     tools:ignore="ButtonStyle" />
@@ -120,6 +120,41 @@
                     android:visibility="gone"
                     tools:ignore="ButtonStyle" />
             </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_layout_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="2"
+            tools:ignore="UselessParent">
+
+            <TextView
+                android:id="@+id/text_view_last_pay_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/date"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/text_size_medium" />
+
+            <LinearLayout
+                android:layout_width="@dimen/small_dp"
+                android:layout_height="match_parent"
+                android:background="@color/blue" />
+
+            <TextView
+                android:id="@+id/text_view_debt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/payment"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/text_size_medium" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

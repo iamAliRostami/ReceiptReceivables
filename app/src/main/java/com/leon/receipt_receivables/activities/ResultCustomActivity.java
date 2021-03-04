@@ -59,7 +59,7 @@ public class ResultCustomActivity extends AppCompatActivity {
     }
 
     void initialize() {
-        getResultExtra();
+        getExtra();
         gpsTracker = new GPSTracker(activity);
         if (vosoolOffloadDto.isPaySuccess) {
             binding.spinner.setVisibility(View.GONE);
@@ -165,27 +165,50 @@ public class ResultCustomActivity extends AppCompatActivity {
     }
 
     public static Intent putIntentResult(Context context, String id, String billId, String paymentId,
-                                         double x, double y) {
+                                         String name, long amount, double x, double y) {
         Intent intent = new Intent(context, ResultCustomActivity.class);
         intent.putExtra(BundleEnum.BILL_ID.getValue(), billId);
         intent.putExtra(BundleEnum.ID.getValue(), id);
         intent.putExtra(BundleEnum.PAYMENT_ID.getValue(), paymentId);
+        intent.putExtra(BundleEnum.NAME.getValue(), name);
+        intent.putExtra(BundleEnum.AMOUNT.getValue(), amount);
         intent.putExtra(BundleEnum.X.getValue(), x);
         intent.putExtra(BundleEnum.Y.getValue(), y);
         return intent;
+    }
+
+    void getExtra() {
+        getResultExtra();
+        resultReturns = new ArrayList<>();
+
+        resultReturns.add("مشترک گرامی ".concat(vosoolOffloadDto.name));
+        resultReturns.add("مبلغ قبض ".concat(String.valueOf(vosoolOffloadDto.amount)));
+        resultReturns.add("ش. قبض ".concat(vosoolOffloadDto.posBillId));
+        resultReturns.add("ش. پرداخت ".concat(vosoolOffloadDto.posPayId));
+
+        StringBuilder resultDescription = new StringBuilder();
+        for (String resultReturn : resultReturns) {
+            resultDescription.append(resultReturn).append("\n");
+        }
+        ISharedPreferenceManager sharedPreferenceManager = new SharedPreferenceManager(activity, SharedReferenceNames.ACCOUNT.getValue());
+        resultReturns.add("کد مامور: ".concat(sharedPreferenceManager.getStringData(SharedReferenceKeys.USER_CODE.getValue())));
+        resultReturns.add("شرکت آب و فاضلاب استان اصفهان");
+        binding.textViewPrint.setText(String.valueOf(resultDescription));
     }
 
     void getResultExtra() {
         vosoolOffloadDto = new VosoolOffloadDto();
         if (getIntent() != null) {
             vosoolOffloadDto.posBillId = getIntent().getExtras().getString(BundleEnum.BILL_ID.getValue());
+            vosoolOffloadDto.name = getIntent().getExtras().getString(BundleEnum.NAME.getValue());
+            vosoolOffloadDto.amount = getIntent().getExtras().getLong(BundleEnum.AMOUNT.getValue());
             vosoolOffloadDto.id = getIntent().getExtras().getString(BundleEnum.ID.getValue());
             vosoolOffloadDto.posPayId = getIntent().getExtras().getString(BundleEnum.PAYMENT_ID.getValue());
             vosoolOffloadDto.x1 = getIntent().getExtras().getDouble(BundleEnum.X.getValue());
             vosoolOffloadDto.y1 = getIntent().getExtras().getDouble(BundleEnum.Y.getValue());
         }
-        binding.textViewPrint.setVisibility(View.GONE);
-        binding.buttonPrint.setVisibility(View.GONE);
+//        binding.textViewPrint.setVisibility(View.GONE);
+//        binding.buttonPrint.setVisibility(View.GONE);
     }
 
     @Override

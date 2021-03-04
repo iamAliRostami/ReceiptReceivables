@@ -104,14 +104,14 @@ public class DownloadActivity extends BaseActivity {
                         if (receiptReceivablesFeedbackTemp.resultDictionary.get(i).id == resultDictionary.id)
                             receiptReceivablesFeedback.resultDictionary.remove(receiptReceivablesFeedback.resultDictionary.get(i));
                 }
-                for (VosoolLoad vosoolLoad : vosoolLoads) {
-                    for (int i = 0; i < receiptReceivablesFeedbackTemp.vosoolLoads.size(); i++) {
-                        if (receiptReceivablesFeedbackTemp.vosoolLoads.get(i).billId.equals(vosoolLoad.billId)) {
-                            myDatabase.vosoolLoadDao().updateVosoolByArchive(false, vosoolLoad.billId);
-                            receiptReceivablesFeedback.vosoolLoads.remove(receiptReceivablesFeedbackTemp.vosoolLoads.get(i));
-                        }
-                    }
-                }
+//                for (VosoolLoad vosoolLoad : vosoolLoads) {
+//                    for (int i = 0; i < receiptReceivablesFeedbackTemp.vosoolLoads.size(); i++) {
+//                        if (receiptReceivablesFeedbackTemp.vosoolLoads.get(i).billId.equals(vosoolLoad.billId)) {
+//                            myDatabase.vosoolLoadDao().updateVosoolByArchive(false, vosoolLoad.billId);
+//                            receiptReceivablesFeedback.vosoolLoads.remove(receiptReceivablesFeedbackTemp.vosoolLoads.get(i));
+//                        }
+//                    }
+//                }
                 for (VosoolBill vosoolBill : vosoolBills)
                     for (int i = 0; i < receiptReceivablesFeedbackTemp.vosoolLoads.size(); i++) {
                         for (int j = 0; j < receiptReceivablesFeedbackTemp.vosoolLoads.get(i).vosoolBills.size(); j++)

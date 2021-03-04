@@ -1,5 +1,6 @@
 package com.leon.receipt_receivables.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -14,15 +15,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.leon.receipt_receivables.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class DetailsAdapter extends
         RecyclerView.Adapter<DetailsAdapter.DetailsItemHolder> {
     private final ArrayList<DetailsItem> detailsItemsTemp;
-    private final ArrayList<DetailsItem> detailsItems;
+//    private final ArrayList<DetailsItem> detailsItems;
 
     public DetailsAdapter(ArrayList<DetailsItem> listItems) {
         this.detailsItemsTemp = new ArrayList<>(listItems);
-        this.detailsItems = new ArrayList<>(listItems);
+//        this.detailsItems = new ArrayList<>(listItems);
+
+        Collections.sort(this.detailsItemsTemp, (o1, o2) -> o1.lastPayDate.compareTo(
+                o2.lastPayDate));
     }
 
     @NonNull
@@ -41,7 +46,7 @@ public class DetailsAdapter extends
     @Override
     public void onBindViewHolder(@NonNull DetailsItemHolder holder, int position) {
         DetailsItem detailsItem = this.detailsItemsTemp.get(position);
-        holder.textViewDebt.setText(String.valueOf(detailsItem.debt));
+        holder.textViewDebt.setText(getNumberSeparator(String.valueOf(detailsItem.debt)));
         holder.textViewLastPayDate.setText(detailsItem.lastPayDate);
     }
 
@@ -79,6 +84,17 @@ public class DetailsAdapter extends
             this.textViewDebt = viewItem.findViewById(R.id.text_view_debt);
             this.textViewLastPayDate = viewItem.findViewById(R.id.text_view_last_pay_date);
         }
+    }
+
+    @SuppressLint("DefaultLocale")
+    public String getNumberSeparator(String number) {
+        String s;
+        try {
+            s = String.format("%,d", Long.parseLong(number));
+        } catch (NumberFormatException e) {
+            s = number;
+        }
+        return s;
     }
 
     public static class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {

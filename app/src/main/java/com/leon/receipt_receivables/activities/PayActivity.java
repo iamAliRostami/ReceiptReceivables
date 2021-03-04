@@ -98,6 +98,7 @@ public class PayActivity extends AppCompatActivity {
     void onButtonsClickListener() {
         binding.buttonDetails.setOnClickListener(v -> {
             binding.recyclerViewDetails.setVisibility(detail ? View.VISIBLE : View.GONE);
+            binding.linearLayoutTitle.setVisibility(detail ? View.VISIBLE : View.GONE);
             binding.mapView.setVisibility(View.GONE);
             detail = !detail;
             map = true;
@@ -105,6 +106,7 @@ public class PayActivity extends AppCompatActivity {
         binding.buttonMap.setOnClickListener(v -> {
             binding.mapView.setVisibility(map ? View.VISIBLE : View.GONE);
             binding.recyclerViewDetails.setVisibility(View.GONE);
+            binding.linearLayoutTitle.setVisibility(View.GONE);
             map = !map;
             detail = true;
         });
@@ -113,7 +115,7 @@ public class PayActivity extends AppCompatActivity {
             String billId = binding.textViewBillId.getText().toString();
             startActivity(
                     ResultCustomActivity.putIntentResult(PayActivity.this, vosoolLoad.id,
-                            billId, paymentId, x, y));
+                            billId, paymentId, vosoolLoad.fullName, vosoolLoad.payable, x, y));
             finish();
         });
         binding.buttonBillPayment.setOnClickListener(v -> {
@@ -132,7 +134,7 @@ public class PayActivity extends AppCompatActivity {
                                         String.format(Locale.ENGLISH,
                                                 "کد وضعیت: %d", status),
                                         String.format(Locale.ENGLISH, "شرح خطا:\n%s", statusDescription)),
-                                        vosoolLoad.id,billId, paymentId, maskedPan, "terminalNo",
+                                        vosoolLoad.id, billId, paymentId, maskedPan, "terminalNo",
                                         "merchantId", "traceNumber",
                                         "rrn", "ref", "amount", "txnDate", "txnTime", statusDescription, x, y, false));
                         finish();
@@ -153,7 +155,7 @@ public class PayActivity extends AppCompatActivity {
                                         String.format(Locale.ENGLISH, "شماره مرجع بازیابی: %s", rrn),
                                         String.format(Locale.ENGLISH, "مبلغ تراکنش: %s", amount),
                                         String.format(Locale.ENGLISH, "شماره کارت کاربر:\n%s", maskedPan)),
-                                vosoolLoad.id,billId, paymentId, maskedPan, terminalNo, merchantId, traceNumber,
+                                vosoolLoad.id, billId, paymentId, maskedPan, terminalNo, merchantId, traceNumber,
                                 rrn, ref, amount, txnDate, txnTime, "description", x, y, true));
                         finish();
                     }
@@ -175,7 +177,7 @@ public class PayActivity extends AppCompatActivity {
                                         String.format(Locale.ENGLISH, "شماره مرجع بازیابی: %s", rrn),
                                         String.format(Locale.ENGLISH, "مبلغ تراکنش: %s", amount),
                                         String.format(Locale.ENGLISH, "شماره کارت کاربر:\n%s", maskedPan)),
-                                vosoolLoad.id,billId, paymentId, maskedPan, terminalNo, merchantId, traceNumber,
+                                vosoolLoad.id, billId, paymentId, maskedPan, terminalNo, merchantId, traceNumber,
                                 rrn, ref, amount, txnDate, txnTime, errorDescription, x, y, false));
                         finish();
                     }
@@ -185,7 +187,7 @@ public class PayActivity extends AppCompatActivity {
                                                    String maskedPan, String panHash) {
                         startActivity(ResultActivity.putIntentResult(ResultActivity.putIntent(PayActivity.this,
                                 String.format(Locale.ENGLISH, "فرایند پرداخت قبض با شناسه قبض %s و شناسه پرداخت %s توسط کاربر لغو شد.", billId, paymentId)),
-                                vosoolLoad.id,billId, paymentId, maskedPan, "terminalNo",
+                                vosoolLoad.id, billId, paymentId, maskedPan, "terminalNo",
                                 "merchantId", "traceNumber", "rrn",
                                 "ref", "amount", "txnDate", "txnTime", "description", x, y, false));
                         finish();
@@ -297,6 +299,7 @@ public class PayActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        HttpClientWrapper.call.cancel();
         Debug.getNativeHeapAllocatedSize();
         System.runFinalization();
         Runtime.getRuntime().totalMemory();

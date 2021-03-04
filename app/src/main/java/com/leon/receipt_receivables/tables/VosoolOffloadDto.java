@@ -1,6 +1,7 @@
 package com.leon.receipt_receivables.tables;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
@@ -26,4 +27,8 @@ public class VosoolOffloadDto {
     public double accuracy;
     public double x2;
     public double y2;
+    @Ignore
+    public String name;
+    @Ignore
+    public long amount;
 }

@@ -100,4 +100,7 @@
     <string name="no_payment">بدون پرداختی</string>
     <string name="repetitive">مراجعه مجدد</string>
     <string name="description">توضیحات</string>
+    <string name="date">تاریخ</string>
+    <string name="payment">مبلغ</string>
+    <string name="bills">قبوض</string>
 </resources>
