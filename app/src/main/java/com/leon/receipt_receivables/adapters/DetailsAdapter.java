@@ -35,7 +35,7 @@ public class DetailsAdapter extends
     public DetailsItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         View view;
-        if (viewType % 2 == 0) {
+        if (viewType % 2 == 1) {
             view = LayoutInflater.from(context).inflate(R.layout.item_details_1, parent, false);
         } else {
             view = LayoutInflater.from(context).inflate(R.layout.item_details_2, parent, false);

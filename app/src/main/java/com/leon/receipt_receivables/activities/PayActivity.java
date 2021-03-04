@@ -16,6 +16,7 @@ import com.kishcore.sdk.hybrid.api.GeneralBillPaymentCallback;
 import com.kishcore.sdk.hybrid.api.SDKManager;
 import com.leon.receipt_receivables.R;
 import com.leon.receipt_receivables.adapters.DetailsAdapter;
+import com.leon.receipt_receivables.databinding.ActivityPayBinding;
 import com.leon.receipt_receivables.enums.BundleEnum;
 import com.leon.receipt_receivables.enums.ProgressType;
 import com.leon.receipt_receivables.infrastructure.IAbfaService;
@@ -48,7 +49,7 @@ import static com.leon.receipt_receivables.MyApplication.hostApp;
 import static com.leon.receipt_receivables.utils.PermissionManager.isNetworkAvailable;
 
 public class PayActivity extends AppCompatActivity {
-    com.leon.receipt_receivables.databinding.ActivityPayBinding binding;
+    ActivityPayBinding binding;
     Activity activity;
     VosoolLoad vosoolLoad;
     ArrayList<DetailsAdapter.DetailsItem> detailsItems = new ArrayList<>();

@@ -42,6 +42,9 @@ public interface VosoolLoadDao {
     @Query("UPDATE VosoolLoad SET isArchive = :isArchive WHERE billId = :billId")
     void updateVosoolByArchive(boolean isArchive, String billId);
 
+    @Query("UPDATE VosoolLoad SET isArchive = :isArchive WHERE trackNumber = :trackNumber AND id = :id")
+    void updateVosoolByArchive(boolean isArchive, String trackNumber, String id);
+
     @Query("UPDATE VosoolLoad SET isArchive = :isArchive")
     void updateVosoolByArchive(boolean isArchive);
 }
