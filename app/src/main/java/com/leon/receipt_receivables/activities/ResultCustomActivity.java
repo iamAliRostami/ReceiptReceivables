@@ -157,7 +157,8 @@ public class ResultCustomActivity extends AppCompatActivity {
             for (int i = 0; i < resultReturns.size(); i++) {
                 printModels.add(new PrintModel(resultReturns.get(i)));
             }
-            SDKManager.print(ResultCustomActivity.this, new PrintableDataList(printModels), 1, null);
+            SDKManager.print(ResultCustomActivity.this, new PrintableDataList(printModels),
+                    1, null);
 
         } else {
             new CustomToast().warning(getString(R.string.printer_has_problem), Toast.LENGTH_LONG);
