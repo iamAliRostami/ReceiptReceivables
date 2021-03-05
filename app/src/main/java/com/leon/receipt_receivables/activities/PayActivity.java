@@ -54,9 +54,9 @@ public class PayActivity extends AppCompatActivity {
     VosoolLoad vosoolLoad;
     ArrayList<DetailsAdapter.DetailsItem> detailsItems = new ArrayList<>();
     DetailsAdapter detailsAdapter;
-    private boolean detail = true, map = true;
-    GPSTracker gpsTracker;
+    boolean detail = true, map = true;
     double x, y, latitude, longitude;
+    GPSTracker gpsTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -216,22 +216,6 @@ public class PayActivity extends AppCompatActivity {
         mapController.setCenter(startPoint);
 
         addPlace(startPoint, true);
-
-//        MyLocationNewOverlay locationOverlay =
-//                new MyLocationNewOverlay(new GpsMyLocationProvider(activity), binding.mapView);
-//        MyLocationNewOverlay locationOverlay =
-//                new MyLocationNewOverlay(binding.mapView);
-//        locationOverlay.enableFollowLocation();
-//
-//        Drawable currentDraw = ResourcesCompat.getDrawable(getResources(), R.mipmap.ic_launcher, null);
-//        Bitmap currentIcon = null;
-//        if (currentDraw != null) {
-//            currentIcon = ((BitmapDrawable) currentDraw).getBitmap();
-//        }
-//        locationOverlay.setPersonIcon(currentIcon);
-//
-//        locationOverlay.enableMyLocation();
-//        binding.mapView.getOverlays().add(locationOverlay);
     }
 
 
@@ -300,6 +284,8 @@ public class PayActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        detailsItems = null;
+        detailsAdapter = null;
         HttpClientWrapper.call.cancel();
         Debug.getNativeHeapAllocatedSize();
         System.runFinalization();

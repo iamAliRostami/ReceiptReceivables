@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Debug;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -97,6 +98,7 @@ public class LoginActivity extends AppCompatActivity {
 
     void setOnImageViewPasswordClickListener() {
         binding.imageViewPassword.setOnClickListener(v -> binding.imageViewPassword.setOnClickListener(view -> {
+            Log.e("click", "psswrd");
             if (binding.editTextPassword.getInputType() != InputType.TYPE_CLASS_TEXT) {
                 binding.editTextPassword.setInputType(InputType.TYPE_CLASS_TEXT);
             } else

@@ -37,12 +37,12 @@ import java.util.Arrays;
 public class ReadingActivity extends BaseActivity {
     ActivityReadingBinding binding;
     ArrayList<ReadingAdapter.ReadingItem> readingItems = new ArrayList<>();
-    ReadingAdapter readingAdapter;
-    Activity activity;
     ArrayList<KarbariDictionary> karbariDictionaries = new ArrayList<>();
     ArrayList<ResultDictionary> resultDictionaries = new ArrayList<>();
     ArrayList<VosoolBill> vosoolBills = new ArrayList<>();
     ArrayList<VosoolLoad> vosoolLoads = new ArrayList<>();
+    ReadingAdapter readingAdapter;
+    Activity activity;
     ArrayList<String> items = new ArrayList<>(Arrays.asList("نام", "بدهی", "تاریخ"));
     boolean ascend = true;
     int type = 0;
@@ -223,6 +223,12 @@ public class ReadingActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
+        readingItems = null;
+        karbariDictionaries = null;
+        resultDictionaries = null;
+        vosoolBills = null;
+        vosoolLoads = null;
+        readingAdapter = null;
         Debug.getNativeHeapAllocatedSize();
         System.runFinalization();
         Runtime.getRuntime().totalMemory();
